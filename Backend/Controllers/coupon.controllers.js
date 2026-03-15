@@ -47,8 +47,29 @@ const getCouponById = async (req, res) => {
     }
 }
 
+// Update a coupon by its Id
+const updateCouponById = async (req, res) => {
+    try {
+        const response = await couponService.updateById(req.params.id, req.body);
+        successResponseBody.data = response;
+        successResponseBody.message = "Coupon updated successfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        console.log(error);
+        if(error.err) {
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to update the coupon.";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to update the coupon.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 module.exports = {
     createCoupon,
     getAllCoupons,
-    getCouponById
+    getCouponById,
+    updateCouponById
 }

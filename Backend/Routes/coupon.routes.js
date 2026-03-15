@@ -9,6 +9,9 @@ const couponRouter = ( app ) => {
 
     // Get a coupon by Id
     app.get('/coupons/:id', couponController.getCouponById);
+
+    // Update a coupon by Id
+    app.put('/coupons/:id', couponController.updateCouponById);
     
 }
 

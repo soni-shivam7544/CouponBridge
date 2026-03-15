@@ -38,8 +38,26 @@ const getById = async (id) => {
     }
 }
 
+const updateById = async (id, updateData) => {
+    try {
+        const updatedCoupon = await Coupon.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+        return updatedCoupon;
+    } catch (error) {
+        console.log(error);
+        if( error.name === "ValidationError" ){
+            let err = {};
+            Object.keys(error.errors).forEach ( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+    }
+}
+
 module.exports = {
     create,
     getAll,
-    getById
+    getById,
+    updateById
 }
