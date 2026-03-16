@@ -27,8 +27,19 @@ const getAll = async () => {
     }
 }
 
+const getOne = async (id) => {
+    try {
+        const provider = await Provider.findById(id).populate('couponIds');
+        return provider;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 
 module.exports = {
     create,
-    getAll
+    getAll,
+    getOne
 }

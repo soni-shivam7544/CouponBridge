@@ -32,7 +32,21 @@ const getAllProviders = async (req, res) => {
     }
 }
 
+const getProviderById = async( req, res ) => {
+    try {
+        const response = await providerService.getOne(req.params.id);
+        successResponseBody.data = response;
+        successResponseBody.message = "The provider retrieved successfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to retrieve the provider.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 module.exports = {
     signUp,
-    getAllProviders
+    getAllProviders,
+    getProviderById
 }
