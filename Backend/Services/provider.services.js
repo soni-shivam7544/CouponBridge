@@ -37,9 +37,37 @@ const getOne = async (id) => {
     }
 }
 
+const updateProvider = async (id, data) => {
+    try {
+        const provider = await Provider.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+        return provider;
+    } catch(error) {
+        console.log(error);
+        if(error.name === 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach ( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+    }
+}
+
+const destroy = async (id) => {
+    try {
+        const provider = await Provider.findByIdAndDelete(id);
+        return provider;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+} 
 
 module.exports = {
     create,
     getAll,
-    getOne
+    getOne,
+    updateProvider,
+    destroy
 }
