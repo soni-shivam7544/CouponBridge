@@ -81,10 +81,24 @@ const destroyCoupon = async (req, res) => {
         res.status(500).json(errorResponseBody);
     }
 }
+
+const searchCoupons = async (req, res) => {
+    try {
+        const response = await couponService.searchCoupons(req.query);
+        successResponseBody.data = response;
+        successResponseBody.message = "Coupons fetched successfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to fetch coupons.";
+        res.status(500).json(errorResponseBody);
+    }
+}
 module.exports = {
     createCoupon,
     getAllCoupons,
     getCouponById,
     updateCouponById,
-    destroyCoupon
+    destroyCoupon,
+    searchCoupons
 }

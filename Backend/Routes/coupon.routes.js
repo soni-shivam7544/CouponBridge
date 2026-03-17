@@ -4,11 +4,15 @@ const couponRouter = ( app ) => {
     // Create a new coupon
     app.post('/cb/v1/api/coupons', couponController.createCoupon);
 
+    // Search coupons by merchant name or provider name
+    app.get('/cb/v1/api/coupons/search', couponController.searchCoupons);
+
     // Get all coupons
     app.get('/cb/v1/api/coupons', couponController.getAllCoupons);
 
     // Get a coupon by Id
     app.get('/cb/v1/api/coupons/:id', couponController.getCouponById);
+
 
     // Update a coupon by Id
     app.put('/cb/v1/api/coupons/:id', couponController.updateCouponById);
