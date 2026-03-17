@@ -1,3 +1,4 @@
+const Coupon = require('../Models/coupon.model.js');
 const Customer = require('../Models/customer.model.js');
 
 const create = async (data) => {
@@ -63,10 +64,21 @@ const destroy = async (id) => {
         throw error;
     }
 }
+
+const getAllCoupons = async (customerId) => {
+    try {
+        const coupons = await Coupon.find( { customerId }).populate('providerId', 'providerName providerEmail');
+        return coupons;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
 module.exports = {
     create,
     getAll,
     getById,
     destroy,
-    update
+    update,
+    getAllCoupons
 }

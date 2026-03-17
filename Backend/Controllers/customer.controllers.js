@@ -77,11 +77,25 @@ const deleteCustomerById = async (req, res) => {
     }
 }
 
+const getCouponsByCustomerId = async (req, res) => {
+    try {
+        const response = await customerService.getAllCoupons(req.params.id);
+        successResponseBody.data = response;
+        successResponseBody.message = "The coupons retrieved successfully.";
+        res.status(200).json(successResponseBody);
+    } catch (error) {
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to retrieve the coupons.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 module.exports = {
     signUp,
     getAllCustomers,
     getCustomerById,
     updateCustomerById,
-    deleteCustomerById
+    deleteCustomerById,
+    getCouponsByCustomerId
 
 }

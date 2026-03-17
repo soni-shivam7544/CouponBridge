@@ -10,6 +10,9 @@ const customerRouter = ( app ) => {
         // Get a customer by Id
         app.get('/cb/v1/api/customers/:id', customerController.getCustomerById);
 
+        // Get all coupons of a customer
+        app.get('/cb/v1/api/customers/:id/coupons', customerController.getCouponsByCustomerId);
+
         // Update a customer by Id
         app.put('/cb/v1/api/customers/:id', customerController.updateCustomerById);
 
