@@ -20,6 +20,34 @@ const signUp = async (req, res) => {
     }
 }
 
+const getAllCustomers = async (req, res) => {
+    try {
+        const response = await customerService.getAll();
+        successResponseBody.data = response;
+        successResponseBody.message = "The customers retrieved successfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to retrieve the customers.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+ 
+const getCustomerById = async(req, res) => {
+    try {
+        const response = await customerService.getById(req.params.id);
+        successResponseBody.data = response;
+        successResponseBody.message = "The customer retrieved successsfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to retrieve the customer.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 module.exports = {
-    signUp
+    signUp,
+    getAllCustomers,
+    getCustomerById
 }

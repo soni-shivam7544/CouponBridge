@@ -17,6 +17,28 @@ const create = async (data) => {
     }
 }
 
+const getAll = async () => {
+    try {
+        const customers = await Customer.find();
+        return customers;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const getById = async (id) => {
+    try {
+        const customer = await Customer.findById(id);
+        return customer;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
-    create
+    create,
+    getAll,
+    getById
 }
