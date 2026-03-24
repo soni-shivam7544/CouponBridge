@@ -8,14 +8,14 @@ const Main = () => {
     const navigate = useNavigate();
   return (
     <>
-        <div id="signup-main">
-            <div id="signup-left">
-                <div id="signup-left-title" className='section-heading'>Join the fastest growing coupon marketplace</div>
-                <div id="signup-left-subtitle" className='sub-heading'>Start saving or earning today. Create your free account in seconds.</div>
-                <div id="signup-left-sections">
-                    <div className="signup-left-section">
+        <div id="auth-main">
+            <div id="auth-left">
+                <div id="auth-left-title" className='section-heading'>Join the fastest growing coupon marketplace</div>
+                <div id="auth-left-subtitle" className='sub-heading'>Start saving or earning today. Create your free account in seconds.</div>
+                <div id="auth-left-sections">
+                    <div className="auth-left-section">
                         <ShoppingBagIcon sx={{marginBottom: '1rem'}}/>
-                        <div className="signup-left-section-title lg-heading" style={{marginBottom: '1rem'}}>For Buyers</div>
+                        <div className="auth-left-section-title lg-heading" style={{marginBottom: '1rem'}}>For Buyers</div>
             
                         <p className='sub-heading' style={{marginBottom: '0.5rem'}}>Access to verified coupons</p>
                         <p className='sub-heading' style={{marginBottom: '0.5rem'}}>Secure code delivery</p>
@@ -23,9 +23,9 @@ const Main = () => {
                         <p className='sub-heading' style={{marginBottom: '0.5rem'}}>Save on favourite purchase</p>
                        
                     </div>
-                    <div className="signup-left-section">
+                    <div className="auth-left-section">
                         <StorefrontIcon sx={{marginBottom: '1rem'}}/>
-                        <div className="signup-left-section-title lg-heading" style={{marginBottom: '1rem'}}>For Sellers</div>
+                        <div className="auth-left-section-title lg-heading" style={{marginBottom: '1rem'}}>For Sellers</div>
                         
                         <p className='sub-heading' style={{marginBottom: '0.5rem'}}>Access to verified coupons</p>
                         <p className='sub-heading' style={{marginBottom: '0.5rem'}}>Secure code delivery</p>
@@ -35,10 +35,10 @@ const Main = () => {
                     </div>
                 </div>
             </div>
-            <div id="signup-right">
-                <div id="signup-right-header">
-                    <div id="signup-right-title" className='lg-heading' style={{marginBottom:'1rem'}}>Create your account</div>
-                    <div id="signup-right-subtitle" className='sub-heading'>Choose how you want to use CouponHub</div>
+            <div id="auth-right">
+                <div id="auth-right-header">
+                    <div id="auth-right-title" className='lg-heading' style={{marginBottom:'1rem'}}>Create your account</div>
+                    <div id="auth-right-subtitle" className='sub-heading'>Choose how you want to use CouponHub</div>
                 </div>
                 
                 <form id='form-section' className='sub-heading'>
@@ -67,7 +67,7 @@ const Main = () => {
                    <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}}>Create Account</Button>
                 </form>
 
-                <div id="signup-right-footer" className='sub-heading'>
+                <div id="auth-right-footer" className='sub-heading'>
                         Already have an account? <Button variant="text" onClick={ ()=> navigate('/login')}>Login here</Button>
                 </div>
 

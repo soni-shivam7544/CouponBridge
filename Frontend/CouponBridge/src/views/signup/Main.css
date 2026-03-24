@@ -1,11 +1,11 @@
-#signup-main {
+#auth-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 39rem;
     padding-right: 4rem;
 }
-#signup-left {
+#auth-left {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,25 +16,25 @@
     padding: 4rem 3rem;
 
 }
-#signup-left-sections {
+#auth-left-sections {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
-.signup-left-section {
+.auth-left-section {
     display: flex;
     flex-direction: column;
     padding: 1rem;
     border: 1px solid white;
     border-radius: 1rem;
 }
-#signup-left-title {
+#auth-left-title {
     margin-bottom: 1rem;
 }
-#signup-left-subtitle {
+#auth-left-subtitle {
     margin-bottom: 3rem;
 }
-#signup-right {
+#auth-right {
     
     border: 1px solid black;
     border-radius: 1rem;
@@ -45,7 +45,7 @@
     width: 35%;
 
 }
-#signup-right-header {
+#auth-right-header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,7 +59,7 @@
     width: 90%;
 }
 
-#signup-right-footer {
+#auth-right-footer {
     border-top: 1px solid black;
     text-align: center;
     padding-top: 0.5rem;
