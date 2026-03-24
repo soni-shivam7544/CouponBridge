@@ -4,19 +4,23 @@ import TimerIcon from '@mui/icons-material/Timer';
 import Button from '@mui/material/Button';
 import '../index.css';
 import './CouponCard.css';
+import { useNavigate } from 'react-router-dom';
 
-function CouponCard() {
+function CouponCard( { data } ) {
+
+    const navigate = useNavigate();
+
     return (
         <>
-            <div className="card">
+            <div className="card" onClick={ ()=> navigate(`/coupons/${data._id}`)}>
                 <div className="card-header">
                     <div className="card-title">
-                        <div className="card-logo lg-heading">A</div>
-                        <div className="card-subtitle heading">Amazon</div>
+                        <div className="card-logo lg-heading">{data.merchant[0].toUpperCase()}</div>
+                        <div className="card-subtitle heading">{data.merchant}</div>
                     </div>
                     <FavoriteBorderIcon className='card-like'/>
                 </div>
-                <span className='card-title-discount heading'> 50% Discount</span>
+                <span className='card-title-discount heading'> <i> {data.discount}% Discount</i></span>
                 <div className="card-body sub-heading">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga quod labore dolore laudantium maiores voluptatibus porro ab expedita.
                 </div>
