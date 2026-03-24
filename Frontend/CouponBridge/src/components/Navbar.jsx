@@ -24,8 +24,8 @@ function Navbar() {
                     </div>
                     <div className="user-items sub-heading">
                         <AddShoppingCartIcon color="primary" className="cart"/>
-                        <div className="login">Login</div>
-                        <Button variant="contained" className='signup'>Get Started</Button>
+                        <div className="login" onClick={ ()=> navigate('/login')}>Login</div>
+                        <Button variant="contained" className='signup' onClick={ ()=> navigate('/signup')}>Get Started</Button>
                     </div>
                 </div>
             </div>

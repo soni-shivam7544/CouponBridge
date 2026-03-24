@@ -2,8 +2,10 @@ import './Main.css';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
+    const navigate = useNavigate();
   return (
     <>
         <div id="signup-main">
@@ -66,7 +68,7 @@ const Main = () => {
                 </form>
 
                 <div id="signup-right-footer" className='sub-heading'>
-                        Already have an account? <Button variant="text">Login here</Button>
+                        Already have an account? <Button variant="text" onClick={ ()=> navigate('/login')}>Login here</Button>
                 </div>
 
             </div>
