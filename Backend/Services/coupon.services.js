@@ -71,8 +71,11 @@ const searchCoupons = async (queryData) => {
         query = query.toLowerCase().trim();
         
         let coupons = await Coupon.find({}).populate('providerId', 'providerName');
+
+        if(query === '')return coupons;
+
         coupons = coupons.filter( coupon => {
-            return query.includes(coupon.merchant.toLowerCase().trim()) || query.includes(coupon.providerId.providerName.toLowerCase().trim());
+            return coupon.merchant.toLowerCase().trim().includes(query) || coupon.providerId.providerName.toLowerCase().trim().includes(query);
         });
         return coupons;
     } catch (error) {
