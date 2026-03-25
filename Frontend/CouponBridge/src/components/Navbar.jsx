@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 function Navbar() {
     
     const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem('user'));
     return (
         <>
             <div className = "nav">
@@ -24,8 +26,15 @@ function Navbar() {
                     </div>
                     <div className="user-items sub-heading">
                         <AddShoppingCartIcon color="primary" className="cart"/>
-                        <div className="login" onClick={ ()=> navigate('/login')}>Login</div>
-                        <Button variant="contained" className='signup' onClick={ ()=> navigate('/signup')}>Get Started</Button>
+                        
+                        { user ? <div id="user" className='lg-heading'> {user.name[0].toUpperCase()}</div>: 
+                            <>
+                                
+                                <div className="login" onClick={ ()=> navigate('/login')}>Login</div>
+                                <Button variant="contained" className='signup' onClick={ ()=> navigate('/signup')}>Get Started</Button>
+                            </>
+                        }
+                        
                     </div>
                 </div>
             </div>

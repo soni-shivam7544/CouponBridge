@@ -26,6 +26,7 @@ const Main = () => {
         axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
         .then ( res => {
             localStorage.setItem('token', res.data.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.data.user));
             console.log(res);
         })
         .catch (err => console.log(err));
