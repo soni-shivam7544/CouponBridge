@@ -42,6 +42,7 @@ const Main = () => {
             axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
             .then ( res=> {
                 localStorage.setItem('token', res.data.data.token);
+                localStorage.setItem('role', 'customer');
                 localStorage.setItem("user", JSON.stringify(res.data.data.user));
                 navigate('/');
             })
@@ -50,6 +51,7 @@ const Main = () => {
         else axios.post('http://localhost:5050/cb/v1/api/providers/signin', formData)
             .then ( res=> {
                 localStorage.setItem('token', res.data.data.token);
+                localStorage.setItem('role', 'seller');
                 localStorage.setItem("user", JSON.stringify(res.data.data.user));
                 navigate('/');
             })
