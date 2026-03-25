@@ -9,7 +9,15 @@ function Navbar() {
     
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    const storedUser = localStorage.getItem('user');
+
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
     return (
         <>
             <div className = "nav">
@@ -26,8 +34,13 @@ function Navbar() {
                     </div>
                     <div className="user-items sub-heading">
                         <AddShoppingCartIcon color="primary" className="cart"/>
-                        
-                        { user ? <div id="user" className='lg-heading'> {user.name[0].toUpperCase()}</div>: 
+
+                        { user ? 
+                            <>
+                                <div id="user" className='lg-heading'> {user.name[0].toUpperCase()}</div>
+                                <Button variant="contained" sx={{borderRadius: '2rem'}} onClick={ handleLogout }>Logout</Button>
+                            </>
+                        : 
                             <>
                                 
                                 <div className="login" onClick={ ()=> navigate('/login')}>Login</div>
