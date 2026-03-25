@@ -8,38 +8,52 @@ const Main = () => {
 
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        role: 'customer'
+        
     });
 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        // console.log(e.target.name, e.target.value);
-        setFormData( (data) => {
+        
+        if(e.target.id === 'customer'){
+            setFormData( (data) => {
+                return { ...data, role: 'customer'}
+            });
+        }
+        else if (e.target.id == 'seller') {
+            setFormData( (data) => {
+                
+                return { ...data, role: 'seller' }
+            });
+        }
+        else setFormData( (data) => {
+            
             return { ...data, [e.target.name] : e.target.value }
-        })
+        });
+        
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
-        .then ( res => {
-            localStorage.setItem('token', res.data.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.data.user));
-            console.log(res);
-        })
-        .catch (err => console.log(err));
-
-        setFormData( (data) => {
-            return { 
-                email:'',
-                password:''
-            }
-        })
-
-        navigate('/');
-
+        
+        if(formData.role === 'customer'){
+            axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
+            .then ( res=> {
+                localStorage.setItem('token', res.data.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.data.user));
+                navigate('/');
+            })
+            .catch( err => console.log(err));
+        }
+        else axios.post('http://localhost:5050/cb/v1/api/providers/signin', formData)
+            .then ( res=> {
+                localStorage.setItem('token', res.data.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.data.user));
+                navigate('/');
+            })
+            .catch( err => console.log(err));
 
     }
 
@@ -60,10 +74,10 @@ const Main = () => {
                 <form id='form-section' className='sub-heading'>
                     <legend  className='heading' style={{marginBottom:'0.5rem'}}>I am your:</legend>
 
-                    <input type="radio" id="customer"  className='radio' name="role" style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                    <input type="radio" id="customer"  className='radio' name="role" checked={ formData.role === 'customer' } onChange={ handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
                     <label htmlFor="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Customer</label><br/>
 
-                    <input type="radio" id="seller" className='radio' name="role" style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                    <input type="radio" id="seller" className='radio' name="role" checked={ formData.role === 'seller' } onChange={handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
                     <label htmlFor="seller" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
 
                     
