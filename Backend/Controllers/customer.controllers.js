@@ -24,7 +24,7 @@ const signin = async (req, res) => {
     try {
         const response = await customerService.login( req.body );
         successResponseBody.data = response;
-        successResponseBody.message = " The customer signed up successfully.";
+        successResponseBody.message = " The customer signed in successfully.";
         res.status(200).json(successResponseBody);
     } catch(error) {
         if( error.err ){

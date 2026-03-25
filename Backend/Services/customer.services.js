@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 
 const create = async (data) => {
     try {
-        const { customerName, customerEmail, customerPassword } = data;
+        const { name, email, password } = data;
 
-        const hashedPassword = await bcrypt.hash(customerPassword, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const customer = await Customer.create({ customerName, customerEmail, customerPassword: hashedPassword });
+        const customer = await Customer.create({ name, email, password: hashedPassword });
         return customer;
     } catch(error) {
         console.log(error);
@@ -29,11 +29,11 @@ const login = async (data) => {
 
         const { email, password } = data;
 
-        const user = await Customer.findOne( { customerEmail: email });
+        const user = await Customer.findOne( { email });
 
         if(!user) throw { err: "User not found", code: 400};
 
-        const isMatch = await bcrypt.compare(password, user.customerPassword);
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch) throw { err: "Invalid credentials", code: 400 };
 
@@ -45,8 +45,8 @@ const login = async (data) => {
 
         return { user: {
             _id: user._id,
-            name: user.customerName,
-            email: user.customerEmail
+            name: user.name,
+            email: user.email
         }, token} ;
 
     } catch (error) {
@@ -112,7 +112,7 @@ const destroy = async (id) => {
 
 const getAllCoupons = async (customerId) => {
     try {
-        const coupons = await Coupon.find( { customerId }).populate('providerId', 'providerName providerEmail');
+        const coupons = await Coupon.find( { customerId }).populate('provider', 'name email');
         return coupons;
     } catch(error) {
         console.log(error);
