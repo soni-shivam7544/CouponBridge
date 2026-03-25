@@ -20,6 +20,24 @@ const signUp = async (req, res) => {
     }
 }
 
+const signin = async (req, res) => {
+    try {
+        const response = await customerService.login( req.body );
+        successResponseBody.data = response;
+        successResponseBody.message = " The customer signed up successfully.";
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        if( error.err ){
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to signin customer.";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to signin customer.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 const getAllCustomers = async (req, res) => {
     try {
         const response = await customerService.getAll();
@@ -92,6 +110,7 @@ const getCouponsByCustomerId = async (req, res) => {
 
 module.exports = {
     signUp,
+    signin,
     getAllCustomers,
     getCustomerById,
     updateCustomerById,

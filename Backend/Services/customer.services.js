@@ -1,9 +1,15 @@
 const Coupon = require('../Models/coupon.model.js');
 const Customer = require('../Models/customer.model.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const create = async (data) => {
     try {
-        const customer = await Customer.create(data);
+        const { customerName, customerEmail, customerPassword } = data;
+
+        const hashedPassword = await bcrypt.hash(customerPassword, 10);
+
+        const customer = await Customer.create({ customerName, customerEmail, customerPassword: hashedPassword });
         return customer;
     } catch(error) {
         console.log(error);
@@ -15,6 +21,45 @@ const create = async (data) => {
             throw { err, code: 400 };
         }
         throw error;
+    }
+}
+
+const login = async (data) => {
+    try {
+
+        const { email, password } = data;
+
+        const user = await Customer.findOne( { customerEmail: email });
+
+        if(!user) throw { err: "User not found", code: 400};
+
+        const isMatch = bcrypt.compare(password, user.customerPassword);
+
+        if(!isMatch) throw { err: "Invalid credentials"};
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        return { user: {
+            _id: user._id,
+            name: user.customerName,
+            email: user.customerEmail
+        }, token} ;
+
+    } catch (error) {
+        console.log(error);
+        if(error.name === 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+
     }
 }
 
@@ -76,6 +121,7 @@ const getAllCoupons = async (customerId) => {
 }
 module.exports = {
     create,
+    login,
     getAll,
     getById,
     destroy,
