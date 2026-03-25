@@ -33,9 +33,9 @@ const login = async (data) => {
 
         if(!user) throw { err: "User not found", code: 400};
 
-        const isMatch = bcrypt.compare(password, user.customerPassword);
+        const isMatch = await bcrypt.compare(password, user.customerPassword);
 
-        if(!isMatch) throw { err: "Invalid credentials"};
+        if(!isMatch) throw { err: "Invalid credentials", code: 400 };
 
         const token = jwt.sign(
             { id: user._id },
