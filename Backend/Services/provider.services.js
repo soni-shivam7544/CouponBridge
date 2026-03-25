@@ -1,9 +1,15 @@
 const Provider = require('../Models/provider.model.js');
 const Coupons = require('../Models/coupon.model.js');
+const bcrypt = require('bcrypt');
 
 const create = async (data) => {
     try {
-        const provider = await Provider.create(data);
+        const { name, email, password } = data;
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const provider = await Provider.create({ name, email, password: hashedPassword });
+        
         return provider;
     } catch(error) {
         console.log(error);
@@ -67,7 +73,7 @@ const destroy = async (id) => {
 
 const getAllCoupons = async (providerId) => {
     try {
-        const coupons = await Coupons.find({ providerId}).populate('customerId', 'customerName customerEmail');
+        const coupons = await Coupons.find({ providerId}).populate('customer', 'name email');
         return coupons;
     } catch(error) {
         console.log(error);
