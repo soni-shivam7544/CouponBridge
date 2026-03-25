@@ -12,6 +12,14 @@ const couponSchema = new mongoose.Schema({
         min: 0,
         max: 100
     },
+    description: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
     expirationDate: {
         type: String,
         required: true
