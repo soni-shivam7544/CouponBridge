@@ -28,12 +28,12 @@ const couponSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    providerId: {
+    provider: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Provider',
         required: true
     },
-    customerId: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
         default: null
