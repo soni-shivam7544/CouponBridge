@@ -1,9 +1,47 @@
 
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 
 const Main = () => {
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
     const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        // console.log(e.target.name, e.target.value);
+        setFormData( (data) => {
+            return { ...data, [e.target.name] : e.target.value }
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
+        .then ( res => {
+            localStorage.setItem('token', res.data.data.token);
+            console.log(res);
+        })
+        .catch (err => console.log(err));
+
+        setFormData( (data) => {
+            return { 
+                email:'',
+                password:''
+            }
+        })
+
+        navigate('/');
+
+
+    }
+
   return (
     <>
         <div id="auth-main">
@@ -21,20 +59,20 @@ const Main = () => {
                 <form id='form-section' className='sub-heading'>
                     <legend  className='heading' style={{marginBottom:'0.5rem'}}>I am your:</legend>
 
-                    <input type="radio" id="customer"  className='radio' name="role"style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label for="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Customer</label><br/>
+                    <input type="radio" id="customer"  className='radio' name="role" style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                    <label htmlFor="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Customer</label><br/>
 
                     <input type="radio" id="seller" className='radio' name="role" style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label for="seller" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
+                    <label htmlFor="seller" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
 
                     
-                    <label for="email" className='heading'>Email</label><br/>
-                    <input type="email" id="email" className='input' name="email" style={{marginBottom:'1rem'}}/><br/>
+                    <label htmlFor="email" className='heading'>Email</label><br/>
+                    <input type="email" id="email" className='input' name="email" value={ formData.email } style={{marginBottom:'1rem'}} onChange={ handleChange }/><br/>
 
-                    <label for="password" className='heading'>Password</label><br/>
-                    <input type="password" id="password" className='input' name="password" style={{marginBottom:'2rem'}}/><br/>
+                    <label htmlFor="password" className='heading'>Password</label><br/>
+                    <input type="password" id="password" className='input' name="password" value={ formData.password } style={{marginBottom:'2rem'}}  onChange={ handleChange }/><br/>
 
-                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}}>login</Button>
+                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}} onClick={ handleSubmit }>login</Button>
                 </form>
 
                 <div id="auth-right-footer" className='sub-heading'>
