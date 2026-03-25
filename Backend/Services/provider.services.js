@@ -1,6 +1,7 @@
 const Provider = require('../Models/provider.model.js');
 const Coupons = require('../Models/coupon.model.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const create = async (data) => {
     try {
@@ -12,6 +13,51 @@ const create = async (data) => {
         
         return provider;
     } catch(error) {
+        console.log(error);
+        if(error.name === 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+    }
+}
+
+const signin = async (data) => {
+    try {
+
+        const { email, password } = data;
+
+        const user = await Provider.findOne( {email});
+        if(!user){
+            throw { err: "User not found!", code: 401 };
+        }
+
+        const isMatch = bcrypt.compare(password, user.password);
+        if(!isMatch){
+            throw { err: "Invalid credentials. Password incorrect.", code: 401};
+        }
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            {expiresIn: '1d'}
+        );
+
+        return (
+            {
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                }, 
+                token
+            }
+        )
+
+    } catch(error){
         console.log(error);
         if(error.name === 'ValidationError') {
             let err = {};
@@ -83,6 +129,7 @@ const getAllCoupons = async (providerId) => {
 
 module.exports = {
     create,
+    signin,
     getAll,
     getOne,
     updateProvider,

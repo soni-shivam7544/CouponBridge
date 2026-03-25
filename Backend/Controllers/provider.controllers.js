@@ -19,6 +19,25 @@ const signUp = async (req, res) => {
     }
 }
 
+const signin = async (req, res) => {
+    try {
+        const response = await providerService.signin( req.body );
+        successResponseBody.data = response;
+        successResponseBody.message = "The provider signed in successfully.";
+        res.status(200).json(successResponseBody);
+
+    } catch(error) {
+        if( error.err ){
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to signin provider.";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to signin provider.";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 const getAllProviders = async (req, res) => {
     try {
         const response = await providerService.getAll();
@@ -91,6 +110,7 @@ const getCouponsByProviderId = async (req, res) => {
 
 module.exports = {
     signUp,
+    signin,
     getAllProviders,
     getProviderById,
     updateProviderById,
