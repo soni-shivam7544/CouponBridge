@@ -1,0 +1,7 @@
+#products {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    padding: 2rem 0.5rem;
+    background-color: rgb(210, 249, 249);
+}
