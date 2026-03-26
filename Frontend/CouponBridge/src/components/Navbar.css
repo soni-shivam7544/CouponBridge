@@ -18,6 +18,7 @@
     justify-content: space-between;
     align-items: center;
     height: 4.5rem;
+    margin-right: 1rem;
 }
 
 .logo {
@@ -64,4 +65,16 @@
 .signup {
     margin: 0 2rem 0 1rem!important;
     border-radius:2rem!important;
+}
+#user {
+    border: 2px solid #FFDE42;
+    padding: 0.2rem 0.5rem;
+    color: #FFDE42;
+    border-radius: 50%;
+    margin: 0 2rem;
+    cursor: pointer;
+
+}
+#user:hover {
+    background-color: #f3faa3;
 }

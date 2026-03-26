@@ -37,19 +37,19 @@ const Main = () => {
                         <div className="coupon-logo section-heading">{coupon.merchant ? coupon.merchant[0] : ''}</div>
                         <div className="coupon-info">
                             <div className="coupon-title section-heading">{coupon.merchant}</div>
-                            <div className="coupon-desc sub-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est suscipit reprehenderit dolore iste totam, aperiam consectetur enim, aut necessitatibus voluptatum.</div>
+                            <div className="coupon-desc sub-heading"> {coupon.description}</div>
                         </div>
                     </div>
                     <div className="seller-details">
                         <div className="seller-detail-title lg-heading">Sold by</div>
                         <div className="seller-detail">
                             <div className="seller-detail-id">
-                                <div className="seller-id-logo heading">{coupon.providerId ? coupon.providerId.providerName[0] : ''}</div>
+                                <div className="seller-id-logo heading">{coupon.provider ? coupon.provider.name[0] : ''}</div>
                                 <div className="seller-id-data">
-                                    <div className="seller-id-name heading">{coupon.providerId ? coupon.providerId.providerName : ''}</div>
+                                    <div className="seller-id-name heading">{coupon.provider ? coupon.provider.name : ''}</div>
                                     <div className="seller-id-rating">
                                         <StarIcon/>
-                                        <p>4</p>
+                                        <p>5</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,13 +60,13 @@ const Main = () => {
                 </div>
                 <div className="right-column">
                     <div className="navigate-options">
-                        <div className="coupon-price section-heading">$4.99</div>
+                        <div className="coupon-price section-heading">Rs. {coupon.price} /-</div>
                         <div className="coupon-time">
                             <div className="coupon-expiry sub-heading">
                                 <CalendarMonthIcon sx={ { marginRight: '0.5rem'}} />
                                 <div className="coupon-expiry-date">
                                     <p>Expires</p>
-                                    <p>20/04/2026</p>
+                                    <p>{coupon.expirationDate}</p>
                                 </div>
                             </div>
                             <div className="coupon-daysleft sub-heading">

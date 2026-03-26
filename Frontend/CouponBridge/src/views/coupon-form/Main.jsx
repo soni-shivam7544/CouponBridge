@@ -1,7 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 const Main = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     code: "",
     price: "",
@@ -19,9 +24,17 @@ const Main = () => {
   };
 
   const handleClick = (e) => {
-    axios.post('http://localhost:5050/cb/v1/api/coupons', formData)
+    axios.post('http://localhost:5050/cb/v1/api/coupons', formData, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
     .then(res => console.log(res))
     .catch(err => console.log(err));
+
+    navigate('/coupons');
+
+
   }
 
   const handleSubmit = async (e) => {

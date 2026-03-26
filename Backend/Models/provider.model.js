@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 const providerSchema = new mongoose.Schema({
-    providerName: {
+    name: {
         type: String,
         required: true
     },
-    providerEmail: {
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    providerPassword: {
+    password: {
         type: String,
         required: true
     },
-    ProviderRating: {
+    rating: {
         type: Number,
         default: 0,
         min: 0,

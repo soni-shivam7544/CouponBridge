@@ -1,9 +1,15 @@
 const Coupon = require('../Models/coupon.model.js');
 const Customer = require('../Models/customer.model.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const create = async (data) => {
     try {
-        const customer = await Customer.create(data);
+        const { name, email, password } = data;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const customer = await Customer.create({ name, email, password: hashedPassword });
         return customer;
     } catch(error) {
         console.log(error);
@@ -15,6 +21,45 @@ const create = async (data) => {
             throw { err, code: 400 };
         }
         throw error;
+    }
+}
+
+const login = async (data) => {
+    try {
+
+        const { email, password } = data;
+
+        const user = await Customer.findOne( { email });
+
+        if(!user) throw { err: "User not found", code: 400};
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch) throw { err: "Invalid credentials", code: 400 };
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        return { user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        }, token} ;
+
+    } catch (error) {
+        console.log(error);
+        if(error.name === 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+
     }
 }
 
@@ -67,7 +112,7 @@ const destroy = async (id) => {
 
 const getAllCoupons = async (customerId) => {
     try {
-        const coupons = await Coupon.find( { customerId }).populate('providerId', 'providerName providerEmail');
+        const coupons = await Coupon.find( { customerId }).populate('provider', 'name email');
         return coupons;
     } catch(error) {
         console.log(error);
@@ -76,6 +121,7 @@ const getAllCoupons = async (customerId) => {
 }
 module.exports = {
     create,
+    login,
     getAll,
     getById,
     destroy,

@@ -4,6 +4,9 @@ const providerRoutes = ( app ) => {
     // Provider signup
     app.post('/cb/v1/api/providers/signup', providerController.signUp);
 
+    // Provider signin
+    app.post('/cb/v1/api/providers/signin', providerController.signin);
+
     // Get all providers and provider by id
     app.get('/cb/v1/api/providers', providerController.getAllProviders);
     app.get('/cb/v1/api/providers/:id', providerController.getProviderById);

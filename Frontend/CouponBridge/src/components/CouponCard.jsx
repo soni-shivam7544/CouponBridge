@@ -36,12 +36,10 @@ function CouponCard( { data } ) {
 
                 </div>
                 <span className='card-title-discount heading'> <i> {data.discount}% Discount</i></span>
-                <div className="card-body sub-heading">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga quod labore dolore laudantium maiores voluptatibus porro ab expedita.
-                </div>
+                <div className="card-body sub-heading"> {data.description} </div>
                 <div className="card-footer">
                     <div className="card-footer-details">
-                        <div className="price lg-heading">$10</div>
+                        <div className="price lg-heading">Rs. {data.price}/-</div>
                         <div className="expiry sub-heading">
                             <TimerIcon/>
                             <p>30d left</p>

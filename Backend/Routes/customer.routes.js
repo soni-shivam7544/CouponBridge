@@ -4,6 +4,9 @@ const customerRouter = ( app ) => {
         // Customer signup
         app.post('/cb/v1/api/customers/signup', customerController.signUp);
 
+        // Customer signin
+        app.post('/cb/v1/api/customers/signin', customerController.signin);
+
         // Get all customers
         app.get('/cb/v1/api/customers', customerController.getAllCustomers);
 
