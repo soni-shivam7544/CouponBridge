@@ -1,9 +1,9 @@
 const couponController = require('../Controllers/coupon.controllers.js');
-const verifyToken = require('../Middlewares/verifyToken.middleware.js');
+const authMiddlewares = require('../Middlewares/auth.middlewares.js');
 
 const couponRouter = ( app ) => {
     // Create a new coupon
-    app.post('/cb/v1/api/coupons',verifyToken, couponController.createCoupon);
+    app.post('/cb/v1/api/coupons', authMiddlewares.verifyProviderToken, couponController.createCoupon);
 
     // Search coupons by merchant name or provider name
     app.get('/cb/v1/api/coupons/search', couponController.searchCoupons);
@@ -16,10 +16,10 @@ const couponRouter = ( app ) => {
 
 
     // Update a coupon by Id
-    app.put('/cb/v1/api/coupons/:id', couponController.updateCouponById);
+    app.put('/cb/v1/api/coupons/:id', authMiddlewares.verifyProviderToken, couponController.updateCouponById);
 
     // Delete a coupon by Id
-    app.delete('/cb/v1/api/coupons/:id', couponController.destroyCoupon);
+    app.delete('/cb/v1/api/coupons/:id', authMiddlewares.verifyProviderToken, couponController.destroyCoupon);
     
 }
 

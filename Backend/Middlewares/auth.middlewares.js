@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
-const Customer = require('../Models/customer.model');
+const Provider = require('../Models/provider.model');
 const { errorResponseBody } = require('../Utils/responsebody');
 
-const verifyToken = async (req, res, next) => {
+const verifyProviderToken = async (req, res, next) => {
     
     try {
         const token = req.headers.authorization;
 
         if(!token) {
-            throw { err: "No token! Authentication Failed! Login first. ", code: 401 };
+            throw { err: "Authentication failed! No token provided, login first. ", code: 401 };
         }
 
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
         
-        const user = await  Customer.findById( decoded.id );
+        const user = await  Provider.findById( decoded.id );
         if(!user){
-            throw { err: "User Not found!", code: 400 };
+            throw { err: "Provider not found!", code: 400 };
         }
         req.user = user;
         
@@ -36,4 +36,6 @@ const verifyToken = async (req, res, next) => {
 }
 
 
-module.exports = verifyToken;
+module.exports = {
+    verifyProviderToken
+};

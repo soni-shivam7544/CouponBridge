@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.heading {
+    font-size: xxx-large;
+    font-family: "Montserrat", sans-serif;
+}
+.sub-heading {
+    font-size: x-large;
+    font-family: "Roboto", sans-serif;
+    font-weight:600;
+}
+.text {
+    font-family: "Poppins", sans-serif; 
+    font-weight: 300
+}
