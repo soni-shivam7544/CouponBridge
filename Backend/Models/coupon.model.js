@@ -12,8 +12,16 @@ const couponSchema = new mongoose.Schema({
         min: 0,
         max: 100
     },
+    description: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
     expirationDate: {
-        type: Date,
+        type: String,
         required: true
     },
     isActive: {
@@ -28,12 +36,12 @@ const couponSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    providerId: {
+    provider: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Provider',
         required: true
     },
-    customerId: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
         default: null

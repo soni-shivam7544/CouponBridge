@@ -1,0 +1,80 @@
+
+.nav {
+    padding: 0 0.5rem;
+    z-index:5;
+    opacity:1;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+}
+.nav-background {
+    width:100%;
+    height: 4.5rem;
+    background-color:white;
+}
+.nav-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4.5rem;
+    margin-right: 1rem;
+}
+
+.logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width:20%;
+    cursor: pointer;
+}
+.menu-items {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+}
+.user-items {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 30%;
+}
+
+.logo-icon {
+    padding: 0 1rem 0 3rem;
+}
+.cart {
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor:pointer;
+}
+.cart:hover{
+    background-color:#dcdff2;
+}
+.login {
+    margin: 0 0.5rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    padding:0.5rem;
+}
+.login:hover {
+    background-color: #dcdff2;
+}
+
+.signup {
+    margin: 0 2rem 0 1rem!important;
+    border-radius:2rem!important;
+}
+#user {
+    border: 2px solid #FFDE42;
+    padding: 0.2rem 0.5rem;
+    color: #FFDE42;
+    border-radius: 50%;
+    margin: 0 2rem;
+    cursor: pointer;
+
+}
+#user:hover {
+    background-color: #f3faa3;
+}

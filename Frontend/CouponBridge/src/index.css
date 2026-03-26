@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.section-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: xx-large;
+}
+.lg-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: x-large;
+}
+.heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+.sub-heading {
+    font-family:  "Montserrat", sans-serif;
+    font-weight: 400;
+}
+.text {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+}

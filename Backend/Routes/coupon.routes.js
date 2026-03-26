@@ -1,8 +1,9 @@
 const couponController = require('../Controllers/coupon.controllers.js');
+const verifyToken = require('../Middlewares/verifyToken.middleware.js');
 
 const couponRouter = ( app ) => {
     // Create a new coupon
-    app.post('/cb/v1/api/coupons', couponController.createCoupon);
+    app.post('/cb/v1/api/coupons',verifyToken, couponController.createCoupon);
 
     // Search coupons by merchant name or provider name
     app.get('/cb/v1/api/coupons/search', couponController.searchCoupons);

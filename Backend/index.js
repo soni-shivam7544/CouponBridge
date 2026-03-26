@@ -3,10 +3,18 @@ const mongoose = require('mongoose');
 const couponRouter = require('./Routes/coupon.routes.js');
 const providerRouter = require('./Routes/provider.routes.js');
 const customerRouter = require('./Routes/customer.routes.js');
+const cors = require('cors');
+const env = require('dotenv');
 const app = express();
 
+
+env.config();
+
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded( { extended: true }));
+
 
 couponRouter(app);
 providerRouter(app);

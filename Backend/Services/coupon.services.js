@@ -20,7 +20,7 @@ const create = async ( couponData ) => {
 
 const getAll = async () => {
     try {
-        const coupons = await Coupon.find().populate('providerId', 'providerName providerEmail').populate('customerId', 'customerName customerEmail');
+        const coupons = await Coupon.find().populate('provider', 'name email').populate('customer', 'name email');
         return coupons;
     } catch (error) {
         console.log(error);
@@ -30,7 +30,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
     try {
-        const coupon = await Coupon.findById(id).populate('providerId', 'providerName providerEmail').populate('customerId', 'customerName customerEmail');
+        const coupon = await Coupon.findById(id).populate('provider', 'name email').populate('customer', 'name email');
         return coupon;
     } catch (error) {
         console.log(error);
@@ -70,9 +70,12 @@ const searchCoupons = async (queryData) => {
         let { query } = queryData;
         query = query.toLowerCase().trim();
         
-        let coupons = await Coupon.find({}).populate('providerId', 'providerName');
+        let coupons = await Coupon.find({}).populate('provider', 'name email');
+
+        if(query === '')return coupons;
+
         coupons = coupons.filter( coupon => {
-            return query.includes(coupon.merchant.toLowerCase().trim()) || query.includes(coupon.providerId.providerName.toLowerCase().trim());
+            return coupon.merchant.toLowerCase().trim().includes(query) || coupon.provider.name.toLowerCase().trim().includes(query);
         });
         return coupons;
     } catch (error) {
