@@ -25,6 +25,23 @@ const Main = () => {
                 setCoupon(res.data.data);
             }).catch( err => console.log(err));
     }, []);
+
+    const handleVerify = () => {
+        console.log( coupon.productId, coupon.code);
+        axios.post('http://localhost:1854/run-bot',{ productId: coupon.productId, couponCode: coupon.code })
+        .then (res=> {
+            console.log(res);
+            if(res.data.data === 'Applied'){
+                const div = document.querySelector('.result-success');
+                div.innerText = `Coupon ${res.data.data}! ${res.data.message}`;
+            }
+            else {
+                const div = document.querySelector('.result-failure');
+                div.innerText = `Coupon ${res.data.data}! ${res.data.message}`;
+            }
+        })
+        .catch(err=> console.log(err));
+    }
     return (
         <div className="details">
             <div className="navigate-back sub-heading" onClick={()=> navigate('/coupons')}>
@@ -76,11 +93,14 @@ const Main = () => {
                         </div>
                         <Button variant="contained" sx={ { margin: '0.5rem 0'}} className='buy-now'>Buy Now</Button>
                         <Button variant="outlined" sx={ { margin: '0.5rem 0'}} className='add-cart'><AddShoppingCartIcon/>Add to cart</Button>
-                        <Button variant="outlined" sx={ { margin: '0.5rem 0'}} className='verify'><ElectricBoltIcon/>verify coupon</Button>
+                        <Button variant="outlined" sx={ { margin: '0.5rem 0'}} className='verify' onClick= {handleVerify}><ElectricBoltIcon/>verify coupon</Button>
+                        <div className="result-success heading" style={{color: 'green', textAlign: 'center'}}></div>
+                        <div className="result-failed heading" style={{color: 'red', textAlign: 'center'}}></div>
                         <div className="coupon-handle">
                             <Button variant="text"><FavoriteBorderIcon sx={ { marginRight: '1rem'}} />save</Button>
                             <Button variant="text"><ShareIcon sx={ { marginRight: '1rem'}} />share</Button>
                         </div>
+                        
                     </div>
                 </div>
             </div>
