@@ -12,6 +12,8 @@ const Main = () => {
 
   const navigate = useNavigate();
 
+  localStorage.removeItem('alert');
+
   const [coupons, setCoupons] = useState([]);
   const [formData, setFormData] = useState({ search: ''});
   
