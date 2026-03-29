@@ -3,6 +3,8 @@ import '../index.css';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SellIcon from '@mui/icons-material/Sell';
+import Alert from '@mui/material/Alert';
+
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
@@ -18,6 +20,9 @@ function Navbar() {
         localStorage.removeItem('token');
         navigate('/login');
     }
+
+    let alert = JSON.parse(localStorage.getItem('alert')) || '{}';
+
     return (
         <>
             <div className = "nav">
@@ -52,6 +57,9 @@ function Navbar() {
                 </div>
             </div>
             <div className="nav-background"></div>
+            { alert.name ? (alert.name === 'success' ? <Alert severity="success">{alert.message}</Alert>:<Alert severity="error">{alert.message}</Alert>) : null }
+            
+            
         </>
     )
 }
