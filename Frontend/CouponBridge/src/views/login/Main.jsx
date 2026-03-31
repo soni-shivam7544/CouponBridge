@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 const Main = () => {
 
+    localStorage.removeItem('alert');
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -37,6 +39,7 @@ const Main = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        localStorage.removeItem('alert');
         
         if(formData.role === 'customer'){
             axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)

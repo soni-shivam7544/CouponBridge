@@ -33,11 +33,11 @@ const Main = () => {
             console.log(res);
             if(res.data.data === 'Applied'){
                 const div = document.querySelector('.result-success');
-                div.innerText = `Coupon ${res.data.data}! ${res.data.message}`;
+                div.innerText = `Coupon ${res.data.data}! ${res.data.message} You can buy the coupon`;
             }
             else {
-                const div = document.querySelector('.result-failure');
-                div.innerText = `Coupon ${res.data.data}! ${res.data.message}`;
+                const div = document.querySelector('.result-failed');
+                div.innerText = `Coupon ${res.data.data}! ${res.data.message} Proceed buying at your risk`;
             }
         })
         .catch(err=> console.log(err));
