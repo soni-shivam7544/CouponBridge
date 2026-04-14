@@ -2,25 +2,86 @@
     margin: 0;
     padding: 0;
 }
+.hero-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem; /* ~56px */
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
 .section-heading {
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
-    font-size: xx-large;
+    font-size: 2rem; /* ~32px */
+    line-height: 1.2;
 }
 .lg-heading {
     font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: x-large;
+    font-weight: 600;
+    font-size: 1.5rem; /* ~24px */
 }
 .heading {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
+    font-size: 1.125rem; /* ~18px */
 }
 .sub-heading {
-    font-family:  "Montserrat", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
 }
 .text {
     font-family: "Roboto", sans-serif;
-    font-weight: 100;
+    font-weight: 400;
+    font-size: 1rem; /* 16px */
+    line-height: 1.5;
+}
+.caption {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+/* Lignt Mode Color Palate*/
+
+:root {
+  --color-bg: #F8FAFC;           /* main background */
+  --color-surface: #FFFFFF;      /* cards */
+  --color-border: #E2E8F0;       /* light borders */
+
+  --color-text-primary: #0F172A; /* headings */
+  --color-text-secondary: #475569; /* sub text */
+  --color-text-muted: #94A3B8;   /* light text */
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-primary-light: #DBEAFE;
+  --color-success: #22C55E;
+  --color-success-bg: #DCFCE7;
+  --color-danger: #EF4444;
+  --color-accent: #3B82F6; /* blue badge */
+}
+
+
+/*  Dark Mode Color Palate */
+
+.dark {
+  --color-bg: #020617;          /* deep dark */
+  --color-surface: #0F172A;     /* cards */
+  --color-border: #1E293B;
+
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5F5;
+  --color-text-muted: #64748B;
+
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+  --color-primary-light: #1E3A8A;
+
+  --color-success: #22C55E;
+  --color-success-bg: #052E16;
+
+  --color-danger: #EF4444;
+  --color-accent: #60A5FA;
 }
