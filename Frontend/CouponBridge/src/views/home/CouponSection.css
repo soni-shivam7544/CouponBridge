@@ -1,7 +1,6 @@
 .coupon-section {
     display: flex;
     flex-direction: column;
-    background-color: #fafaec;
 }
 
 .coupon-header-section {
@@ -25,7 +24,7 @@
 
 }
 .view-all:hover {
-    border: 1px solid black;
+    border: 2px solid var(--color-border);
     border-radius: 2rem;
 }
 .coupon-list {
