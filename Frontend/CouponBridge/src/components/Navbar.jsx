@@ -27,21 +27,45 @@ function Navbar() {
     }
 
     const handleThemeToggle = () => {
-        const body = document.querySelector('body');
-        body.classList.toggle('dark');
-        if(themeMode)localStorage.setItem('themeMode','dark');
-        else localStorage.setItem('themeMode','light');
-        setThemeMode(!themeMode);
+        const body = document.body;
+        const isDark = body.classList.contains('dark');
+        if( isDark ) {
+            body.classList.remove('dark');
+            localStorage.setItem('themeMode','light');
+            setThemeMode(true);
+        } else {
+            body.classList.add('dark');
+            localStorage.setItem('themeMode', 'dark');
+            setThemeMode(false);
+        }
         
     }
 
     useEffect(() => {
         const storedThemeMode = localStorage.getItem('themeMode');
-        if(storedThemeMode && storedThemeMode === 'dark'){
-            const body = document.querySelector('body');
-            body.classList.toggle('dark');
+        const body = document.body;
+
+        if(storedThemeMode === 'dark'){
+            body.classList.add('dark');
             setThemeMode(false);
+        } else{
+            body.classList.remove('dark');
+            setThemeMode(true);
         }
+        
+        const handleScroll = () => {
+            const nav = document.querySelector(".nav");
+
+            if (window.scrollY > 1) {
+            nav.classList.add("scrolled");
+            } else {
+            nav.classList.remove("scrolled");
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
     },[]);
 
     return (

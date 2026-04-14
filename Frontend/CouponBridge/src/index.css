@@ -26,6 +26,12 @@
   --color-highlight: #FFDE42;        /* main yellow */
   --color-highlight-hover: #FACC15;  /* slightly darker for hover */
   --color-highlight-soft: #FEF9C3;   /* soft background */
+
+  --color-hero-cover: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.9)
+  );
 }
 
 body {
@@ -57,6 +63,12 @@ body {
   --color-highlight: #FFDE42;        /* keep same for consistency */
   --color-highlight-hover: #EAB308;  /* warmer hover */
   --color-highlight-soft: #3F3F00;   /* dark subtle background */
+
+  --color-hero-cover: linear-gradient(
+    to bottom,
+    rgba(2,6,23,0.6),
+    rgba(2,6,23,0.9)
+  );
 }
 
 /* Typography */
