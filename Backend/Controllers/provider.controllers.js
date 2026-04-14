@@ -5,7 +5,7 @@ const signUp = async (req, res) => {
     try {
         const response = await providerService.create(req.body);
         successResponseBody.data = response;
-        successResponseBody.message = "You have Registered as a Provider Successfully. Please Login to your Account ";
+        successResponseBody.message = "You have registered as a provider successfully. Please login to your account ";
         res.status(201).json(successResponseBody);
     } catch (error) {
         if(error.err) {
@@ -23,7 +23,7 @@ const signin = async (req, res) => {
     try {
         const response = await providerService.signin( req.body );
         successResponseBody.data = response;
-        successResponseBody.message = `Welcome Back ${response.user.name}. Login to Provider Account Successful.`;
+        successResponseBody.message = `Welcome back ${response.user.name}. Login to provider account successful.`;
         res.status(200).json(successResponseBody);
 
     } catch(error) {

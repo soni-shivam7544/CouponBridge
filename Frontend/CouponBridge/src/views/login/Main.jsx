@@ -26,10 +26,10 @@ const Main = () => {
                 return { ...data, role: 'customer'}
             });
         }
-        else if (e.target.id == 'seller') {
+        else if (e.target.id === 'provider') {
             setFormData( (data) => {
                 
-                return { ...data, role: 'seller' }
+                return { ...data, role: 'provider' }
             });
         }
         else setFormData( (data) => {
@@ -93,8 +93,8 @@ const Main = () => {
                     <input type="radio" id="customer"  className='radio' name="role" checked={ formData.role === 'customer' } onChange={ handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
                     <label htmlFor="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Customer</label><br/>
 
-                    <input type="radio" id="seller" className='radio' name="role" checked={ formData.role === 'seller' } onChange={handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label htmlFor="seller" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
+                    <input type="radio" id="provider" className='radio' name="role" checked={ formData.role === 'provider' } onChange={handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                    <label htmlFor="provider" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
 
                     
                     <label htmlFor="email" className='heading'>Email</label><br/>

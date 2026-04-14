@@ -4,10 +4,12 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../hooks/useAlert';
 import axios from 'axios';
 
 const Main = () => {
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
     const [formData, setFormData ] = useState({
             role: 'customer',
             name: '',
@@ -16,14 +18,15 @@ const Main = () => {
     }); 
 
     const handleChange = (e) => {
+
         if(e.target.id === 'customer') {
             setFormData ((data) => {
                 return { ...data, role: 'customer'};
             })
         }
-        else if (e.target.id === 'seller'){
+        else if (e.target.id === 'provider'){
             setFormData ((data) => {
-                return { ...data,  role: 'seller'};
+                return { ...data,  role: 'provider'};
             })
         }
         else setFormData ((data) => {
@@ -40,18 +43,32 @@ const Main = () => {
             axios.post('http://localhost:5050/cb/v1/api/customers/signup', formData)
             .then ( res=> {
                 console.log(res.data);
+                showAlert({type:'success', message: `${res.data.message}`});
                 navigate('/login');
             })
-            .catch( err => console.log(err));
+            .catch( err => {
+                console.log(err.response);
+                showAlert({ type: 'error', message: `${err.response.data.error}`});
+
+            });
         }
         else axios.post('http://localhost:5050/cb/v1/api/providers/signup', formData)
             .then ( res=> {
                 console.log(res.data);
+                showAlert({type:'success', message: `${res.data.message}`})
                 navigate('/login');
             })
-            .catch( err => console.log(err));
+            .catch( err => {
+                console.log(err.response);
+                showAlert({ type: 'error', message: `${err.response.data.error}`});
+            });
 
-        
+        setFormData({
+            role: 'customer',
+            name: '',
+            email: '',
+            password: ''
+        });
     }
     
   return (
@@ -89,30 +106,30 @@ const Main = () => {
                     <div id="auth-right-subtitle" className='sub-heading'>Choose how you want to use CouponHub</div>
                 </div>
                 
-                <form id='form-section' className='sub-heading'>
+                <form id='form-section' className='sub-heading' onSubmit={ handleSubmit }>
                     <legend  className='heading' style={{marginBottom:'0.5rem'}}>I want to:</legend>
 
                     <input type="radio" id="customer"  className='radio' name="role"  checked={ formData.role === 'customer'} onChange={ handleChange } style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
                     <label htmlFor="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Buy Coupons</label><br/>
 
-                    <input type="radio" id="seller" className='radio' name="role" checked={ formData.role === 'seller'} onChange={ handleChange } style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label htmlFor="seller" className='sub-heading' style={ { cursor: 'pointer'}}>Sell Coupons</label><br/>
+                    <input type="radio" id="provider" className='radio' name="role" checked={ formData.role === 'provider'} onChange={ handleChange } style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                    <label htmlFor="provider" className='sub-heading' style={ { cursor: 'pointer'}}>Sell Coupons</label><br/>
 
                     <label htmlFor="name"  className='heading' >Full Name</label><br/>
-                    <input type="text" id="name" name="name"  value={formData.name} onChange={ handleChange } className='input' style={{marginBottom:'1rem'}}/><br/>
+                    <input type="text" id="name" name="name"  value={formData.name} onChange={ handleChange } className='input' style={{marginBottom:'1rem'}} required/><br/>
                     
 
                     <label htmlFor="email" className='heading'>Email</label><br/>
-                    <input type="email" id="email" className='input' name="email"  value={formData.email} onChange={ handleChange } style={{marginBottom:'1rem'}}/><br/>
+                    <input type="email" id="email" className='input' name="email"  value={formData.email} onChange={ handleChange } style={{marginBottom:'1rem'}} required/><br/>
 
                     <label htmlFor="password" className='heading'>Password</label><br/>
-                    <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } style={{marginBottom:'1rem'}}/><br/>
+                    <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } style={{marginBottom:'1rem'}} required/><br/>
 
                     {/* <label htmlFor="conf-password" className='heading'>Confirm Password</label><br/>
                     <input type="password" id="conf-password" className='input' name="conf-password" style={{marginBottom:'1.5rem'}}/><br/>
                  */}
 
-                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}} onClick={ handleSubmit }>Create Account</Button>
+                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}}>Create Account</Button>
                 </form>
 
                 <div id="auth-right-footer" className='sub-heading'>

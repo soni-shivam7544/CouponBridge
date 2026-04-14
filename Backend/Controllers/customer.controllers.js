@@ -6,7 +6,7 @@ const signUp = async (req, res) => {
     try {
         const response = await customerService.create(req.body);
         successResponseBody.data = response;
-        successResponseBody.message = "You have Registered as a Customer Successfully. Please Login to your Account ";
+        successResponseBody.message = "You have registered as a customer successfully. Please login to your account ";
         res.status(201).json(successResponseBody);
     }catch (error) {
         if(error.err) {
@@ -25,7 +25,7 @@ const signin = async (req, res) => {
         const response = await customerService.login( req.body );
         successResponseBody.data = response;
         console.log(response);
-        successResponseBody.message = `Welcome Back ${response.user.name}. Login to Customer Account Successful.`;
+        successResponseBody.message = `Welcome back ${response.user.name}. Login to customer account successful.`;
         res.status(200).json(successResponseBody);
     } catch(error) {
         if( error.err ){

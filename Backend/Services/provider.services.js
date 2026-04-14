@@ -14,6 +14,12 @@ const create = async (data) => {
         return provider;
     } catch(error) {
         console.log(error);
+        if(error.code === 11000){
+            throw {
+                err: "Email already exists!",
+                code: 400
+            }
+        }
         if(error.name === 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach( key => {
