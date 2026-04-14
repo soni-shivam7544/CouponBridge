@@ -31,11 +31,11 @@ const login = async (data) => {
 
         const user = await Customer.findOne( { email });
 
-        if(!user) throw { err: "User not found", code: 400};
+        if(!user) throw { err: "Email Not Found!", code: 400};
 
         const isMatch = await bcrypt.compare(password, user.password);
 
-        if(!isMatch) throw { err: "Invalid credentials", code: 400 };
+        if(!isMatch) throw { err: "Invalid Credentials. Password Incorrect.", code: 400 };
 
         const token = jwt.sign(
             { id: user._id },

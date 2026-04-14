@@ -17,7 +17,7 @@ function Navbar() {
 
     const handleLogout = () => {
         logout();
-        showAlert({type:'success', message:'Logout successfully. Hope we will meet soon.'});
+        showAlert({type:'success', message:'Logout Successfully. Hope to see you soon.'});
         navigate('/login');
     }
 

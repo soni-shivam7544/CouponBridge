@@ -32,12 +32,12 @@ const signin = async (data) => {
 
         const user = await Provider.findOne( {email});
         if(!user){
-            throw { err: "User not found!", code: 401 };
+            throw { err: "Email not found!", code: 401 };
         }
 
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            throw { err: "Invalid credentials. Password incorrect.", code: 401};
+            throw { err: "Invalid Credentials. Password Incorrect.", code: 401};
         }
 
         const token = jwt.sign(

@@ -47,22 +47,29 @@ const Main = () => {
             .then ( res=> {
                 console.log(res.data);
                 login({ userData:res.data.data, role:'customer'});
-                showAlert({ type: 'success', message: 'Customer Login Successful.'});
+                showAlert({ type: 'success', message: `${res.data.message}`});
                 navigate('/');
             })
             .catch( err => {
-                console.log(err.response);
+                showAlert({ type: 'error', message: `${err.response.data.error}`});
+
             });
         }
         else axios.post('http://localhost:5050/cb/v1/api/providers/signin', formData)
             .then ( res=> {
                 login({ userData:res.data.data, role:'provider'});
-                showAlert({ type: 'success', message: 'Provider Login Successful.'});
+                showAlert({ type: 'success', message: `${res.data.message}`});
                 navigate('/');
             })
             .catch( err => {
-                console.log(err.response);
+                showAlert({ type: 'error', message: `${err.response.data.error}`});
             });
+
+        setFormData({
+            email: '',
+            password: '',
+            role: 'customer',
+        });
 
     }
 
@@ -80,7 +87,7 @@ const Main = () => {
                     <div id="auth-right-subtitle" className='sub-heading'>Choose your account type and enter your credentials</div>
                 </div>
                 
-                <form id='form-section' className='sub-heading'>
+                <form id='form-section' className='sub-heading' onSubmit ={ handleSubmit }>
                     <legend  className='heading' style={{marginBottom:'0.5rem'}}>I am your:</legend>
 
                     <input type="radio" id="customer"  className='radio' name="role" checked={ formData.role === 'customer' } onChange={ handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
@@ -91,12 +98,12 @@ const Main = () => {
 
                     
                     <label htmlFor="email" className='heading'>Email</label><br/>
-                    <input type="email" id="email" className='input' name="email" value={ formData.email } style={{marginBottom:'1rem'}} onChange={ handleChange }/><br/>
+                    <input type="email" id="email" className='input' name="email" value={ formData.email } style={{marginBottom:'1rem'}} onChange={ handleChange } required/><br/>
 
                     <label htmlFor="password" className='heading'>Password</label><br/>
-                    <input type="password" id="password" className='input' name="password" value={ formData.password } style={{marginBottom:'2rem'}}  onChange={ handleChange }/><br/>
+                    <input type="password" id="password" className='input' name="password" value={ formData.password } style={{marginBottom:'2rem'}}  onChange={ handleChange } required/><br/>
 
-                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}} onClick={ handleSubmit }>login</Button>
+                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}}>login</Button>
                 </form>
 
                 <div id="auth-right-footer" className='sub-heading'>

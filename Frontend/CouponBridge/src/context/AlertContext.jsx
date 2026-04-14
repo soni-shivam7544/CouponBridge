@@ -10,7 +10,7 @@ export const AlertProvider = ({ children }) => {
 
         setTimeout(()=>{
             setAlert(null);
-        }, 3000);
+        }, 5000);
     };
 
     return (
