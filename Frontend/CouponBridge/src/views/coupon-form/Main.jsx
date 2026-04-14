@@ -28,7 +28,9 @@ const Main = () => {
     });
   };
 
-  const handleClick = (e) => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     axios.post('http://localhost:5050/cb/v1/api/coupons', formData, {
       headers: {
         Authorization: localStorage.getItem('token')
@@ -42,20 +44,12 @@ const Main = () => {
 
     })
     .catch(err => {
-      console.log(err);
+      console.log(err.response);
       localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
       
       navigate('/login');
 
     });
-
-    
-
-
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
   
   };
 
@@ -74,6 +68,7 @@ const Main = () => {
           placeholder="Coupon Code"
           value={formData.code}
           onChange={handleChange}
+          required
         />
         <label htmlFor='product-id'>Product Id</label>
         <input
@@ -84,6 +79,7 @@ const Main = () => {
           placeholder="Product Id"
           value={formData.productId}
           onChange={handleChange}
+          required
         />
         
         <label htmlFor='price'>Price</label>
@@ -95,6 +91,7 @@ const Main = () => {
           placeholder="Price (₹)"
           value={formData.price}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor='discount'>Discount</label>
@@ -106,6 +103,7 @@ const Main = () => {
           placeholder="Discount (%)"
           value={formData.discount}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor='expiry-date'>Expiry Date</label>
@@ -116,6 +114,7 @@ const Main = () => {
           name="expirationDate"
           value={formData.expirationDate}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor='merchant'>Merchant Name</label>
@@ -127,6 +126,7 @@ const Main = () => {
           placeholder="Merchant (Amazon, Flipkart...)"
           value={formData.merchant}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor='description'>Description</label>
@@ -140,7 +140,7 @@ const Main = () => {
           onChange={handleChange}
         />
 
-        <Button variant="contained" onClick={ handleClick } sx={{marginTop: '1rem'}}>Publish</Button>
+        <Button type='submit' variant="contained" sx={{marginTop: '1rem'}}>Publish</Button>
 
         
       </form>

@@ -8,14 +8,14 @@ const verifyProviderToken = async (req, res, next) => {
         const token = req.headers.authorization;
 
         if(!token) {
-            throw { err: "Authentication failed! No token provided, login first. ", code: 401 };
+            throw { err: "Authentication failed! Login as Provider first.", code: 401 };
         }
 
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
         
         const user = await  Provider.findById( decoded.id );
         if(!user){
-            throw { err: "Provider not found!", code: 400 };
+            throw { err: "Provider not found! Create an Account.", code: 400 };
         }
         req.user = user;
         
@@ -26,11 +26,9 @@ const verifyProviderToken = async (req, res, next) => {
         console.log(error);
         if(error.err) {
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Something went wrong!";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Something happened wrong!";
         return res.status(500).json(errorResponseBody);
     }
 }

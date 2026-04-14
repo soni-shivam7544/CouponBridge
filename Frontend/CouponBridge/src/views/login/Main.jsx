@@ -3,11 +3,13 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
+import { useAlert } from '../../hooks/useAlert';
+import { useAuth } from '../../hooks/useAuth';
 
 const Main = () => {
 
-    localStorage.removeItem('alert');
-
+    const { showAlert } = useAlert();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -39,26 +41,28 @@ const Main = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        localStorage.removeItem('alert');
         
         if(formData.role === 'customer'){
             axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
             .then ( res=> {
-                localStorage.setItem('token', res.data.data.token);
-                localStorage.setItem('role', 'customer');
-                localStorage.setItem("user", JSON.stringify(res.data.data.user));
+                console.log(res.data);
+                login({ userData:res.data.data, role:'customer'});
+                showAlert({ type: 'success', message: 'Customer Login Successful.'});
                 navigate('/');
             })
-            .catch( err => console.log(err));
+            .catch( err => {
+                console.log(err.response);
+            });
         }
         else axios.post('http://localhost:5050/cb/v1/api/providers/signin', formData)
             .then ( res=> {
-                localStorage.setItem('token', res.data.data.token);
-                localStorage.setItem('role', 'seller');
-                localStorage.setItem("user", JSON.stringify(res.data.data.user));
+                login({ userData:res.data.data, role:'provider'});
+                showAlert({ type: 'success', message: 'Provider Login Successful.'});
                 navigate('/');
             })
-            .catch( err => console.log(err));
+            .catch( err => {
+                console.log(err.response);
+            });
 
     }
 

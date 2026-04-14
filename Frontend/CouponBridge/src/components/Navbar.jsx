@@ -4,24 +4,22 @@ import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SellIcon from '@mui/icons-material/Sell';
 import Alert from '@mui/material/Alert';
+import {useAlert} from '../hooks/useAlert';
+import { useAuth } from '../hooks/useAuth';
 
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     
     const navigate = useNavigate();
-
-    const storedUser = localStorage.getItem('user');
-
-    const user = storedUser ? JSON.parse(storedUser) : null;
+    const { alert, showAlert } = useAlert();
+    const { user, logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
+        logout();
+        showAlert({type:'success', message:'Logout successfully. Hope we will meet soon.'});
         navigate('/login');
     }
-
-    let alert = JSON.parse(localStorage.getItem('alert')) || '{}';
 
     return (
         <>
@@ -57,8 +55,7 @@ function Navbar() {
                 </div>
             </div>
             <div className="nav-background"></div>
-            { alert.name ? (alert.name === 'success' ? <Alert severity="success">{alert.message}</Alert>:<Alert severity="error">{alert.message}</Alert>) : null }
-            
+            { alert ? <Alert severity= {alert.type} className='alert-message'> {alert.message}</Alert>:null}
             
         </>
     )

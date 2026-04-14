@@ -78,3 +78,9 @@
 #user:hover {
     background-color: #f3faa3;
 }
+
+.alert-message {
+    position: sticky;
+    top:4.5rem;
+    z-index: 4;
+}
