@@ -35,10 +35,15 @@
     align-items: center;
     justify-content: flex-start;
     padding: 0 0.5rem;
+    height: 3rem;
+}
+.footer-desc-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .footer-desc-content {
     padding: 1rem 0;
-    font-weight:300
 }
 .footer-desc-icon {
     margin-right: 0.5rem;
@@ -51,10 +56,7 @@
  .footer-links-heading {
     margin-bottom: 0.5rem;
  }
-.footer-links-items:hover {
-    text-decoration: underline;
-    text-decoration-color: black;
-}
+
 
 .footer-social {
     display: flex;
@@ -62,7 +64,7 @@
     align-items: center;
     width: 83%;
     padding: 1rem 0;
-    border-top: 1px solid black;
+    border-top: 2px solid var(--color-border);
 }
 
 .footer-social-content {

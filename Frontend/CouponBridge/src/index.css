@@ -2,47 +2,7 @@
     margin: 0;
     padding: 0;
 }
-.hero-heading {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-    font-size: 3.5rem; /* ~56px */
-    line-height: 1.1;
-    letter-spacing: -1px;
-}
-.section-heading {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 2rem; /* ~32px */
-    line-height: 1.2;
-}
-.lg-heading {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem; /* ~24px */
-}
-.heading {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 1.125rem; /* ~18px */
-}
-.sub-heading {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 400;
-    font-size: 0.95rem;
-    color: var(--color-text-secondary);
-}
-.text {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5;
-}
-.caption {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-}
+
 
 /* Lignt Mode Color Palate*/
 
@@ -54,6 +14,7 @@
   --color-text-primary: #0F172A; /* headings */
   --color-text-secondary: #475569; /* sub text */
   --color-text-muted: #94A3B8;   /* light text */
+  
   --color-primary: #2563EB;
   --color-primary-hover: #1D4ED8;
   --color-primary-light: #DBEAFE;
@@ -61,8 +22,16 @@
   --color-success-bg: #DCFCE7;
   --color-danger: #EF4444;
   --color-accent: #3B82F6; /* blue badge */
+
+  --color-highlight: #FFDE42;        /* main yellow */
+  --color-highlight-hover: #FACC15;  /* slightly darker for hover */
+  --color-highlight-soft: #FEF9C3;   /* soft background */
 }
 
+body {
+    background-color: var(--color-bg);
+
+}
 
 /*  Dark Mode Color Palate */
 
@@ -84,4 +53,71 @@
 
   --color-danger: #EF4444;
   --color-accent: #60A5FA;
+
+  --color-highlight: #FFDE42;        /* keep same for consistency */
+  --color-highlight-hover: #EAB308;  /* warmer hover */
+  --color-highlight-soft: #3F3F00;   /* dark subtle background */
+}
+
+/* Typography */
+
+.hero-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem; /* ~56px */
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: var(--color-text-highlight);
+}
+.section-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 2rem; /* ~32px */
+    line-height: 1.2;
+    color: var(--color-text-primary);
+}
+.lg-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem; /* ~24px */
+    color: var(--color-text-primary);
+}
+.heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 1.125rem; /* ~18px */
+    color: var(--color-text-primary);
+}
+.sub-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5rem;
+}
+.text {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 1rem; /* 16px */
+    line-height: 1.5;
+    color: var(--color-text-secondary)
+}
+.caption {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.footer-link {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
 }
