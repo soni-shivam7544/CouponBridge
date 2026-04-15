@@ -6,34 +6,48 @@
 }
 .coupons-header {
     padding-bottom: 2rem;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid var(--color-border);
     margin-top: 3rem;
 }
 .coupons-search {
     display:flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    margin: 3rem;
+    margin: 2rem 0rem;
+}
+.coupons-search select{
+    padding: 0.85rem;
+    border: 2px solid var(--color-border);
+    border-radius: 1rem;
+    background-color: var(--color-surface);
+    margin-left: 0.5rem;
+}
+select:focus {
+  outline: none;
+  border: 2px solid #4a90e2; /* optional: nicer focus color */
+}
+.coupons-search-filter{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .coupons-searchbar{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    border-radius: 2rem;
-    border: 1px solid black;
+    border-radius: 1rem;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-surface);
 }
 .search {
     all: unset;
-    padding: 1rem;
-    width: 50rem;
+    padding: 0.7rem;
+    width: 45rem;
 }
-.search-button {
-    border-top-right-radius: 2rem!important;
-    border-bottom-right-radius: 2rem!important;
-}
+
 .coupons-list {
-    background-color: #fafaec;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
 }

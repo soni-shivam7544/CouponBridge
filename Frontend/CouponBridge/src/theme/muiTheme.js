@@ -8,6 +8,13 @@ export const muiTheme = createTheme({
                     textTransform: 'none'
                 }
             }
+        },
+        MuiToggleButton:{
+            styleOverrides:{
+                root:{
+                    textTransform: 'none'
+                }
+            }
         }
     }
 });

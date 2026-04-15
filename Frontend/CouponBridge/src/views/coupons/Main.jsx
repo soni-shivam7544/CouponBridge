@@ -3,6 +3,8 @@ import './Main.css';
 import CouponCard from '../../components/CouponCard.jsx';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import ToggleButton from '@mui/material/ToggleButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +18,7 @@ const Main = () => {
 
   const [coupons, setCoupons] = useState([]);
   const [formData, setFormData] = useState({ search: ''});
+  const [selected, setSelected] = useState(false);
   
 
   const handleChange = (event) => {
@@ -34,8 +37,8 @@ const Main = () => {
   return (
     <>
       <div className="main">
-        <div className="navigate-back sub-heading" onClick={()=> navigate('/')}>
-                <ArrowBackIcon sx={{marginRight: '1rem'}}/>
+        <div className="navigate-back text" onClick={()=> navigate('/')}>
+                <ArrowBackIcon sx={{marginRight: '0.5rem'}}/>
                 <p>Back to Home</p>
         </div>
         <div className="coupons-header">
@@ -47,10 +50,45 @@ const Main = () => {
           </div>
         </div>
         <div className="coupons-search">
-          <form className="coupons-searchbar sub-heading">
+          <form className="coupons-searchbar text">
+            <SearchIcon sx={{marginLeft:'0.5rem'}}/>
             <input className='search' name='search' value={formData.search} onChange={handleChange} placeholder='Search Merchant, Provider, Category'/>
-            <Button type='submit' className='search-button' variant="contained"><SearchIcon sx={{fontSize: 35, padding: '0.2rem', width: '4rem'}}/></Button>
           </form>
+          <div className="coupons-search-filter">
+            <select className="coupons-search-category text">
+
+              <option>All Categories</option>
+              <option>Food</option>
+              <option>Travel</option>
+              <option>Electronics</option>
+              <option>Fashion</option>
+              <option>Health</option>
+              <option>Entertainment</option>
+              <option>Home</option>
+
+            </select>
+
+            <select className="coupons-search-category text">
+
+              <option>Newest</option>
+              <option>Price: Low To High</option>
+              <option>Price: High To Low</option>
+
+            </select>
+
+            <div className="coupons-search-verified-toggle">
+              <ToggleButton
+                value="check"
+                selected={selected}
+                onChange={() => setSelected((prevSelected) => !prevSelected)}
+                sx={{ borderRadius:'1rem', border: '2px solid var(--color-border)', padding: '0.8rem', marginLeft: '0.5rem', backgroundColor:'var(--color-surface)'}}
+              >
+                <VerifiedIcon className='text' sx={{marginRight:'0.2rem', fontSize:'1.2rem'}} />
+                <span className='text'>Verified Only</span>
+              </ToggleButton>
+
+            </div>
+          </div>
         </div>
         <div className="coupons-list">
           { coupons.map( coupon => {
