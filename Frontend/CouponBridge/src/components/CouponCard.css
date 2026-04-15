@@ -7,6 +7,7 @@
     transition: transform 0.3s ease;
     overflow: hidden;
     cursor: pointer;
+    margin-bottom: 1rem;
 
 }
 .coupon-card:hover {
@@ -57,6 +58,16 @@
 .coupon-card-price{
     display: flex;
     align-items: center;
+}
+.coupon-card-reduced-price{
+    display: flex;
+    align-items: center;
+}
+.coupon-card-actual-price{
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    text-decoration: line-through;
 }
 .coupon-card-like {
     display: flex;

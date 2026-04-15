@@ -52,8 +52,14 @@ function CouponCard( { data } ) {
                 </div>
                 <div className="coupon-card-navigation">
                     <div className="coupon-card-price lg-heading">
-                        <CurrencyRupeeIcon sx={{fontSize:'1.5rem'}}/>
-                        <span>25</span>
+                        <div className="coupon-card-reduced-price">
+                            <CurrencyRupeeIcon sx={{fontSize:'1.5rem'}}/>
+                            <span>25</span>
+                        </div>
+                        <div className="coupon-card-actual-price text">
+                            <CurrencyRupeeIcon sx={{fontSize:'1rem'}}/>
+                            <span>{125/4}</span>
+                        </div>
                     </div>
                     <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
                 </div>
