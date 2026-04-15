@@ -1,85 +1,92 @@
-.card {
-    display:flex;
-    flex-direction: column;
+.coupon-card {
     position: relative;
-    margin: 1rem;
-    width: 22%;
+    min-width:22%;
     border-radius: 1rem;
-    cursor: pointer;
-    background-color:#ffffd4;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
     transition: transform 0.3s ease;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
 
 }
-.card:hover {
-    /* background-color:#e2e2d2; */
+.coupon-card:hover {
     transform: translateY(-10px);
     box-shadow: 25px 25px 25px rgba(0, 0, 0, 0.1);
-
 }
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.coupon-card-image {
+    position: relative;
+    
+}
+.coupon-card img {
+    width: 100%;
+    height: 16rem;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+.coupon-card img:hover{
+    transform: scale(1.1);
+}
+
+.coupon-card-info {
     padding: 1rem;
 }
 
-
-.card-title {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.card-logo {
-    border: 1px solid black;
-    padding: 1rem;
-    margin-right:0.5rem;
-    border-top-left-radius: 2rem;
-}
-.card-title-discount {
-    position: absolute;
-    border: 2px solid green;
-    color: green;
-    border-radius: 2rem;
-    padding: 0.1rem 0.5rem;
-    right: -1rem;
-    top: 5rem;
-
-}
-.card-body {
-    margin: 1rem 0;
-    padding-bottom: 2rem;
-    padding: 1rem;
-    border-bottom: 1px solid #b2b2ac;
-}
-.card-footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-}
-.card-footer-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-}
-.expiry {
+.coupon-card-provider {
     display: flex;
     align-items: center;
 }
-
-.card-footer-navigate {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.add-to-cart {
-    border-radius: 2rem!important;
-}
-.add-to-cart p {
+.coupon-card-provider-rating {
+    display: flex;
     margin-left: 0.5rem;
+}
+.coupon-card-expiry{
+    display: flex;
+    align-items: center;
+    line-height: 1.5rem;
+}
+
+.coupon-card-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.coupon-card-price{
+    display: flex;
+    align-items: center;
+}
+.coupon-card-like {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    padding: 0.3rem;
+    background-color: var(--color-bg);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.coupon-card-discount {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    border-radius: 2rem;
+    padding: 0.1rem 1rem;
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.coupon-card-isverified{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    border-radius: 2rem;
+    padding: 0.1rem 1rem;
+    background-color: var(--color-success);
+    color: white;
 }
