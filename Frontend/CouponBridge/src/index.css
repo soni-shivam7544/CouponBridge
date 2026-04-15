@@ -29,8 +29,8 @@
 
   --color-hero-cover: linear-gradient(
     to bottom,
-    rgba(255,255,255,0.6),
-    rgba(255,255,255,0.9)
+    rgba(255,255,255,0.3),
+    rgba(255,255,255,0.4)
   );
 }
 
@@ -62,7 +62,7 @@ body {
 
   --color-highlight: #FFDE42;        /* keep same for consistency */
   --color-highlight-hover: #EAB308;  /* warmer hover */
-  --color-highlight-soft: #3F3F00;   /* dark subtle background */
+  --color-highlight-soft: #FEF9C3;   /* dark subtle background */
 
   --color-hero-cover: linear-gradient(
     to bottom,
@@ -79,7 +79,8 @@ body {
     font-size: 3.5rem; /* ~56px */
     line-height: 1.1;
     letter-spacing: -1px;
-    color: var(--color-text-highlight);
+    color: var(--color-highlight);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 .section-heading {
     font-family: "Montserrat", sans-serif;
@@ -100,9 +101,16 @@ body {
     font-size: 1.125rem; /* ~18px */
     color: var(--color-text-primary);
 }
+.hero-sub-heading {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-highlight-soft);
+    line-height: 1.5rem;
+}
 .sub-heading {
     font-family: "Montserrat", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.95rem;
     color: var(--color-text-secondary);
     line-height: 1.5rem;
