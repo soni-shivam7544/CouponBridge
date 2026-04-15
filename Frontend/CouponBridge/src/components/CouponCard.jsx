@@ -23,6 +23,9 @@ function CouponCard( { data } ) {
         e.stopPropagation();
         setIsLiked((like)=>(!like));
     }
+    const handleAddtoCart = (e) => {
+        e.stopPropagation();
+    }
 
     return (
         
@@ -52,7 +55,7 @@ function CouponCard( { data } ) {
                         <CurrencyRupeeIcon sx={{fontSize:'1.5rem'}}/>
                         <span>25</span>
                     </div>
-                    <Button variant="contained"><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
+                    <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
                 </div>
             </div>
         </div>

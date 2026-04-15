@@ -68,6 +68,7 @@
     background-color: var(--color-bg);
     border-radius: 50%;
     cursor: pointer;
+    z-index: 2;
 }
 .coupon-card-discount {
     position: absolute;
@@ -77,6 +78,7 @@
     padding: 0.1rem 1rem;
     background-color: var(--color-primary);
     color: white;
+    z-index: 2;
 }
 
 .coupon-card-isverified{
@@ -89,4 +91,5 @@
     padding: 0.1rem 1rem;
     background-color: var(--color-success);
     color: white;
+    z-index: 2;
 }

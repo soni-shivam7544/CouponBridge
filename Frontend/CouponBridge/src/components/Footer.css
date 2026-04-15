@@ -76,6 +76,9 @@
     justify-content:flex-end;
     width: 40%;
 }
+.footer-icons:hover {
+    color: var(--color-text-primary);
+}
 .footer-icons {
     margin: 0 0.5rem;
     cursor: pointer;
