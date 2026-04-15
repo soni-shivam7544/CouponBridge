@@ -53,19 +53,6 @@ function Navbar() {
             setThemeMode(true);
         }
         
-        const handleScroll = () => {
-            const nav = document.querySelector(".nav");
-
-            if (window.scrollY > 1) {
-            nav.classList.add("scrolled");
-            } else {
-            nav.classList.remove("scrolled");
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => window.removeEventListener("scroll", handleScroll);
     },[]);
 
     return (
