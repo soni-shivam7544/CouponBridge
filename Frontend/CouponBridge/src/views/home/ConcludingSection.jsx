@@ -13,7 +13,7 @@ function ConcludingSection() {
                 <div className="conclusion-subtitle sub-heading">Join CouponBridge today and discover thousands of verified coupons from top brands.</div>
                 <Button variant='contained' className='conclusion-create' onClick={ ()=> navigate('/signup')}>
                     <p>Create Free Account</p>
-                    <ArrowForwardIcon/>
+                    <ArrowForwardIcon sx={{marginLeft: '0.5rem'}}/>
                 </Button>
             </div>
         </>
