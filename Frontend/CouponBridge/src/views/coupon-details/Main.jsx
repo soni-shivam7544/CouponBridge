@@ -2,13 +2,17 @@ import '../../index.css';
 import './Main.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import SellIcon from '@mui/icons-material/Sell';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import TimerIcon from '@mui/icons-material/Timer';
+import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import StarIcon from '@mui/icons-material/Star';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState} from 'react';
@@ -44,64 +48,81 @@ const Main = () => {
     }
     return (
         <div className="details">
-            <div className="navigate-back sub-heading" onClick={()=> navigate('/coupons')}>
-                <ArrowBackIcon  sx={{marginRight: '1rem'}}/>
+            <div className="navigate-back text" onClick={()=> navigate('/coupons')}>
+                <ArrowBackIcon  sx={{marginRight: '0.5rem'}}/>
                 <p>Back to Browse</p>
             </div>
             <div className="coupon-details">
                 <div className="left-column">
-                    <div className="card-details">
-                        <div className="coupon-logo section-heading">{coupon.merchant ? coupon.merchant[0] : ''}</div>
-                        <div className="coupon-info">
-                            <div className="coupon-title section-heading">{coupon.merchant}</div>
-                            <div className="coupon-desc sub-heading"> {coupon.description}</div>
-                        </div>
-                    </div>
-                    <div className="seller-details">
-                        <div className="seller-detail-title lg-heading">Sold by</div>
-                        <div className="seller-detail">
-                            <div className="seller-detail-id">
-                                <div className="seller-id-logo heading">{coupon.provider ? coupon.provider.name[0] : ''}</div>
-                                <div className="seller-id-data">
-                                    <div className="seller-id-name heading">{coupon.provider ? coupon.provider.name : ''}</div>
-                                    <div className="seller-id-rating">
-                                        <StarIcon/>
-                                        <p>5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <Button variant="text">view profile</Button>
-
-                        </div>
-                    </div>
+                    <div className='text coupon-card-discount'>20% OFF</div>
+                    <div className='text coupon-card-isverified'><VerifiedIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Verified</span></div>
                 </div>
-                <div className="right-column">
-                    <div className="navigate-options">
-                        <div className="coupon-price section-heading">Rs. {coupon.price} /-</div>
-                        <div className="coupon-time">
-                            <div className="coupon-expiry sub-heading">
-                                <CalendarMonthIcon sx={ { marginRight: '0.5rem'}} />
-                                <div className="coupon-expiry-date">
-                                    <p>Expires</p>
-                                    <p>{coupon.expirationDate}</p>
-                                </div>
-                            </div>
-                            <div className="coupon-daysleft sub-heading">
-                                <TimerIcon sx={ { marginRight: '0.5rem'}} />
-                                31 days left
-                            </div>
-                        </div>
-                        <Button variant="contained" sx={ { margin: '0.5rem 0'}} className='buy-now'>Buy Now</Button>
-                        <Button variant="outlined" sx={ { margin: '0.5rem 0'}} className='add-cart'><AddShoppingCartIcon/>Add to cart</Button>
-                        <Button variant="outlined" sx={ { margin: '0.5rem 0'}} className='verify' onClick= {handleVerify}><ElectricBoltIcon/>verify coupon</Button>
-                        <div className="result-success heading" style={{color: 'green', textAlign: 'center'}}></div>
-                        <div className="result-failed heading" style={{color: 'red', textAlign: 'center'}}></div>
-                        <div className="coupon-handle">
-                            <Button variant="text"><FavoriteBorderIcon sx={ { marginRight: '1rem'}} />save</Button>
-                            <Button variant="text"><ShareIcon sx={ { marginRight: '1rem'}} />share</Button>
-                        </div>
-                        
+                <div className="right-column text">
+                    <p style={{color:'var(--color-primary)'}}>Amazon</p>
+                    <p style={{margin:'0.3rem 0rem'}} className='lg-heading'>20% Off Electronics</p>
+                    <div className="coupon-details-days-left">
+                        <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
+                        <span>68 days left</span>
                     </div>
+                    <div className="coupon-details-cost">
+                        <div className="coupon-details-reduced-cost section-heading">
+                            <CurrencyRupeeIcon sx={{fontSize:'2rem'}}/>
+                            <span>22</span>
+                        </div>
+                        <div className="coupon-details-real-cost">
+                            <CurrencyRupeeIcon sx={{fontSize: '1rem'}}/>
+                            <span>22</span>
+                        </div>
+                    </div>
+                    <p>Get 3 months of Netflix Premium subscription free. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas enim nulla quaerat ad expedita quis dolores mollitia ducimus voluptatem beatae doloribus fugit reprehenderit pariatur quasi temporibus ullam, nihil laudantium ipsa.</p>
+                    <div className="coupon-details-provider">
+                        <div className="coupon-details-provider-info">
+                            <PersonIcon sx={{marginRight: '0.7rem', backgroundColor: 'var(--color-bg)', padding: '0.5rem', borderRadius: '50%'}}/>
+                            <div className="coupon-details-provider-intro">
+                                <p className='heading'>Mike Johnson</p>
+                                <p>Verified Seller</p>
+                            </div>
+                        </div>
+                        <div className="coupon-details-provider-rating">
+                            <StarIcon sx={{color: 'var(--color-highlight)', marginRight:'0.3rem'}}/>
+                            <span className=''><b>4.5</b></span>
+                        </div>
+                    </div>
+                    <div className="coupon-details-navigate">
+                        <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}}>Buy Now</Button>
+                        <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
+                    </div>
+                    <div className="coupon-details-quick-items">
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                            <FavoriteBorderIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
+                            <span>Save</span>
+                        </Button>
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                            <ElectricBoltIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
+                            <span>Verify Coupon</span>
+                        </Button>
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                            <ShareIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
+                            <span>Share</span>
+                        </Button>
+                    </div>
+                    <div className="coupon-details-meta">
+                        <div className="coupon-details-meta-item">
+                            <div className="coupon-details-meta-title">
+                                <SellIcon sx={{fontSize:'1rem', marginRight: '0.5rem'}}/>
+                                <span>Category</span>
+                            </div>
+                            <p style={{color:'var(--color-text-primary)'}}>Entertainment</p>
+                        </div>
+                        <div className="coupon-details-meta-item">
+                            <div className="coupon-details-meta-title">
+                                <CalendarMonthIcon sx={{fontSize:'1rem', marginRight: '0.5rem'}}/>
+                                <span>Expires</span>
+                            </div>
+                            <p style={{color:'var(--color-text-primary)'}}>10/06/2026</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
