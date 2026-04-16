@@ -1,0 +1,14 @@
+.favourites-container{
+    margin: 3rem 2rem;
+}
+.favourites-header{
+    display: flex;
+    align-items: center;
+}
+.favourites-coupon-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+}
