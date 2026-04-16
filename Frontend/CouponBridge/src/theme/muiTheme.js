@@ -15,6 +15,11 @@ export const muiTheme = createTheme({
                     textTransform: 'none'
                 }
             }
+        },
+        MuiSvgIcon:{
+            defaultProps:{
+                fontSize: 'small'
+            }
         }
     }
 });

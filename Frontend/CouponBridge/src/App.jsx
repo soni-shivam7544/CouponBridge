@@ -7,6 +7,7 @@ import Login from './views/login/Login.jsx';
 import PublishCoupon from './views/coupon-form/PublishCoupon.jsx';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserProfile from './views/user-profile/UserProfile.jsx';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path='/signup' element = { <SignUp/>}/>
         <Route path='/login' element = { <Login/> }/>
         <Route path='/publish' element = { <PublishCoupon/> }/>
+        <Route path='/users/:id' element = {<UserProfile/>}/>
       </Routes>
     </BrowserRouter>
   )
