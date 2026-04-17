@@ -107,6 +107,7 @@
     border: 2px solid var(--color-border);
     border-radius: 1rem;
     padding: 0.5rem 1rem;
+    background-color: var(--color-bg);
 }
 .edit-saved{
     all:unset!important;

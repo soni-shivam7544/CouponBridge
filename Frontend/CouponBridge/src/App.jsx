@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProfile from './views/user-profile/UserProfile.jsx';
 import Cart from './views/cart/Cart.jsx';
 import Favourites from './views/favourites/Favourites.jsx'
+import Checkout from './views/checkout/Checkout.jsx';
 
 export default function App() {
   return (

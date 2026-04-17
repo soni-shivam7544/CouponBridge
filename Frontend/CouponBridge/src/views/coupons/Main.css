@@ -50,4 +50,7 @@ select:focus {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    overflow-y: auto;
+    height: 70vh;
+    scrollbar-width: none;
 }
