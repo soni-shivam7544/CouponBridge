@@ -8,6 +8,8 @@ import PublishCoupon from './views/coupon-form/PublishCoupon.jsx';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProfile from './views/user-profile/UserProfile.jsx';
+import Cart from './views/cart/Cart.jsx';
+import Favourites from './views/favourites/Favourites.jsx'
 
 export default function App() {
   return (
@@ -20,6 +22,9 @@ export default function App() {
         <Route path='/login' element = { <Login/> }/>
         <Route path='/publish' element = { <PublishCoupon/> }/>
         <Route path='/users/:id' element = {<UserProfile/>}/>
+        <Route path='/cart' element = {<Cart/>}/>
+        <Route path='/users/:id/favourites' element = {<Favourites/>}/>
+        <Route path='/users/:id/checkout' element = {<Checkout/>}/>
       </Routes>
     </BrowserRouter>
   )

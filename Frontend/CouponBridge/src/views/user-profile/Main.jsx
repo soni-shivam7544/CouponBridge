@@ -121,7 +121,7 @@ const Main= () => {
         {option == 'profile' ?<div className="personal-container text">
           <div className="personal-container-header">
             <div className="personal-container-title">
-              <p className='heading'>Personal Information</p>
+              <p className='heading'><b>Personal Information</b></p>
               <p className='sub-heading'>Update your profile details</p>
             </div>
             {!editMode ?

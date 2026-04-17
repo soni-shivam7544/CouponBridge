@@ -1,7 +1,7 @@
 import './Navbar.css';
 import '../index.css';
 import Button from '@mui/material/Button';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LogoImage from '../assets/images/coupon_bridge_logo.png';
 import Alert from '@mui/material/Alert';
 import {useAlert} from '../hooks/useAlert';
@@ -72,7 +72,7 @@ function Navbar() {
                     <div className="user-items text">
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)'}} onClick={handleThemeToggle}/>}
                         
-                        <AddShoppingCartIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}} className="cart"/>
+                        <ShoppingCartOutlinedIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}} className="cart"/>
 
                         { user ? 
                             <>

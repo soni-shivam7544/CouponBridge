@@ -87,11 +87,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom:2rem;
 }
 .personal-container {
     background-color: var(--color-surface);
     padding:1rem;
     border-radius: 1rem;
+    border: 2px solid var(--color-border);
 }
 .personal-container-form label{
     display: block;
