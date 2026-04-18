@@ -76,38 +76,41 @@ const Main = () => {
   return (
     <>
         <div id="auth-main">
-            <div id="auth-left">
-                <div id="auth-left-title" className='section-heading'>Welcome back to the marketplace for verified coupons</div>
-                <div id="auth-left-subtitle" className='sub-heading'>Access your account to buy, sell, or manage your coupons.</div>
-                
+            <div id="auth-left" className='text' style={{color:'var(--color-surface-dark-text)'}}>
+                <div id="auth-left-title" className='section-heading' style={{color:'var(--color-surface-dark-text)'}}>Welcome back to the marketplace for verified coupons</div>
+                <div id="auth-left-subtitle" className='sub-heading' style={{color:'var(--color-surface-dark-text)'}}>Access your account to buy, sell, or manage your coupons.</div>
             </div>
             <div id="auth-right">
                 <div id="auth-right-header">
-                    <div id="auth-right-title" className='lg-heading' style={{marginBottom:'1rem'}}>Sign in to your account</div>
-                    <div id="auth-right-subtitle" className='sub-heading'>Choose your account type and enter your credentials</div>
+                    <div id="auth-right-title" className='lg-heading' style={{marginBottom:'0.5rem'}}>Login to your account</div>
+                    <div id="auth-right-subtitle" className='sub-heading'>Choose how you want to use CouponHub</div>
                 </div>
                 
-                <form id='form-section' className='sub-heading' onSubmit ={ handleSubmit }>
-                    <legend  className='heading' style={{marginBottom:'0.5rem'}}>I am your:</legend>
+                <form id='form-section' className='text' onSubmit={ handleSubmit }>
+                    <legend  style={{marginBottom:'0.5rem', color:'var(--color-text-primary)'}}>I am your:</legend>
 
-                    <input type="radio" id="customer"  className='radio' name="role" checked={ formData.role === 'customer' } onChange={ handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label htmlFor="customer" className='sub-heading' style={ { cursor: 'pointer'} }>Customer</label><br/>
+                    <div className="register-choice">
+                        <input type="radio" id="customer" name="role"  checked={ formData.role === 'customer'} onChange={ handleChange } style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                        <label htmlFor="customer" style={ { cursor: 'pointer'}} className={`radio ${formData.role === 'customer' && 'register-choice-active'}`}>Buyer</label>
 
-                    <input type="radio" id="provider" className='radio' name="role" checked={ formData.role === 'provider' } onChange={handleChange} style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
-                    <label htmlFor="provider" className='sub-heading' style={ { cursor: 'pointer'}}>Provider</label><br/>
+                        <input type="radio" id="provider" name="role" checked={ formData.role === 'provider'} onChange={ handleChange } style={{marginBottom:'1rem', marginLeft:'1rem'}}/>
+                        <label htmlFor="provider" style={ { cursor: 'pointer'}} className={`radio ${formData.role === 'provider' && 'register-choice-active'}`}>Seller</label>
 
-                    
-                    <label htmlFor="email" className='heading'>Email</label><br/>
-                    <input type="email" id="email" className='input' name="email" value={ formData.email } style={{marginBottom:'1rem'}} onChange={ handleChange } required/><br/>
+                    </div>
 
-                    <label htmlFor="password" className='heading'>Password</label><br/>
-                    <input type="password" id="password" className='input' name="password" value={ formData.password } style={{marginBottom:'2rem'}}  onChange={ handleChange } required/><br/>
 
-                   <Button variant="contained" type='submit' sx= {{ width: '97%', borderRadius: '0.5rem', marginBottom: '0.5rem'}}>login</Button>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" className='input' name="email"  value={formData.email} onChange={ handleChange } required/>
+
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } required/>
+
+                   <Button variant="contained" type='submit' sx= {{ width: '100%', borderRadius: '0.5rem', margin: '1rem 0rem 1rem'}}>Login</Button>
                 </form>
 
-                <div id="auth-right-footer" className='sub-heading'>
-                        Don't have an account? <Button variant="text" onClick={ ()=> navigate('/signup')}>Create Account</Button>
+                <div id="auth-right-footer" className='text'>
+                    <span>Don't have an account? </span>
+                    <Button variant="text" onClick={ ()=> navigate('/signup')}>Create Account</Button>
                 </div>
 
             </div>
