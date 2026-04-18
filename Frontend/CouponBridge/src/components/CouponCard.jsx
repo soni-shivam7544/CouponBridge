@@ -31,16 +31,30 @@ function CouponCard( { data } ) {
         
         <div className="coupon-card" onClick={ ()=> navigate(`/coupons/${data._id}`)}>
             <div className="coupon-card-image">
-                <img src={watchImage} alt='image'/>
-                <div className='text coupon-card-discount'>20% OFF</div>
+                <img src={data ? data.image : null} alt='image'/>
+                <div className='text coupon-card-discount'>
+                    {data ?
+                    data.discountType === 'Percentage' ?
+                    `${data.discountValue}% OFF`
+                    :
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <CurrencyRupeeIcon/>
+                        <span>{`${data.discountValue} OFF`}</span>
+                    </div>
+                    : 
+                    ''}
+                </div>
+                { data ? data.isVerified ? 
                 <div className='text coupon-card-isverified'><VerifiedIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Verified</span></div>
+                : null: null
+                }
                 <span className='coupon-card-like' onClick={handleLike}>{ !isLiked ? <FavoriteBorderIcon sx={{ color:'var(--color-text-muted)'}}/> : <FavoriteIcon sx={{ color:'var(--color-danger)'}}/>}</span>
             </div>
             <div className="coupon-card-info text">
-                <p style={{color:'var(--color-primary)'}}>Amazon</p>
-                <p className='heading'>20% Off Electronics</p>
+                <p style={{color:'var(--color-primary)'}}>{data ?data.brand.trim().toUpperCase():''}</p>
+                <p className='heading'>{data ? data.title.trim().toUpperCase():''}</p>
                 <div className="coupon-card-provider caption">
-                    <p>Jane Smith</p>
+                    <p>{data ? data.provider.name:''}</p>
                     <div className="coupon-card-provider-rating">
                         <StarIcon sx={{color: 'var(--color-highlight-hover)', fontSize:'1rem'}}/>
                         <span>4.8</span>
@@ -54,12 +68,9 @@ function CouponCard( { data } ) {
                     <div className="coupon-card-price lg-heading">
                         <div className="coupon-card-reduced-price">
                             <CurrencyRupeeIcon sx={{fontSize:'1.5rem'}}/>
-                            <span>25</span>
+                            <span>{data ? data.price:''}</span>
                         </div>
-                        <div className="coupon-card-actual-price text">
-                            <CurrencyRupeeIcon sx={{fontSize:'1rem'}}/>
-                            <span>{125/4}</span>
-                        </div>
+                        
                     </div>
                     <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
                 </div>
