@@ -1,16 +1,18 @@
 const mongoose = require('mongoose');
 
 const couponSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
     code: {
         type: String,
         required: true,
         unique: true
     },
-    discount: {
+    discountValue: {
         type: Number,
-        required: true,
-        min: 0,
-        max: 100
+        required: true
     },
     description: {
         type: String,
@@ -20,7 +22,7 @@ const couponSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    expirationDate: {
+    expiry: {
         type: String,
         required: true
     },
@@ -28,11 +30,15 @@ const couponSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    merchant: {
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    brand: {
         type: String,
         required: true
     },
-    purchased: {
+    isPurchased: {
         type: Boolean,
         default: false
     },
@@ -49,6 +55,22 @@ const couponSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
         default: null
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    discountType: {
+        type: String,
+        enum: {
+            values: ["Percentage", "Flat"],
+            message: "{VALUE} is not supported"
+        }
+
+    },
+    image: {
+        type: String,
+        default: 'https://res.cloudinary.com/dquo06t4c/image/upload/v1776523679/alt_img_coupon_tlqym9.png'
     }
 }, { timestamps: true });
 

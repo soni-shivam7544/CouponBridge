@@ -22,11 +22,9 @@ const Main = () => {
     description: "",
     productId: "",
     title:"",
-    discountType:"",
-    category:"",
-    image:""
+    discountType:"Percentage",
+    category:"Food"
   });
-  console.log(formData);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -41,19 +39,46 @@ const Main = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageData = new FormData();
-    imageData.append('image', file);
-    axios.post('http://localhost:5050/cb/v1/api/upload',imageData)
-    .then(res=>{
-      console.log(res.data.data.imageUrl);
 
-      setFormData(data => {
-        return {
-          ...data,
+    if(file){
+
+      const imageData = new FormData();
+      imageData.append('image', file);
+      axios.post('http://localhost:5050/cb/v1/api/upload',imageData)
+      .then(res=>{
+        const updatedFormData = {
+          ...formData,
           image: res.data.data.imageUrl
-        }
-      });
-      
+        };
+        
+        axios.post('http://localhost:5050/cb/v1/api/coupons', updatedFormData, {
+          headers: {
+            Authorization: localStorage.getItem('token')
+          }
+        })
+        .then(res => {
+          console.log(res);
+          localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
+          
+          navigate('/coupons');
+
+        })
+        .catch(err => {
+          console.log(err.response);
+          localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
+          
+          navigate('/login');
+
+        });
+        
+
+      }).catch(err=>{
+        console.log(err.response);
+      })
+    }
+
+    else {
+
       axios.post('http://localhost:5050/cb/v1/api/coupons', formData, {
         headers: {
           Authorization: localStorage.getItem('token')
@@ -74,9 +99,8 @@ const Main = () => {
 
       });
 
-    }).catch(err=>{
-      console.log(err.response);
-    })
+    }
+    
   
   };
 
@@ -179,8 +203,8 @@ const Main = () => {
                 onChange={handleChange} 
                 required
               >
-                <option>% Percentage</option>
-                <option>OFF</option>
+                <option>Percentage</option>
+                <option>Flat</option>
               </select>
             </div>
 

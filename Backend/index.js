@@ -33,7 +33,9 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/couponbridge')
+mongoose.connect('mongodb://localhost:27017/couponbridge',{
+    autoIndex: true
+    })
     .then(() => {
         console.log("Connected to MongoDB");
     })

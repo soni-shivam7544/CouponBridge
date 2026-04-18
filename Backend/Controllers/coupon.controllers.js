@@ -5,6 +5,7 @@ const couponService = require('../Services/coupon.services.js');
 const createCoupon = async (req, res) => {
     try {
         const data = req.body;
+        console.log(data);
         const response = await couponService.create({ ...data, provider: req.user._id });
         successResponseBody.data = response;
         successResponseBody.message = "The coupon created successfully.";
