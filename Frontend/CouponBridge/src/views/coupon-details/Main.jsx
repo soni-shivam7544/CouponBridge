@@ -21,11 +21,12 @@ import axios from 'axios';
 const Main = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [coupon, setCoupon] = useState({});
+    const [coupon, setCoupon] = useState(null);
 
     useEffect(()=>{
         axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`)
             .then( res => {
+                console.log(res.data.data);
                 setCoupon(res.data.data);
             }).catch( err => console.log(err));
     }, []);
@@ -54,12 +55,28 @@ const Main = () => {
             </div>
             <div className="coupon-details">
                 <div className="left-column">
-                    <div className='text coupon-card-discount'>20% OFF</div>
+                    <div className='text coupon-card-discount'>
+                        {coupon ?
+                        coupon.discountType === 'Percentage' ?
+                        `${coupon.discountValue}% OFF`
+                        :
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <CurrencyRupeeIcon/>
+                            <span>{`${coupon.discountValue} OFF`}</span>
+                        </div>
+                        : 
+                        ''}
+                    </div>
+                    { coupon ? coupon.isVerified ? 
                     <div className='text coupon-card-isverified'><VerifiedIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Verified</span></div>
+                    : null: null}
+
+                    <img src={coupon ? coupon.image:''} alt='coupon_img'/>
+                    
                 </div>
                 <div className="right-column text">
-                    <p style={{color:'var(--color-primary)'}}>Amazon</p>
-                    <p style={{margin:'0.3rem 0rem'}} className='lg-heading'>20% Off Electronics</p>
+                    <p style={{color:'var(--color-primary)'}}>{coupon ?coupon.brand.trim().toUpperCase():''}</p>
+                    <p style={{margin:'0.3rem 0rem'}} className='lg-heading'>{coupon ? coupon.title.trim().toUpperCase():''}</p>
                     <div className="coupon-details-days-left">
                         <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
                         <span>68 days left</span>
@@ -67,20 +84,16 @@ const Main = () => {
                     <div className="coupon-details-cost">
                         <div className="coupon-details-reduced-cost section-heading">
                             <CurrencyRupeeIcon sx={{fontSize:'2rem'}}/>
-                            <span>22</span>
-                        </div>
-                        <div className="coupon-details-real-cost">
-                            <CurrencyRupeeIcon sx={{fontSize: '1rem'}}/>
-                            <span>22</span>
+                            <span>{coupon ? coupon.price:''}</span>
                         </div>
                     </div>
-                    <p>Get 3 months of Netflix Premium subscription free. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas enim nulla quaerat ad expedita quis dolores mollitia ducimus voluptatem beatae doloribus fugit reprehenderit pariatur quasi temporibus ullam, nihil laudantium ipsa.</p>
+                    <p>{coupon ? coupon.description:''}</p>
                     <div className="coupon-details-provider">
                         <div className="coupon-details-provider-info">
                             <PersonIcon sx={{marginRight: '0.7rem', backgroundColor: 'var(--color-bg)', padding: '0.5rem', borderRadius: '50%'}}/>
                             <div className="coupon-details-provider-intro">
-                                <p className='heading'>Mike Johnson</p>
-                                <p>Verified Seller</p>
+                                <p className='heading'>{coupon ? coupon.provider.name:''}</p>
+                                <p>{coupon ? coupon.provider.email : ''}</p>
                             </div>
                         </div>
                         <div className="coupon-details-provider-rating">
@@ -112,14 +125,14 @@ const Main = () => {
                                 <SellIcon sx={{fontSize:'1rem', marginRight: '0.5rem'}}/>
                                 <span>Category</span>
                             </div>
-                            <p style={{color:'var(--color-text-primary)'}}>Entertainment</p>
+                            <p style={{color:'var(--color-text-primary)'}}>{coupon ? coupon.category:''}</p>
                         </div>
                         <div className="coupon-details-meta-item">
                             <div className="coupon-details-meta-title">
                                 <CalendarMonthIcon sx={{fontSize:'1rem', marginRight: '0.5rem'}}/>
                                 <span>Expires</span>
                             </div>
-                            <p style={{color:'var(--color-text-primary)'}}>10/06/2026</p>
+                            <p style={{color:'var(--color-text-primary)'}}>{coupon ? coupon.expiry:''}</p>
                         </div>
                     </div>
 
