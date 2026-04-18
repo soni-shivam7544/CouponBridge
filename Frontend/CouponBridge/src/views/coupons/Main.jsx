@@ -17,22 +17,35 @@ const Main = () => {
   localStorage.removeItem('alert');
 
   const [coupons, setCoupons] = useState([]);
-  const [formData, setFormData] = useState({ search: ''});
-  const [selected, setSelected] = useState(false);
+  const [formData, setFormData] = useState({
+    search: '',
+    sort: 'Newest',
+    category: 'All Categories'
+  });
+  
+  const [verifiedCheckbox, setVerifiedCheckbox] = useState(false);
   
 
   const handleChange = (event) => {
-    setFormData( {search: event.target.value});
+    setFormData( {...formData, [event.target.name]: event.target.value});
   }
 
 
   useEffect ( () => {
-    axios.get(`http://localhost:5050/cb/v1/api/coupons/search?query=${formData.search}`)
+    console.log(verifiedCheckbox);
+    axios.get(`http://localhost:5050/cb/v1/api/coupons/search`,{
+      params:{
+        search: formData.search,
+        sort: formData.sort,
+        category: formData.category,
+        isVerified: verifiedCheckbox
+      }
+    })
       .then(res => {
         setCoupons(res.data.data);
       })
-      .catch(err => console.log(err));
-  }, [formData]);
+      .catch(err => console.log(err.response));
+  }, [formData, verifiedCheckbox]);
 
   return (
     <>
@@ -55,7 +68,12 @@ const Main = () => {
             <input className='search' name='search' value={formData.search} onChange={handleChange} placeholder='Search Merchant, Provider, Category'/>
           </form>
           <div className="coupons-search-filter">
-            <select className="coupons-search-category text">
+            <select
+            className="coupons-search-category text"
+            name='category'
+            value={formData.category}
+            onChange={handleChange}
+            >
 
               <option>All Categories</option>
               <option>Food</option>
@@ -65,12 +83,19 @@ const Main = () => {
               <option>Health</option>
               <option>Entertainment</option>
               <option>Home</option>
+              <option>Other</option>
 
             </select>
 
-            <select className="coupons-search-category text">
+            <select 
+            className="coupons-search-category text"
+            name='sort'
+            value = {formData.sort}
+            onChange={handleChange}
+            >
 
               <option>Newest</option>
+              <option>Oldest</option>
               <option>Price: Low To High</option>
               <option>Price: High To Low</option>
 
@@ -79,8 +104,8 @@ const Main = () => {
             <div className="coupons-search-verified-toggle">
               <ToggleButton
                 value="check"
-                selected={selected}
-                onChange={() => setSelected((prevSelected) => !prevSelected)}
+                selected={verifiedCheckbox}
+                onChange={() => setVerifiedCheckbox(!verifiedCheckbox)}
                 sx={{ borderRadius:'1rem', border: '2px solid var(--color-border)', padding: '0.8rem', marginLeft: '0.5rem', backgroundColor:'var(--color-surface)'}}
               >
                 <VerifiedIcon className='text' sx={{marginRight:'0.2rem', fontSize:'1.2rem'}} />

@@ -65,17 +65,43 @@ const deleteById = async (id) => {
     }
 }
 
-const searchCoupons = async (queryData) => {
+const searchCoupons = async (query) => {
     try {
-        let { query } = queryData;
-        query = query.toLowerCase().trim();
+        let { search, sort, isVerified, category } = query;
+        search = search.toLowerCase().trim();
         
-        let coupons = await Coupon.find({}).populate('provider', 'name email');
+        let sortOption = '';
+        switch(sort){
+            case 'Newest':
+                sortOption = { createdAt : -1};
+                break;
+            case 'Oldest':
+                sortOption = { createdAt : 1 };
+                break;
+            case 'Price: Low To High':
+                sortOption = { price: 1 };
+                break;
+            case 'Price: High To Low':
+                sortOption = { price: -1 };
+                break;
+            default:
+                sortOption = { createdAt : -1 };
+        }
 
-        if(query === '')return coupons;
+        let coupons = await Coupon.find({}).sort(sortOption).populate('provider', 'name email');
+
+        if(isVerified === "true"){
+            coupons = coupons.filter(coupon => coupon.isVerified === true);
+        }
+
+        if(category !== "All Categories"){
+            coupons = coupons.filter(coupon => coupon.category === category);
+        }
+
+        if(search === '')return coupons;
 
         coupons = coupons.filter( coupon => {
-            return coupon.merchant.toLowerCase().trim().includes(query) || coupon.provider.name.toLowerCase().trim().includes(query);
+            return coupon.brand.toLowerCase().trim().includes(search) || coupon.provider.name.toLowerCase().trim().includes(search) || coupon.category.toLowerCase().trim().includes(search);
         });
         return coupons;
     } catch (error) {

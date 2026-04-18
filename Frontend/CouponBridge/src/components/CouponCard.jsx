@@ -7,11 +7,9 @@ import Button from '@mui/material/Button';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
-import watchImage from '../assets/images/watch.png';
 import '../index.css';
 import './CouponCard.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useState } from 'react';
 
 function CouponCard( { data } ) {
