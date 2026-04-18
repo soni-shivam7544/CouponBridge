@@ -11,16 +11,26 @@ const Main = () => {
 
   const navigate = useNavigate();
 
+  const [file, setFile] = useState(null);
+
   const [formData, setFormData] = useState({
     code: "",
     price: "",
-    discount: "",
-    expirationDate: "",
-    merchant: "",
+    discountValue: "",
+    expiry: "",
+    brand: "",
     description: "",
-    productId: ""
+    productId: "",
+    title:"",
+    discountType:"",
+    category:"",
+    image:""
   });
+  console.log(formData);
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  }
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -31,25 +41,42 @@ const Main = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5050/cb/v1/api/coupons', formData, {
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    })
-    .then(res => {
-      console.log(res);
-      localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
-      
-      navigate('/coupons');
+    const imageData = new FormData();
+    imageData.append('image', file);
+    axios.post('http://localhost:5050/cb/v1/api/upload',imageData)
+    .then(res=>{
+      console.log(res.data.data.imageUrl);
 
-    })
-    .catch(err => {
+      setFormData(data => {
+        return {
+          ...data,
+          image: res.data.data.imageUrl
+        }
+      });
+      
+      axios.post('http://localhost:5050/cb/v1/api/coupons', formData, {
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      })
+      .then(res => {
+        console.log(res);
+        localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
+        
+        navigate('/coupons');
+
+      })
+      .catch(err => {
+        console.log(err.response);
+        localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
+        
+        navigate('/login');
+
+      });
+
+    }).catch(err=>{
       console.log(err.response);
-      localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-      
-      navigate('/login');
-
-    });
+    })
   
   };
 
@@ -61,7 +88,7 @@ const Main = () => {
           <span>Publish Your Coupon</span>
         </p>
         <p className="sub-heading">Fill in the details below to list your coupon on the marketplace</p>
-        <form className="publish-coupon-details">
+        <form className="publish-coupon-details" onSubmit={handleSubmit}>
           <div className="publish-coupon-two-column">
             <div className="publish-coupon-two-column-item">
               <label
@@ -234,9 +261,8 @@ const Main = () => {
               <input
                 id='img'
                 name='img'
-                value={formData.img}
                 type='file'
-                onChange={handleChange}
+                onChange={handleFileChange}
               />
               <span>Provide an image of the coupon or related product</span>
 
