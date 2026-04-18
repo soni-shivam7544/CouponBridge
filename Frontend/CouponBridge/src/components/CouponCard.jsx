@@ -52,7 +52,7 @@ function CouponCard( { data } ) {
             </div>
             <div className="coupon-card-info text">
                 <p style={{color:'var(--color-primary)'}}>{data ?data.brand.trim().toUpperCase():''}</p>
-                <p className='heading'>{data ? data.title.trim().toUpperCase():''}</p>
+                <p className='coupon-card-info-title heading'>{data ? data.title.trim().toUpperCase():''}</p>
                 <div className="coupon-card-provider caption">
                     <p>{data ? data.provider.name:''}</p>
                     <div className="coupon-card-provider-rating">

@@ -240,8 +240,13 @@ const Main = () => {
                 onChange={handleChange}
                 required
               >
-                <option>Fashion</option>
                 <option>Food</option>
+                <option>Fashion</option>
+                <option>Electronics</option>
+                <option>Travel</option>
+                <option>Health</option>
+                <option>Entertainment</option>
+                <option>Home</option>
                 <option>Other</option>
               </select>
             </div>
