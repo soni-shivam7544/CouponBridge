@@ -111,6 +111,8 @@ const updateProvider = async (id, data) => {
 
 const destroy = async (id) => {
     try {
+        const coupons = await Coupons.deleteMany({provider: id});
+
         const provider = await Provider.findByIdAndDelete(id);
         return provider;
     } catch(error) {

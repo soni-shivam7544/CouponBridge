@@ -8,6 +8,7 @@ import GradingIcon from '@mui/icons-material/Grading';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import Button from '@mui/material/Button';
 import CouponCard from '../../components/CouponCard';
@@ -110,6 +111,14 @@ const Main= () => {
     navigate('/login');
   }
 
+  const handleDelete = () => {
+    axios.delete(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`)
+    .then(res=>{
+      logout();
+      navigate('/signup');
+    }).catch(err=>console.log(err.response));
+  }
+
   useEffect(()=>{
     if(user){
       const date = new Date(user.createdAt);
@@ -160,6 +169,10 @@ const Main= () => {
           <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-danger)'}} onClick={handleLogout}>
             <LogoutIcon sx={{ marginRight:'1rem'}}/>
             <span>Logout</span>
+          </Button>
+          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-danger)'}} onClick={handleDelete}>
+            <DeleteOutlineOutlinedIcon sx={{ marginRight:'1rem'}}/>
+            <span>Delete Account</span>
           </Button>
         </div>
       </div>
