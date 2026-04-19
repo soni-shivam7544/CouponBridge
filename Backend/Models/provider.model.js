@@ -19,6 +19,9 @@ const providerSchema = new mongoose.Schema({
         default: 0,
         min: 0,
         max: 6
+    },
+    picture: {
+        type: String
     }
 
 }, { timestamps: true });

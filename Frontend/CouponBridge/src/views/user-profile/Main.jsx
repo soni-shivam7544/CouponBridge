@@ -3,7 +3,8 @@ import './Main.css';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';import GradingIcon from '@mui/icons-material/Grading';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import GradingIcon from '@mui/icons-material/Grading';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,9 +13,14 @@ import Button from '@mui/material/Button';
 import CouponCard from '../../components/CouponCard';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Main= () => {
-  const {user} = useAuth();
+
+  const navigate = useNavigate();
+
+  const {user, updateUser, logout} = useAuth();
   const role = localStorage.getItem('role');
   const [option, setOption] = useState('profile');
   const [editMode,setEditMode] = useState(false);
@@ -23,10 +29,19 @@ const Main= () => {
     email: '',
     type: '',
     createdAt:'',
+    picture:''
   });
 
   const handleSave = () => {
     // axios call
+
+    axios.put(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`, personalData)
+    .then(res => {
+      console.log(res);
+      updateUser(res.data.data);
+    }).catch(err => {
+      console.log(err.response);
+    })
 
     setEditMode(false);
     const inputs = document.querySelectorAll('form input');
@@ -36,6 +51,11 @@ const Main= () => {
   }
   const handleCancel = () => {
     // no axios call
+    const prevUser = user;
+    updateUser({
+      ...prevUser
+    });
+
     setEditMode(false);
     const inputs = document.querySelectorAll('form input');
     inputs.forEach(input => {
@@ -50,6 +70,7 @@ const Main= () => {
       input.classList.remove('edit-saved');
     });
   }
+
   const handlePersonalDataChange = (e) => {
     e.preventDefault();
     setPersonalData({...personalData, [e.target.name]:e.target.value});
@@ -57,6 +78,36 @@ const Main= () => {
 
   const handleOptionChange = (e) => {
     setOption(e.target.value);
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    const imageData = new FormData();
+    imageData.append('image', file);
+
+    axios.post('http://localhost:5050/cb/v1/api/upload',imageData)
+    .then(res=>{
+      const updatedData = {
+        ...personalData,
+        picture: res.data.data.imageUrl
+      }
+      axios.put(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`,updatedData)
+      .then(res => {
+        axios.get(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`)
+        .then(res=>{
+          updateUser(res.data.data);
+        }).catch(err=> console.log(err.response));
+
+      })
+      .catch(err => console.log(err.response))
+
+    }).catch(err => console.log(err.response));
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   }
 
   useEffect(()=>{
@@ -67,7 +118,8 @@ const Main= () => {
         name: user.name,
         email: user.email,
         type: role || null,
-        createdAt: memberSince
+        createdAt: memberSince,
+        picture: user.picture || null
       })
     }
   },[user, role]);
@@ -76,7 +128,26 @@ const Main= () => {
     <div className='profile-container'>
       <div className="profile-container-left text">
         <div className="profile-left-info">
-          <PersonOutlinedIcon sx={{fontSize:'3.5rem', backgroundColor:'var(--color-primary-light)', borderRadius:'50%', padding: '0.5rem', marginBottom:'0.5rem'}}/>
+          <div className="profile-left-info-header">
+            <div className="profile-left-img">
+              {user && user.picture ? 
+              <img src={user.picture} alt='img'/>
+              :
+              <PersonOutlinedIcon sx={{fontSize:'3.5rem', backgroundColor:'var(--color-primary-light)', borderRadius:'50%', padding: '0.5rem', marginBottom:'0.5rem'}}/>
+              }
+              
+            </div>
+            <div className="profile-left-img-edit">
+              <label htmlFor='file-upload'>
+                <ModeEditOutlineOutlinedIcon sx={{fontSize:'1.5rem', backgroundColor: 'var(--color-bg)', padding: '0.5rem', borderRadius:'50%'}}/>
+              </label>
+              <input
+                id='file-upload'
+                type='file'
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
           <p className='lg-heading'>{user ? user.name :null}</p>
           <p>{user ? user.email : null}</p>
           <span style={{backgroundColor:'var(--color-bg)', borderRadius:'1rem', color:'var(--color-accent)', padding: '0rem 1rem', marginTop:'0.5rem'}}>{role ? role :null}</span>
@@ -86,7 +157,7 @@ const Main= () => {
             <FavoriteBorderOutlinedIcon sx={{marginRight:'1rem'}}/>
             <span>Favourites</span>
           </Button>
-          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-danger)'}}>
+          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-danger)'}} onClick={handleLogout}>
             <LogoutIcon sx={{ marginRight:'1rem'}}/>
             <span>Logout</span>
           </Button>
