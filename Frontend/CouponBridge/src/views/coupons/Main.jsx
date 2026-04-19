@@ -10,9 +10,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { useGlobalCategory } from '../../hooks/useGlobalCategory.js';
+
 const Main = () => {
 
   const navigate = useNavigate();
+
+  const {globalCategory} = useGlobalCategory();
 
   localStorage.removeItem('alert');
 
@@ -20,7 +24,7 @@ const Main = () => {
   const [formData, setFormData] = useState({
     search: '',
     sort: 'Newest',
-    category: 'All Categories'
+    category: globalCategory
   });
   
   const [verifiedCheckbox, setVerifiedCheckbox] = useState(false);
@@ -32,7 +36,6 @@ const Main = () => {
 
 
   useEffect ( () => {
-    console.log(verifiedCheckbox);
     axios.get(`http://localhost:5050/cb/v1/api/coupons/search`,{
       params:{
         search: formData.search,
