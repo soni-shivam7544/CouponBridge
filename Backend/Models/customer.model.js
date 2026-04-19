@@ -16,7 +16,13 @@ const customerSchema = new mongoose.Schema({
     },
     picture: {
         type: String
-    }
+    },
+    savedCoupons:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Coupon'
+        }
+    ]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Customer', customerSchema);

@@ -24,7 +24,11 @@ const Main = () => {
     const [coupon, setCoupon] = useState(null);
 
     useEffect(()=>{
-        axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`)
+        axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`,{
+            headers:{
+                authorization: localStorage.getItem('token')
+            }
+        })
             .then( res => {
                 console.log(res.data.data);
                 setCoupon(res.data.data);

@@ -38,6 +38,10 @@ const couponSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isSaved: {
+        type: Boolean,
+        default: false
+    },
     isPurchased: {
         type: Boolean,
         default: false

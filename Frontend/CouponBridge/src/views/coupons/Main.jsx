@@ -26,6 +26,7 @@ const Main = () => {
     sort: 'Newest',
     category: globalCategory
   });
+  console.log(coupons);
   
   const [verifiedCheckbox, setVerifiedCheckbox] = useState(false);
   
@@ -42,6 +43,9 @@ const Main = () => {
         sort: formData.sort,
         category: formData.category,
         isVerified: verifiedCheckbox
+      },
+      headers:{
+        authorization: localStorage.getItem('token')
       }
     })
       .then(res => {

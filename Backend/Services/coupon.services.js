@@ -1,4 +1,5 @@
-const Coupon = require("../Models/coupon.model.js")
+const Coupon = require("../Models/coupon.model.js");
+const Customer = require("../Models/customer.model.js");
 
 const create = async ( couponData ) => {
     try {
@@ -28,9 +29,22 @@ const getAll = async () => {
     }
 }
 
-const getById = async (id) => {
+const getById = async ({id,user}) => {
     try {
-        const coupon = await Coupon.findById(id).populate('provider', 'name email').populate('customer', 'name email');
+        let coupon = await Coupon.findById(id).populate('provider', 'name email').populate('customer', 'name email');
+        
+        if(user){
+            const savedUser = await Customer.findById(user._id);
+            if(savedUser){
+                const savedIds = user.savedCoupons.map( id => id.toString());
+                const updatedCoupon = {
+                    ...coupon._doc,
+                    isSaved: savedIds.includes(coupon._id.toString())
+                };
+                coupon = updatedCoupon;
+            }
+                
+        }
         return coupon;
     } catch (error) {
         console.log(error);
@@ -65,7 +79,7 @@ const deleteById = async (id) => {
     }
 }
 
-const searchCoupons = async (query) => {
+const searchCoupons = async ({query,user}) => {
     try {
         let { search, sort, isVerified, category } = query;
         search = search.toLowerCase().trim();
@@ -87,9 +101,23 @@ const searchCoupons = async (query) => {
             default:
                 sortOption = { createdAt : -1 };
         }
-
+        
         let coupons = await Coupon.find({}).sort(sortOption).populate('provider', 'name email');
+        
 
+        if(user){
+            const savedUser = await Customer.findById(user._id);
+            if(savedUser){
+                const savedIds = user.savedCoupons.map( id => id.toString());
+                const updatedCoupons = coupons.map(coupon => ({
+                    ...coupon._doc,
+                    isSaved: savedIds.includes(coupon._id.toString())
+                }));
+                coupons = updatedCoupons;
+            }
+                
+        }
+        
         if(isVerified === "true"){
             coupons = coupons.filter(coupon => coupon.isVerified === true);
         }

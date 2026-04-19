@@ -11,48 +11,101 @@ import '../index.css';
 import './CouponCard.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../hooks/useAuth';
+import { useEffect } from 'react';
 
 function CouponCard( { data } ) {
 
+    const role = localStorage.getItem('role');
+    const {user, updateUser} = useAuth();
+    const [coupon, setCoupon] = useState(data);
+    const [isLiked, setIsLiked] = useState(coupon.isSaved); // to toggle like
+    
     const navigate = useNavigate();
-    const [isLiked, setIsLiked] = useState(false);
-
     const handleLike = (e) => {
         e.stopPropagation();
-        setIsLiked((like)=>(!like));
+
+        if(role === 'customer'){
+            if(isLiked === false){
+
+                axios.put(`http://localhost:5050/cb/v1/api/customers/${user._id}`,{
+                    $addToSet: { savedCoupons: coupon._id } // prevents duplicates
+                }).then(res => {
+                    console.log(res);
+                    console.log("saved");
+                    updateUser(res.data.data);
+                    setIsLiked(true);
+
+
+                }).catch(err => {
+                    console.log(err.response);
+                })
+            }
+            else{
+
+                axios.put(`http://localhost:5050/cb/v1/api/customers/${user._id}`,{
+                    $pull: { savedCoupons: coupon._id }
+                }).then(res => {
+                    console.log(res);
+                    console.log("saved removed");
+                    updateUser(res.data.data);
+                    setIsLiked(false);
+
+
+                }).catch(err => {
+                    console.log(err.response);
+                })
+            }
+        }
+        else{
+            console.log("Customer Login is required.");
+        }
+        
+        
     }
     const handleAddtoCart = (e) => {
         e.stopPropagation();
     }
-
+    useEffect(()=>{
+        axios.get(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
+            headers:{
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(res=>{
+            setCoupon(res.data.data);
+            setIsLiked(res.data.data.isSaved)
+        }).catch(err=>console.log(err.response));
+    },[user]);
     return (
         
-        <div className="coupon-card" onClick={ ()=> navigate(`/coupons/${data._id}`)}>
+        <div className="coupon-card" onClick={ ()=> navigate(`/coupons/${coupon._id}`)}>
             <div className="coupon-card-image">
-                <img src={data ? data.image : null} alt='image'/>
+                <img src={coupon ? coupon.image : null} alt='image'/>
                 <div className='text coupon-card-discount'>
-                    {data ?
-                    data.discountType === 'Percentage' ?
-                    `${data.discountValue}% OFF`
+                    {coupon ?
+                    coupon.discountType === 'Percentage' ?
+                    `${coupon.discountValue}% OFF`
                     :
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <CurrencyRupeeIcon/>
-                        <span>{`${data.discountValue} OFF`}</span>
+                        <span>{`${coupon.discountValue} OFF`}</span>
                     </div>
                     : 
                     ''}
                 </div>
-                { data ? data.isVerified ? 
+                { coupon ? coupon.isVerified ? 
                 <div className='text coupon-card-isverified'><VerifiedIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Verified</span></div>
                 : null: null
                 }
-                <span className='coupon-card-like' onClick={handleLike}>{ !isLiked ? <FavoriteBorderIcon sx={{ color:'var(--color-text-muted)'}}/> : <FavoriteIcon sx={{ color:'var(--color-danger)'}}/>}</span>
+                <span className='coupon-card-like' onClick={handleLike}>{ coupon && !(coupon.isSaved )? <FavoriteBorderIcon sx={{ color:'var(--color-text-muted)'}}/> : <FavoriteIcon sx={{ color:'var(--color-danger)'}}/>}</span>
             </div>
             <div className="coupon-card-info text">
-                <p style={{color:'var(--color-primary)'}}>{data ?data.brand.trim().toUpperCase():''}</p>
-                <p className='coupon-card-info-title heading'>{data ? data.title.trim().toUpperCase():''}</p>
+                <p style={{color:'var(--color-primary)'}}>{coupon ?coupon.brand.trim().toUpperCase():''}</p>
+                <p className='coupon-card-info-title heading'>{coupon ? coupon.title.trim().toUpperCase():''}</p>
                 <div className="coupon-card-provider caption">
-                    <p>{data ? data.provider.name:''}</p>
+                    <p>{coupon ? coupon.provider.name:''}</p>
                     <div className="coupon-card-provider-rating">
                         <StarIcon sx={{color: 'var(--color-highlight-hover)', fontSize:'1rem'}}/>
                         <span>4.8</span>
@@ -66,7 +119,7 @@ function CouponCard( { data } ) {
                     <div className="coupon-card-price lg-heading">
                         <div className="coupon-card-reduced-price">
                             <CurrencyRupeeIcon sx={{fontSize:'1.5rem'}}/>
-                            <span>{data ? data.price:''}</span>
+                            <span>{coupon ? coupon.price:''}</span>
                         </div>
                         
                     </div>
