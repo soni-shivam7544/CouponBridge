@@ -49,11 +49,7 @@ const login = async (data) => {
             { expiresIn: '1d' }
         );
 
-        return { user: {
-            _id: user._id,
-            name: user.name,
-            email: user.email
-        }, token} ;
+        return { user, token} ;
 
     } catch (error) {
         console.log(error);

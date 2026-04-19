@@ -76,7 +76,7 @@ function Navbar() {
 
                         { user ? 
                             <>
-                                <div id="user" className='lg-heading'> {user.name[0].toUpperCase()}</div>
+                                <div id="user" className='lg-heading' onClick={()=>navigate(`/users/${user._id}`)}> {user.name[0].toUpperCase()}</div>
                                 <Button variant="contained" sx={{borderRadius: '2rem'}} onClick={ handleLogout }>Logout</Button>
                             </>
                         : 

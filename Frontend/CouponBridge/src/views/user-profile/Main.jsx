@@ -10,17 +10,19 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import Button from '@mui/material/Button';
 import CouponCard from '../../components/CouponCard';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 const Main= () => {
+  const {user} = useAuth();
+  const role = localStorage.getItem('role');
   const [option, setOption] = useState('profile');
   const [editMode,setEditMode] = useState(false);
   const [personalData, setPersonalData] = useState({
-    name:'Shivam Soni',
-    email:'sonishivam7544@gmail.com',
-    type: 'Buyer',
-    createdAt: '08/04/2026',
+    name: '',
+    email: '',
+    type: '',
+    createdAt:'',
   });
 
   const handleSave = () => {
@@ -57,14 +59,27 @@ const Main= () => {
     setOption(e.target.value);
   }
 
+  useEffect(()=>{
+    if(user){
+      const date = new Date(user.createdAt);
+      const memberSince = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+      setPersonalData({
+        name: user.name,
+        email: user.email,
+        type: role || null,
+        createdAt: memberSince
+      })
+    }
+  },[user, role]);
+
   return (
     <div className='profile-container'>
       <div className="profile-container-left text">
         <div className="profile-left-info">
           <PersonOutlinedIcon sx={{fontSize:'3.5rem', backgroundColor:'var(--color-primary-light)', borderRadius:'50%', padding: '0.5rem', marginBottom:'0.5rem'}}/>
-          <p className='lg-heading'>Shivam Soni</p>
-          <p>sonishivam7544@gmail.com</p>
-          <span style={{backgroundColor:'var(--color-bg)', borderRadius:'1rem', color:'var(--color-accent)', padding: '0rem 1rem', marginTop:'0.5rem'}}>Buyer</span>
+          <p className='lg-heading'>{user ? user.name :null}</p>
+          <p>{user ? user.email : null}</p>
+          <span style={{backgroundColor:'var(--color-bg)', borderRadius:'1rem', color:'var(--color-accent)', padding: '0rem 1rem', marginTop:'0.5rem'}}>{role ? role :null}</span>
         </div>
         <div className="profile-left-actions">
           <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-text-secondary)'}}>

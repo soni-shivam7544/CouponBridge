@@ -57,6 +57,7 @@ const Main = () => {
         }
         else axios.post('http://localhost:5050/cb/v1/api/providers/signin', formData)
             .then ( res=> {
+                console.log(res);
                 login({ userData:res.data.data, role:'provider'});
                 showAlert({ type: 'success', message: `${res.data.message}`});
                 navigate('/');
