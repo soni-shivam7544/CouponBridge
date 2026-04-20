@@ -13,27 +13,71 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import StarIcon from '@mui/icons-material/Star';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState} from 'react';
+import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
 
 const Main = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
+    const {user, updateUser} = useAuth();
     const [coupon, setCoupon] = useState(null);
+    const [isLiked, setIsLiked] = useState(false); // to toggle like
+    const handleLike = (e) => {
 
+        if(role === 'customer'){
+            if(isLiked === false){
+
+                axios.put(`http://localhost:5050/cb/v1/api/customers/${user._id}`,{
+                    $addToSet: { savedCoupons: coupon._id } // prevents duplicates
+                }).then(res => {
+                    console.log(res);
+                    console.log("saved");
+                    updateUser(res.data.data);
+                    setIsLiked(true);
+
+
+                }).catch(err => {
+                    console.log(err.response);
+                })
+            }
+            else{
+
+                axios.put(`http://localhost:5050/cb/v1/api/customers/${user._id}`,{
+                    $pull: { savedCoupons: coupon._id }
+                }).then(res => {
+                    console.log(res);
+                    console.log("saved removed");
+                    updateUser(res.data.data);
+                    setIsLiked(false);
+
+
+                }).catch(err => {
+                    console.log(err.response);
+                })
+            }
+        }
+        else{
+            console.log("Customer Login is required.");
+        }
+        
+        
+    }
     useEffect(()=>{
         axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`,{
             headers:{
                 authorization: localStorage.getItem('token')
             }
         })
-            .then( res => {
-                console.log(res.data.data);
-                setCoupon(res.data.data);
-            }).catch( err => console.log(err));
-    }, []);
+        .then(res=>{
+            setCoupon(res.data.data);
+            setIsLiked(res.data.data.isSaved)
+        }).catch(err=>console.log(err.response));
+    }, [user]);
 
     const handleVerify = () => {
         console.log( coupon.productId, coupon.code);
@@ -110,10 +154,15 @@ const Main = () => {
                         <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
                     </div>
                     <div className="coupon-details-quick-items">
-                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                        {coupon && !(coupon.isSaved) ? <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleLike}>
                             <FavoriteBorderIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Save</span>
+                        </Button>:
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-danger)'}} onClick={handleLike}>
+                            <FavoriteIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
+                            <span>Saved</span>
                         </Button>
+                        }
                         <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
                             <ElectricBoltIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Verify Coupon</span>
