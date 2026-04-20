@@ -3,4 +3,5 @@ const authMiddlewares = require('../Middlewares/auth.middlewares');
 
 const cartRouter = (app) => {
     app.get('/cb/v1/api/cart',authMiddlewares.isCustomerLoggedin, cartControllers.getUserCart);
+    app.post('/cb/v1/api/cart',authMiddlewares.isCustomerLoggedin, cartControllers.addToUserCart);
 }
