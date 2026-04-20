@@ -68,8 +68,40 @@ const verifyCustomerToken = async (req, res, next) => {
     }
 }
 
+const isCustomerLoggedin = async (req, res, next) => {
+    try {
+        const token = req.headers.authorization;
+
+        console.log(token);
+
+        if(!token) {
+            throw { err: "Authentication failed! Login as Customer first.", code: 401 };
+        }
+
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        
+        const user = await  Customer.findById( decoded.id );
+        if(!user){
+            throw { err: "Customer not found! Create an Account.", code: 400 };
+        }
+        req.user = user;
+        
+        next();
+
+        
+    } catch (error) {
+        console.log(error);
+        if(error.err) {
+            errorResponseBody.error = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
 
 module.exports = {
     verifyProviderToken,
-    verifyCustomerToken
+    verifyCustomerToken,
+    isCustomerLoggedin
 };
