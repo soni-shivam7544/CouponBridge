@@ -72,5 +72,6 @@ const removeFromCart = async({user, couponId}) => {
 
 module.exports = {
     getCart,
-    addToCart
+    addToCart,
+    removeFromCart
 }
