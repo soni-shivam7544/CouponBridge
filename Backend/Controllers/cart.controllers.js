@@ -46,6 +46,22 @@ const removeFromUserCart = async (req, res) => {
     }
 }
 
+const updateUserCart = async (req, res) => {
+    try {
+        const {couponId, quantity} = req.body;
+        const response =  await cartServices.updateInCart({user: req.user, couponId, quantity});
+        successResponseBody.data = response;
+        return res.status(200).json(successResponseBody);
+        
+    } catch (error) {
+        if(error.err){
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
 module.exports = {
     getUserCart,
     addToUserCart,

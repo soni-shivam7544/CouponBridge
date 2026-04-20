@@ -69,9 +69,30 @@ const removeFromCart = async({user, couponId}) => {
     }
 }
 
+const updateInCart = async({user, couponId, quantity}) => {
+    try {
+        if(!user) throw { err: 'User not found!', code: 401};
+
+        const cart = await Cart.findOne({ user: user._id});
+        if(!cart) throw { err: 'No item in your cart', code: 400};
+
+        const index = cart.items.findIndex( item => (item.coupon.toString() === couponId));
+
+        if(index<0) throw { err: 'Coupon is not in your cart', code: 400};
+
+        cart.items[index].quantity = quantity;
+
+        await cart.save();
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 
 module.exports = {
     getCart,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    updateInCart
 }

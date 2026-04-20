@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const couponRouter = require('./Routes/coupon.routes.js');
 const providerRouter = require('./Routes/provider.routes.js');
 const customerRouter = require('./Routes/customer.routes.js');
-const uploadRoutes = require('./Routes/upload.routes.js')
+const uploadRoutes = require('./Routes/upload.routes.js');
+const cartRoutes = require('./Routes/cart.routes.js');
 const cors = require('cors');
 const { errorResponseBody } = require('./Utils/responsebody.js');
 const app = express();
+
 
 
 app.use(cors());
@@ -20,6 +22,7 @@ couponRouter(app);
 providerRouter(app);
 customerRouter(app);
 uploadRoutes(app);
+cartRoutes(app);
 
 
 app.get('/', (req, res) => {
