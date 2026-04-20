@@ -162,7 +162,7 @@ const Main= () => {
           <span style={{backgroundColor:'var(--color-bg)', borderRadius:'1rem', color:'var(--color-accent)', padding: '0rem 1rem', marginTop:'0.5rem'}}>{role ? role :null}</span>
         </div>
         <div className="profile-left-actions">
-          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-text-secondary)'}}>
+          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-text-secondary)'}} onClick={()=>navigate(`/users/${user._id}/favourites`)}>
             <FavoriteBorderOutlinedIcon sx={{marginRight:'1rem'}}/>
             <span>Favourites</span>
           </Button>

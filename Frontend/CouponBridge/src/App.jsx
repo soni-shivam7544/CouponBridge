@@ -23,7 +23,7 @@ export default function App() {
         <Route path='/login' element = { <Login/> }/>
         <Route path='/publish' element = { <PublishCoupon/> }/>
         <Route path='/users/:id' element = {<UserProfile/>}/>
-        <Route path='/cart' element = {<Cart/>}/>
+        <Route path='/users/:id/cart' element = {<Cart/>}/>
         <Route path='/users/:id/favourites' element = {<Favourites/>}/>
         <Route path='/users/:id/checkout' element = {<Checkout/>}/>
       </Routes>

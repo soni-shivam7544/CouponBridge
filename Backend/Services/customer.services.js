@@ -77,7 +77,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
     try {
-        const customer = await Customer.findById(id);
+        const customer = await Customer.findById(id).populate('savedCoupons');
         return customer;
     } catch(error) {
         console.log(error);
