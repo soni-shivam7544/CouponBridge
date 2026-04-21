@@ -1,0 +1,33 @@
+.payment-summary-cart-card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem 0rem;
+}
+
+.payment-cart-card-img {
+    width: 4rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+.payment-cart-card-img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.payment-cart-card-item-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.payment-cart-card-details {
+    display: flex;
+    align-items: flex-end;
+    width: 78%;
+    justify-content: space-between;
+    margin-left: 0.5rem;
+}
+.payment-cart-card-item-detail{
+    width: 50%;
+}
