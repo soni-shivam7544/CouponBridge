@@ -4,7 +4,7 @@ const getCart = async (user) => {
     try {
 
         if(user){
-            const cart = await Cart.findOne({user: user._id});
+            const cart = await Cart.findOne({user: user._id}).populate('items.coupon');
             return cart;
         }
         throw {err: 'User not found.', code: '401'};
@@ -13,6 +13,20 @@ const getCart = async (user) => {
         console.log(err);
         throw err;
         
+    }
+}
+
+const getCartCouponById = async ({ user, couponId}) =>{
+    try {
+        if(!user) throw {err: 'User not found.', code: '401'};
+        const cart = await Cart.findOne({user: user._id}).populate('items.coupon');
+        const cartCoupon = cart.items.find((item)=>(item.coupon._id.toString() === couponId));
+
+        return cartCoupon;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 }
 
@@ -94,5 +108,6 @@ module.exports = {
     getCart,
     addToCart,
     removeFromCart,
-    updateInCart
+    updateInCart,
+    getCartCouponById
 }

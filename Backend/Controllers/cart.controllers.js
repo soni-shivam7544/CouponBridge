@@ -16,6 +16,21 @@ const getUserCart = async (req, res) => {
     }
 }
 
+const getUserCartCouponById = async(req, res) => {
+    try {
+        const response = await cartServices.getCartCouponById({user: req.user, couponId: req.params.id});
+        successResponseBody.data = response;
+        return res.status(200).json(successResponseBody);
+    } catch (error) {
+        if(error.err){
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
+
 const addToUserCart = async (req, res) => {
     try {
         const response = await cartServices.addToCart({user: req.user, couponId: req.body.couponId});
@@ -65,5 +80,7 @@ const updateUserCart = async (req, res) => {
 module.exports = {
     getUserCart,
     addToUserCart,
-    removeFromUserCart
+    removeFromUserCart,
+    updateUserCart,
+    getUserCartCouponById
 }

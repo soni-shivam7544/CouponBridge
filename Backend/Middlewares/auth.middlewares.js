@@ -39,8 +39,6 @@ const verifyCustomerToken = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
 
-        console.log(token);
-
         if(!token) {
             req.user = null;
             return next();
@@ -71,8 +69,6 @@ const verifyCustomerToken = async (req, res, next) => {
 const isCustomerLoggedin = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
-
-        console.log(token);
 
         if(!token) {
             throw { err: "Authentication failed! Login as Customer first.", code: 401 };
