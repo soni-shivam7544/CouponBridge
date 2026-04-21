@@ -10,10 +10,19 @@ import Button from '@mui/material/Button';
 import CartCard from '../../components/CartCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const Main = () => {
 
   const [cartItems,setCartItems] = useState(null);
+  const navigate = useNavigate();
+
+  const subtotal = cartItems && cartItems.reduce((acc, item) => {
+    return acc + (Number(item.coupon?.price || 0))*(Number(item.quantity || 0));
+  }, 0);
+
+  const platformFee = subtotal / 20;
+  const total = subtotal + platformFee;
 
   const fetchCartItems = () => {
     axios.get('http://localhost:5050/cb/v1/api/cart',{
@@ -21,6 +30,8 @@ const Main = () => {
         authorization: localStorage.getItem('token')
       }
     }).then(res => {
+      const ItemsArray = res.data.data.items;
+      
       setCartItems(res.data.data.items);
     }).catch(err => {
       console.log(err.response);
@@ -84,14 +95,14 @@ const Main = () => {
               <span>Subtotal</span>
               <div className="cart-icon-contained text">
                 <CurrencyRupeeOutlinedIcon/>
-                <span>77.00</span>
+                <span>{subtotal}</span>
               </div>
             </div>
             <div className="cart-summary-item">
               <span>Platform Fee (5%)</span>
               <div className="cart-icon-contained text">
                 <CurrencyRupeeOutlinedIcon/>
-                <span>3.85</span>
+                <span>{platformFee}</span>
               </div>
             </div>
           </div>
@@ -100,7 +111,7 @@ const Main = () => {
               <span>Total</span>
               <div className="cart-icon-contained">
                 <CurrencyRupeeOutlinedIcon/>
-                <span>80.85</span>
+                <span>{total}</span>
               </div>
             </div>
             <div className="cart-order-info">
@@ -113,7 +124,7 @@ const Main = () => {
                 <span>Verified coupons</span>
               </div>
             </div>
-            <Button variant="contained" sx={{width:'100%', borderRadius: '0.5rem'}}>
+            <Button variant="contained" sx={{width:'100%', borderRadius: '0.5rem'}} onClick={()=>navigate('/checkout')}>
               <span>Proceed to Checkout</span>
               <ArrowForwardIcon sx={{marginLeft: '1rem'}}/>
             </Button>
