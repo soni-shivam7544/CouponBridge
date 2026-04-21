@@ -66,6 +66,20 @@ function CouponCard( { data } ) {
     }
     const handleAddtoCart = (e) => {
         e.stopPropagation();
+
+        axios.post('http://localhost:5050/cb/v1/api/cart',{
+            couponId: coupon._id
+        },{
+            headers:{
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err.response)
+        })
     }
     useEffect(()=>{
         axios.get(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{

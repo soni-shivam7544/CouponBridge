@@ -40,6 +40,10 @@ function Navbar() {
         }
         
     }
+    const handleShoppingCart = () => {
+        if(user) navigate('/cart');
+        else showAlert({type:'error', message:'Login to customer account required!'})
+    }
 
     useEffect(() => {
         const storedThemeMode = localStorage.getItem('themeMode');
@@ -72,7 +76,7 @@ function Navbar() {
                     <div className="user-items text">
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)'}} onClick={handleThemeToggle}/>}
                         
-                        <ShoppingCartOutlinedIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}} className="cart"/>
+                        <ShoppingCartOutlinedIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
 
                         { user ? 
                             <>
