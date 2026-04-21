@@ -3,11 +3,62 @@ import './Main.css';
 import PaymentOutlinedIcon from '@mui/icons-material/PaymentOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import CurrencyRupeeOutlinedIcon from '@mui/icons-material/CurrencyRupeeOutlined';
-import pitza from '../../assets/images/pitza.png';
 
 import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import PaymentCard from '../../components/PaymentCard';
 
 const Main = () => {
+    const [items,setItems] = useState([]);
+    const [searchParams] = useSearchParams();
+    const type = searchParams.get('type');
+    const couponId = searchParams.get('couponId');
+
+    let subtotal = 0;
+    if(type === 'buyNow'){
+        subtotal = items.reduce((acc, item)=>{
+            return (Number(item?.price || 0));
+        },0);
+    }
+    else{
+        subtotal = items.reduce((acc, item)=>{
+            return acc + (Number(item.coupon?.price || 0))*(Number(item.quantity || 0));
+        },0);
+    }
+
+    let platformFee = subtotal / 20;
+    let total = subtotal + platformFee;
+
+    useEffect(()=>{
+
+        if(type === 'buyNow'){
+            axios.get(`http://localhost:5050/cb/v1/api/coupons/${couponId}`,{
+                headers:{
+                    authorization: localStorage.getItem('token')
+                }
+            }).then(res=>{
+                setItems([{
+                    ...res.data.data
+                }])
+            }).catch(err=>{
+                console.log(err.response)
+            });
+        }
+        else{
+            axios.get(`http://localhost:5050/cb/v1/api/cart`,{
+                headers:{
+                    authorization: localStorage.getItem('token')
+                }
+            }).then(res=>{
+                setItems(res.data.data.items);
+            }).catch(err=>{
+                console.log(err.response);
+            })
+        }
+
+    },[]);
   return (
     <div className="payment-container">
         <div className="payment-header">
@@ -27,10 +78,12 @@ const Main = () => {
                 >
                     Email
                 </label>
+                <p>The coupons will be sent to this email</p>
                 <input
                     id='email'
 
                 />
+                
 
                 <label
                     htmlFor='name'
@@ -101,7 +154,7 @@ const Main = () => {
                 >
                     <span>Pay</span>
                     <CurrencyRupeeOutlinedIcon sx={{fontSize:'1rem'}}/>
-                    <span>80.85</span>
+                    <span>{total}</span>
                 </Button>
                 
 
@@ -110,127 +163,42 @@ const Main = () => {
                 <p className='heading'>Order Summary</p>
 
                 <div className="payment-summary-cart-cards text">
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
+                    {type === 'buyNow' ?
+                    items.map(item=>{
+                        return <PaymentCard key={item._id} data={item} quantity={1}/>
+                    })
+                    :
+                    items.map(item=>{
+                        return <PaymentCard key={item.coupon._id} data={item.coupon} quantity={item.quantity}/>
+                    })
+                    }
 
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="payment-summary-cart-card">
-                        <div className="payment-cart-card-img">
-                            <img src={pitza} alt='img'/>
-                        </div>
-                        <div className="payment-cart-card-details">
-                            <div className="payment-cart-card-item-detail">
-                                <p className='heading'>Free Delivery for 1 Month</p>
-                                <p className='sub-heading'>Uber Eats</p>
-                            </div>
-                            <div className="payment-summary-cost heading">
-                                <CurrencyRupeeOutlinedIcon/>
-                                <span>23</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div className="payment-summary-fee">
-                    <p className='payment-summary-totals'>
+                    <div className='payment-summary-totals'>
                         <span>Subtotal</span>
                         <div className="payment-summary-cost text">
                             <CurrencyRupeeOutlinedIcon/>
-                            <span>77.00</span>
+                            <span>{subtotal}</span>
                         </div>
-                    </p>
+                    </div>
 
-                    <p className='payment-summary-totals'>
+                    <div className='payment-summary-totals'>
                         <span>Platform Fee (5%)</span>
                         <div className="payment-summary-cost text">
                             <CurrencyRupeeOutlinedIcon/>
-                            <span>3.85</span>
+                            <span>{platformFee}</span>
                         </div>
-                    </p>
+                    </div>
 
-                    <p className='payment-summary-totals lg-heading' style={{borderTop:'2px solid var(--color-border)', margin:'0.5rem 0rem', padding: '1rem 0'}}>
+                    <div className='payment-summary-totals lg-heading' style={{borderTop:'2px solid var(--color-border)', margin:'0.5rem 0rem', padding: '1rem 0'}}>
                         <span>Total</span>
                         <div className="payment-summary-cost">
                             <CurrencyRupeeOutlinedIcon/>
-                            <span>80.85</span>
+                            <span>{total}</span>
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>

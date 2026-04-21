@@ -150,7 +150,7 @@ const Main = () => {
                         </div>
                     </div>
                     <div className="coupon-details-navigate">
-                        <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}}>Buy Now</Button>
+                        <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}} onClick={() => navigate(`/checkout?type=buyNow&couponId=${id}`)}>Buy Now</Button>
                         <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
                     </div>
                     <div className="coupon-details-quick-items">
