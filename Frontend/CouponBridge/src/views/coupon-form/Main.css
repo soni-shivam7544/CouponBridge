@@ -1,25 +1,62 @@
-#publish-main {
+.publish-main{
     display: flex;
     justify-content: center;
-    margin: 2rem 1rem;
+    margin: 1rem 0rem;
 }
-
-#container {
-    width: 420px;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-
-}
-
-#form {
-    display: flex;
-    flex-direction: column;
-}
-.form-input {
+.publish-container {
+    background-color: var(--color-surface);
     padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid black;
+    width: 70%;
+    border-radius: 1rem;
+}
+.publish-coupon-details {
+    margin: 1rem 0rem;
+}
+.publish-coupon-details label{
+    display: block;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+.publish-coupon-details input{
+    all: unset;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    padding: 0.5rem 1rem;
+    width: 100%;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+}
+.publish-coupon-details select{
+    all: unset;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    padding: 0.5rem 1rem;
+    width: 100%;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+}
+.publish-coupon-details textarea{
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    padding: 0.5rem 1rem;
+    width: 100%;
+    min-height: 3rem;
+    height: 6rem;
+    border-radius: 1rem;
+    box-sizing: border-box;
     margin-bottom: 1rem;
-    margin-top: 0.2rem;
+    overflow-y: auto;
+    resize: vertical;
+    outline: none;
+}
+.publish-coupon-two-column {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.publish-coupon-two-column-item {
+    min-width: 45%;
 }

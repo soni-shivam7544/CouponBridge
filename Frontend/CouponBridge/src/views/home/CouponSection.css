@@ -1,14 +1,13 @@
 .coupon-section {
     display: flex;
     flex-direction: column;
-    background-color: #fafaec;
+    margin: 4rem 2rem 0rem 2rem;
 }
 
 .coupon-header-section {
     display: flex;
     justify-content:space-between;
     align-items: center;
-    margin:2rem;
 }
 .coupon-header {
     display: flex;
@@ -21,17 +20,17 @@
     align-items: center;
     justify-content:flex-end;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
 
 }
 .view-all:hover {
-    border: 1px solid black;
+    border: 2px solid var(--color-border);
     border-radius: 2rem;
 }
 .coupon-list {
-    margin: 0 2rem;
+    margin: 4rem 0rem 2rem 0rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }

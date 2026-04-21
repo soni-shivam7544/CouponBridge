@@ -1,0 +1,48 @@
+.cart-container{
+    margin: 3rem 2rem;
+}
+.cart-header{
+    display: flex;
+    align-items: center;
+}
+.cart-body{
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0rem;
+    align-items: flex-start;
+}
+.cart-coupon-list{
+    height: 70vh;
+    width: 70%;
+    overflow-y: auto;
+    /* Hide scrollbar (Chrome, Safari, Edge) */
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/Edge */
+    
+}
+
+.cart-summary {
+    background-color: var(--color-surface);
+    padding: 1rem;
+    width: 25%;
+    border: 2px solid var(--color-border);
+    border-radius: 1rem;
+}
+.cart-summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cart-icon-contained {
+    display: flex;
+    align-items: center;
+}
+.cart-order-info {
+    background-color: var(--color-bg);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0.5rem 0rem 1.5rem;
+}
+.cart-order-info-item {
+    margin: 0.5rem 0rem;
+}

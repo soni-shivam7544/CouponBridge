@@ -1,8 +1,9 @@
 .details {
-    margin: 2rem;
+    margin: 2rem 4rem 0rem 3rem;
     display: flex;
     flex-direction:column;
     justify-content: flex-start;
+    margin-bottom: 4rem;
 }
 
 .navigate-back {
@@ -13,117 +14,100 @@
 }
 .coupon-details {
     display: flex;
-    justify-content: space-between;
     align-items:flex-start;
-    padding: 2rem;
     margin-top: 2rem;
 }
 .left-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 60%;
+    position: relative;
+    width: 55%;
+    border: 1px solid var(--color-border);
+    border-radius: 2rem;
+    height: 82vh;
+    overflow: hidden;
+}
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 .right-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 35%;
+    width: 45%;
+    padding-left: 2rem;
 }
-.card-details {
-    display: flex;
-    align-items: flex-start;
-    justify-content:space-between;
-    padding: 2rem 1rem;
-    border: 1px solid black;
+
+.coupon-details-days-left {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--color-primary-light);
     border-radius: 1rem;
+    padding: 0rem 0.4rem;
+    margin: 0.5rem 0rem;
 }
-
-.coupon-logo {
-
-    border: 1px solid black;
-    border-radius:1rem;
-    padding: 1.5rem;
-
-}
-
-.coupon-info {
-    margin-left: 1.5rem;
-}
-
-.coupon-title {
-    margin-bottom: 3rem;
-}
-
-.coupon-desc {
-    margin-bottom: 2rem;
-}
-
-.navigate-options {
+.coupon-details-cost{
     display: flex;
-    flex-direction: column;
-    padding: 2rem 1rem;
-    border: 1px solid black;
-    border-radius: 1rem;
+    align-items: flex-end;
+    margin: 1rem 0rem;
 }
-.coupon-expiry {
+.coupon-details-reduced-cost{
     display: flex;
     align-items: center;
 }
-.coupon-time {
+.coupon-details-real-cost{
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    text-decoration: line-through;
+}
+.coupon-details-provider{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem 0;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid black;
-}
-
-.coupon-daysleft {
-    display: flex;
-    align-items: center;
-}
-
-.coupon-handle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 2rem 0;
-}
-.seller-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    border: 2px solid var(--color-border);
+    border-radius: 1rem;
     padding: 2rem 1rem;
-    border: 1px solid black;
-    border-radius: 1rem;
-    margin-top: 3rem;
+    background-color: var(--color-surface);
+    margin: 1.5rem 0rem;
 }
-.seller-detail-title {
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid black;
-}
-.seller-detail {
+.coupon-details-provider-info {
     display: flex;
+    align-items: center;
+}
+.coupon-details-provider-rating {
+    display: flex;
+    align-items: center;
+}
+.coupon-details-navigate{
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    margin-top: 0.5rem;
+    margin: 1.5rem 0rem;
 }
-.seller-detail-id {
-    display: flex;
-    align-items: center;
-}
-.seller-id-logo {
-    padding: 1rem;
-    border: 1px solid black;
-    border-radius: 1rem;
-}
-.seller-id-data {
-    margin-left: 1rem;
-}
-.seller-id-rating {
-    display: flex;
-    align-items: center;
 
+.coupon-details-quick-items{
+    display: flex;
+    align-items: center;
+}
+.coupon-details-quick-item{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 2rem;
+}
+.coupon-details-meta{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0rem 0.5rem;
+}
+.coupon-details-meta-item{
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary-light);
+    border-radius: 1rem;
+    width: 43%;
+}
+.coupon-details-meta-title{
+    display: flex;
+    align-items: center;
+    line-height: 2rem;
 }

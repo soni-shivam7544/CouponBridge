@@ -5,6 +5,7 @@ const couponService = require('../Services/coupon.services.js');
 const createCoupon = async (req, res) => {
     try {
         const data = req.body;
+        console.log(data);
         const response = await couponService.create({ ...data, provider: req.user._id });
         successResponseBody.data = response;
         successResponseBody.message = "The coupon created successfully.";
@@ -37,7 +38,7 @@ const getAllCoupons = async (req, res) => {
 // Get a coupon by its Id
 const getCouponById = async (req, res) => {
     try {
-        const response = await couponService.getById(req.params.id);
+        const response = await couponService.getById({ id:req.params.id, user:req.user});
         successResponseBody.data = response;
         successResponseBody.message = "Coupon fetched successfully.";
         res.status(200).json(successResponseBody);
@@ -85,7 +86,7 @@ const destroyCoupon = async (req, res) => {
 
 const searchCoupons = async (req, res) => {
     try {
-        const response = await couponService.searchCoupons(req.query);
+        const response = await couponService.searchCoupons({query: req.query, user: req.user});
         successResponseBody.data = response;
         successResponseBody.message = "Coupons fetched successfully.";
         res.status(200).json(successResponseBody);

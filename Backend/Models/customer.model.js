@@ -13,7 +13,16 @@ const customerSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    picture: {
+        type: String
+    },
+    savedCoupons:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Coupon'
+        }
+    ]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Customer', customerSchema);

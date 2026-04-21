@@ -2,14 +2,14 @@ const successResponseBody = {
     success: true,
     data: {},
     error: {},
-    message: "The request processed successfully."
+    message: "The Request Processed Successfully."
 }
 
 const errorResponseBody = {
     success: false,
     data: {},
     error: {},
-    message: "Something went wrong."
+    message: "Something Went Wrong."
 }
 
 module.exports = {

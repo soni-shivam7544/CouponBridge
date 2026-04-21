@@ -14,6 +14,12 @@ const create = async (data) => {
         return provider;
     } catch(error) {
         console.log(error);
+        if(error.code === 11000){
+            throw {
+                err: "Email already exists!",
+                code: 400
+            }
+        }
         if(error.name === 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach( key => {
@@ -32,12 +38,12 @@ const signin = async (data) => {
 
         const user = await Provider.findOne( {email});
         if(!user){
-            throw { err: "User not found!", code: 401 };
+            throw { err: "Email not found!", code: 401 };
         }
 
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            throw { err: "Invalid credentials. Password incorrect.", code: 401};
+            throw { err: "Invalid Credentials. Password Incorrect.", code: 401};
         }
 
         const token = jwt.sign(
@@ -48,11 +54,7 @@ const signin = async (data) => {
 
         return (
             {
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                }, 
+                user, 
                 token
             }
         )
@@ -109,6 +111,8 @@ const updateProvider = async (id, data) => {
 
 const destroy = async (id) => {
     try {
+        const coupons = await Coupons.deleteMany({provider: id});
+
         const provider = await Provider.findByIdAndDelete(id);
         return provider;
     } catch(error) {

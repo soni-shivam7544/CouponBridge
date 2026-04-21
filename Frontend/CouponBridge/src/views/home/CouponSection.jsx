@@ -32,9 +32,9 @@ function CouponSection() {
                         <p className="header-title section-heading">Featured Coupons</p>
                         <p className="header-desc sub-heading">Hand-picked deals from our top sellers</p>
                     </div>
-                    <div className="view-all sub-heading" onClick={ ()=> navigate('/coupons')}>
-                        View All
-                        <ArrowForwardIcon  sx={{marginLeft: '1rem'}}/>
+                    <div className="view-all text" onClick={ ()=> navigate('/coupons')}>
+                        <p>View All</p>
+                        <ArrowForwardIcon  sx={{marginLeft: '0.5rem'}}/>
                     </div>
                 </div>
                 <div className="coupon-list">

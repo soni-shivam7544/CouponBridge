@@ -1,4 +1,5 @@
-const Coupon = require("../Models/coupon.model.js")
+const Coupon = require("../Models/coupon.model.js");
+const Customer = require("../Models/customer.model.js");
 
 const create = async ( couponData ) => {
     try {
@@ -28,9 +29,22 @@ const getAll = async () => {
     }
 }
 
-const getById = async (id) => {
+const getById = async ({id,user}) => {
     try {
-        const coupon = await Coupon.findById(id).populate('provider', 'name email').populate('customer', 'name email');
+        let coupon = await Coupon.findById(id).populate('provider', 'name email').populate('customer', 'name email');
+        
+        if(user){
+            const savedUser = await Customer.findById(user._id);
+            if(savedUser){
+                const savedIds = user.savedCoupons.map( id => id.toString());
+                const updatedCoupon = {
+                    ...coupon._doc,
+                    isSaved: savedIds.includes(coupon._id.toString())
+                };
+                coupon = updatedCoupon;
+            }
+                
+        }
         return coupon;
     } catch (error) {
         console.log(error);
@@ -65,17 +79,57 @@ const deleteById = async (id) => {
     }
 }
 
-const searchCoupons = async (queryData) => {
+const searchCoupons = async ({query,user}) => {
     try {
-        let { query } = queryData;
-        query = query.toLowerCase().trim();
+        let { search, sort, isVerified, category } = query;
+        search = search.toLowerCase().trim();
         
-        let coupons = await Coupon.find({}).populate('provider', 'name email');
+        let sortOption = '';
+        switch(sort){
+            case 'Newest':
+                sortOption = { createdAt : -1};
+                break;
+            case 'Oldest':
+                sortOption = { createdAt : 1 };
+                break;
+            case 'Price: Low To High':
+                sortOption = { price: 1 };
+                break;
+            case 'Price: High To Low':
+                sortOption = { price: -1 };
+                break;
+            default:
+                sortOption = { createdAt : -1 };
+        }
+        
+        let coupons = await Coupon.find({}).sort(sortOption).populate('provider', 'name email');
+        
 
-        if(query === '')return coupons;
+        if(user){
+            const savedUser = await Customer.findById(user._id);
+            if(savedUser){
+                const savedIds = user.savedCoupons.map( id => id.toString());
+                const updatedCoupons = coupons.map(coupon => ({
+                    ...coupon._doc,
+                    isSaved: savedIds.includes(coupon._id.toString())
+                }));
+                coupons = updatedCoupons;
+            }
+                
+        }
+        
+        if(isVerified === "true"){
+            coupons = coupons.filter(coupon => coupon.isVerified === true);
+        }
+
+        if(category !== "All Categories"){
+            coupons = coupons.filter(coupon => coupon.category === category);
+        }
+
+        if(search === '')return coupons;
 
         coupons = coupons.filter( coupon => {
-            return coupon.merchant.toLowerCase().trim().includes(query) || coupon.provider.name.toLowerCase().trim().includes(query);
+            return coupon.brand.toLowerCase().trim().includes(search) || coupon.provider.name.toLowerCase().trim().includes(search) || coupon.category.toLowerCase().trim().includes(search);
         });
         return coupons;
     } catch (error) {

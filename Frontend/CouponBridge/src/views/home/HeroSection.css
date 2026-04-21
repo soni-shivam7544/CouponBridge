@@ -15,13 +15,14 @@
     position:absolute;
     top:4.5rem;
     height:90vh;
-    background-color: black;
+    background: var(--color-hero-cover);
+    backdrop-filter: blur(4px);
     width:100%;
     opacity: 0.5;
 }
 
 .hero-container {
-    width: 50%;
+    width: 55%;
     display: flex;
     text-align: center;
     flex-wrap: wrap;
@@ -29,57 +30,47 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
-    z-index:1;
+    z-index:4;
+    transform: translateY(-10px);
     
 }
 .hero-insight {
     border-radius:2rem;
-    border: 1px solid black;
-    padding: 0 0.5rem;
-    margin-bottom: 0.5rem;
+    border: 1px solid var(--color-border);
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 1rem;
+    background-color: var(--color-surface);
 }
 .hero-title {
-    font-size:xxx-large;
-    font-weight:600;
-    color:#FFDE42;
     margin-bottom: 1rem;
 }
 
 .hero-desc-1 {
-    color:#e7ebb9;
-    font-size:large;
-    font-width: 100;
     margin-bottom:0.5rem;
 }
- .hero-desc-2 {
-    color:#e7ebb9;
-    font-size:large;
-    font-weight:100;
- }
 
  .hero-navigate {
     display:flex;
-    justify-content:space-between;
+    justify-content:space-around;
     align-items: center;
     margin-top:4rem;
     width: 55%;
  }
 .selling-btn {
     border-radius:2rem!important;
-    padding: 0.5rem 1.5rem!important;
+    padding: 0.7rem 1.5rem!important;
 }
 .browse {
     border-radius:2rem;
     display:flex;
     align-items:center;
-    border: 1px solid #e7ebb9;
-    color: #f3faa3;
-    font-size:larger;
-    padding: 0.5rem 2rem;
+    border: 2px solid var(--color-border);
+    color: var(--color-highlight-soft);
+    padding: 0.5rem 0.7rem 0.5rem 1rem;
     cursor: pointer;
 }
 .browse:hover {
-    background-color: #f9faf6;
-    color: black;
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
 }
 

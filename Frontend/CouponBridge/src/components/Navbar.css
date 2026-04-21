@@ -1,80 +1,78 @@
 
 .nav {
-    padding: 0 0.5rem;
     z-index:5;
     opacity:1;
     position: fixed;
-    top: 0;
     width: 100%;
-    background-color: white;
+    box-sizing: border-box;
+    top: 0;
+    background: rgba(255, 255, 255, 0.6); /* light glass */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.dark .nav {
+  background: rgba(2, 6, 23, 0.5);
+}
+.nav img {
+    height: 100%;
+    object-fit: contain;
 }
 .nav-background {
     width:100%;
     height: 4.5rem;
-    background-color:white;
+    background-color: var(--color-bg);
 }
 .nav-items {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 4.5rem;
-    margin-right: 1rem;
 }
 
 .logo {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width:20%;
+    height: 4rem;
     cursor: pointer;
+    margin-left: 4rem;
 }
 .menu-items {
     display: flex;
     justify-content: space-evenly;
-    width: 50%;
 }
 .user-items {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 30%;
+    margin-right: 4rem;
 }
 
-.logo-icon {
-    padding: 0 1rem 0 3rem;
-}
 .cart {
-    margin: 0 0.5rem;
-    padding: 0.5rem;
     border-radius: 50%;
     cursor:pointer;
-}
-.cart:hover{
-    background-color:#dcdff2;
-}
-.login {
-    margin: 0 0.5rem;
-    cursor: pointer;
-    border-radius: 2rem;
-    padding:0.5rem;
-}
-.login:hover {
-    background-color: #dcdff2;
+    margin-right: 0.5rem;
 }
 
+
 .signup {
-    margin: 0 2rem 0 1rem!important;
     border-radius:2rem!important;
 }
 #user {
     border: 2px solid #FFDE42;
-    padding: 0.2rem 0.5rem;
     color: #FFDE42;
     border-radius: 50%;
-    margin: 0 2rem;
     cursor: pointer;
+    margin-right: 0.5rem;
+    padding: 0 0.7rem;
 
 }
 #user:hover {
     background-color: #f3faa3;
+}
+
+.alert-message {
+    position: sticky;
+    top:4.55rem;
+    z-index: 4;
+    backdrop-filter: blur(10px)!important;
+    -webkit-backdrop-filter: blur(10px)!important;
 }

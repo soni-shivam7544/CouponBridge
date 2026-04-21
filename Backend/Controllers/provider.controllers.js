@@ -5,16 +5,16 @@ const signUp = async (req, res) => {
     try {
         const response = await providerService.create(req.body);
         successResponseBody.data = response;
-        successResponseBody.message = "The provider signed up successfully.";
+        successResponseBody.message = "You have registered as a provider successfully. Please login to your account ";
         res.status(201).json(successResponseBody);
     } catch (error) {
         if(error.err) {
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to sign up the provider.";
+            errorResponseBody.message = "Failed to register the provider.";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Failed to sign up the provider.";
+        errorResponseBody.message = "Failed to register the provider.";
         res.status(500).json(errorResponseBody);
     }
 }
@@ -23,17 +23,17 @@ const signin = async (req, res) => {
     try {
         const response = await providerService.signin( req.body );
         successResponseBody.data = response;
-        successResponseBody.message = "The provider signed in successfully.";
+        successResponseBody.message = `Welcome back ${response.user.name}. Login to provider account successful.`;
         res.status(200).json(successResponseBody);
 
     } catch(error) {
         if( error.err ){
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to signin provider.";
+            errorResponseBody.message = "Failed to login provider.";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Failed to signin provider.";
+        errorResponseBody.message = "Failed to login provider.";
         res.status(500).json(errorResponseBody);
     }
 }

@@ -1,23 +1,21 @@
 .conclusion-section {
-    background-color: black;
-    color: white;
+    background-color: var(--color-surface-dark);
+    color: var(--color-surface-dark-text);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height:60vh;
-    margin-top: 4rem;
+    height:65vh;
+    margin: 2rem 0rem;
 }
 
 .conclusion-title {
     margin-top: 6rem;
     padding: 1rem 1rem 0.5rem 1rem;
+    color: var(--color-surface-dark-text);
 }
 .conclusion-subtitle {
     padding: 0.5rem 1rem 1rem 1rem;
-}
-.conclusion-create {
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-surface-dark-text);
 }

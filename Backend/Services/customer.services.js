@@ -13,6 +13,12 @@ const create = async (data) => {
         return customer;
     } catch(error) {
         console.log(error);
+        if(error.code === 11000){
+            throw {
+                err: "Email already exists!",
+                code: 400
+            }
+        }
         if(error.name === 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach( key => {
@@ -31,11 +37,11 @@ const login = async (data) => {
 
         const user = await Customer.findOne( { email });
 
-        if(!user) throw { err: "User not found", code: 400};
+        if(!user) throw { err: "Email Not Found!", code: 400};
 
         const isMatch = await bcrypt.compare(password, user.password);
 
-        if(!isMatch) throw { err: "Invalid credentials", code: 400 };
+        if(!isMatch) throw { err: "Invalid Credentials. Password Incorrect.", code: 400 };
 
         const token = jwt.sign(
             { id: user._id },
@@ -43,11 +49,7 @@ const login = async (data) => {
             { expiresIn: '1d' }
         );
 
-        return { user: {
-            _id: user._id,
-            name: user.name,
-            email: user.email
-        }, token} ;
+        return { user, token} ;
 
     } catch (error) {
         console.log(error);
@@ -75,7 +77,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
     try {
-        const customer = await Customer.findById(id);
+        const customer = await Customer.findById(id).populate('savedCoupons');
         return customer;
     } catch(error) {
         console.log(error);
