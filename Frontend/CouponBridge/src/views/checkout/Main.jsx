@@ -12,6 +12,13 @@ import PaymentCard from '../../components/PaymentCard';
 
 const Main = () => {
     const [items,setItems] = useState([]);
+    const [formData, setFormData] = useState({
+        email: '',
+        name: '',
+        number: '',
+        expiryDate: '',
+        cvv: ''
+    });
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
     const couponId = searchParams.get('couponId');
@@ -30,6 +37,60 @@ const Main = () => {
 
     let platformFee = subtotal / 20;
     let total = subtotal + platformFee;
+
+    const handleSubmit = (e)=> {
+        e.preventDefault();
+        console.log(formData);
+
+        if(type !== 'buyNow'){
+            axios.post(`http://localhost:5050/cb/v1/api/orders`,{
+                items,
+                mode: 'cart'
+
+            },{
+                headers: {
+                    authorization: localStorage.getItem('token')
+                }
+            }).then(res=>{
+                console.log(res);
+            }).catch(err => {
+                console.log(err.response);
+            });
+
+        }else{
+            axios.post(`http://localhost:5050/cb/v1/api/orders`,{
+                items:{
+                    coupon: items[0],
+                    quantity: 1
+                },
+                mode: 'buyNow'
+
+            },{
+                headers: {
+                    authorization: localStorage.getItem('token')
+                }
+            }).then(res=>{
+                console.log(res);
+            }).catch(err => {
+                console.log(err.response);
+            });
+        }
+        
+        setFormData({
+            email: '',
+            name: '',
+            number: '',
+            expiryDate: '',
+            cvv: ''
+        });
+    }
+
+    const handleChange = (e) => {
+        setFormData((prevData)=>{
+            return {...prevData,
+            [e.target.name] : e.target.value}
+        })
+    }
 
     useEffect(()=>{
 
@@ -66,7 +127,7 @@ const Main = () => {
             <p className='sub-heading'>Pay securely with CouponBridge</p>
         </div>
         <div className="payment-body">
-            <form className="payment-details text">
+            <form className="payment-details text" onSubmit={handleSubmit}>
                 <p style={{display:'flex', alignItems:'center', marginBottom:'1.5rem'}}  className='heading'>
                     <PaymentOutlinedIcon sx={{marginRight:'1rem'}}/>
                     <span>Payment Details</span>
@@ -81,6 +142,10 @@ const Main = () => {
                 <p>The coupons will be sent to this email</p>
                 <input
                     id='email'
+                    name='email'
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
 
                 />
                 
@@ -94,6 +159,9 @@ const Main = () => {
                 <input
                     id='name'
                     name='name'
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
 
                 />
 
@@ -107,6 +175,9 @@ const Main = () => {
                     id='number'
                     type='number'
                     name='number'
+                    value={formData.number}
+                    onChange={handleChange}
+                    required
 
                 />
 
@@ -121,6 +192,9 @@ const Main = () => {
                         <input
                             id='expiryDate'
                             name='expiryDate'
+                            value={formData.expiryDate}
+                            onChange={handleChange}
+                            required
 
                         />
                     </div>
@@ -136,6 +210,9 @@ const Main = () => {
                             id='cvv'
                             name='cvv'
                             type='number'
+                            value={formData.cvv}
+                            onChange={handleChange}
+                            required
 
                         />
                     </div>

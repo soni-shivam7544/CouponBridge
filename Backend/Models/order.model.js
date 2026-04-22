@@ -17,6 +17,7 @@ const orderSchema = mongoose.Schema({
     }],
     subtotal: Number,
     platformFee: Number,
+    total: Number,
     status: {
         type: String,
         enum:{

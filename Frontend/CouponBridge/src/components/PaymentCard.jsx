@@ -19,7 +19,7 @@ function PaymentCard({ data, quantity}) {
                 <div className="payment-summary-cost heading">
                     <CurrencyRupeeOutlinedIcon/>
                     <span>{data.price}</span>
-                    <span className='text'>-- x{quantity}</span>
+                    <span className='text'>---x{quantity}</span>
                 </div>
             </div>
         </div>
