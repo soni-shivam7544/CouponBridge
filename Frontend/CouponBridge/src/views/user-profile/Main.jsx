@@ -25,6 +25,7 @@ const Main= () => {
   const role = localStorage.getItem('role');
   const [option, setOption] = useState('profile');
   const [editMode,setEditMode] = useState(false);
+  const [purchased, setPurchased] = useState([]);
   const [personalData, setPersonalData] = useState({
     name: '',
     email: '',
@@ -129,6 +130,20 @@ const Main= () => {
         type: role || null,
         createdAt: memberSince,
         picture: user.picture || null
+      })
+    }
+
+    if(role === 'customer'){
+      axios.get(`http://localhost:5050/cb/v1/api/coupons/purchased`,{
+        headers:{
+          authorization: localStorage.getItem('token')
+        }
+      }).then(res=>{
+        console.log(res);
+        setPurchased(res.data.data);
+
+      }).catch(err=>{
+        console.log(err.response);
       })
     }
   },[user, role]);
@@ -302,12 +317,9 @@ const Main= () => {
           <p className='text'>Show Payments</p>
         </div>: ''}
         {option == 'purchase' ?<div className="purchase-container">
-          <CouponCard/>
-          <CouponCard/>
-          <CouponCard/>
-          <CouponCard/>
-          <CouponCard/>
-          <CouponCard/>
+          {purchased.map(item => {
+            return <CouponCard data = { item }/>
+          })}
         </div>: ''}
       </div>
     </div>

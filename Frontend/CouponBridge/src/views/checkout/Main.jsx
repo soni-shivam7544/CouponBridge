@@ -59,10 +59,12 @@ const Main = () => {
 
         }else{
             axios.post(`http://localhost:5050/cb/v1/api/orders`,{
-                items:{
-                    coupon: items[0],
-                    quantity: 1
-                },
+                items:[
+                    {
+                        coupon: items[0],
+                        quantity: 1
+                    }
+                ],
                 mode: 'buyNow'
 
             },{

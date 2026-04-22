@@ -1,11 +1,11 @@
 const Order = require('../Models/order.model');
 const Cart = require('../Models/cart.model');
 const Coupon = require('../Models/coupon.model');
+const Customer = require('../Models/customer.model');
 const mongoose = require('mongoose');
 
 const create = async({user, data}) => {
     let order = null;
-    console.log('in service');
     try {
         if(!user) throw { err: 'User not found!', code: 401};
 
@@ -66,7 +66,41 @@ const create = async({user, data}) => {
         // order.save({session});
         await order.save();
 
-        if(data.mode === 'cart') await Cart.findOneAndDelete({ user: user._id });
+
+        if(data.mode === 'cart'){
+
+            const cart = await Cart.findOne({ user: user._id });
+
+            if (cart && cart.items.length > 0) {
+            const cartCouponIds = cart.items.map(item => item.coupon);
+
+            await Customer.findByIdAndUpdate(user._id, {
+                $pull: {
+                savedCoupons: { $in: cartCouponIds }
+                }
+            });
+
+            await Cart.findOneAndDelete({ user: user._id });
+            }
+            
+        }
+        else {
+            const customer = await Customer.findByIdAndUpdate(user._id,
+                {
+                    $pull:{
+                        savedCoupons: new mongoose.Types.ObjectId(data.items[0].coupon._id)
+                    }
+                }
+            )
+            console.log(customer);
+            console.log(new mongoose.Types.ObjectId(data.items[0].coupon._id));
+            
+            const cart = await Cart.findOne({ user: user._id});
+            cart.items = cart.items.filter((item)=>{
+                return item.coupon != data.items[0].coupon._id;
+            });
+            await cart.save();
+        }
         // await Cart.findOneAndDelete({ user: user._id }, {session});
 
         // await session.commitTransaction();
