@@ -64,7 +64,7 @@ const create = async({user, data}) => {
         order.total = total;
 
         // order.save({session});
-        order.save();
+        await order.save();
 
         if(data.mode === 'cart') await Cart.findOneAndDelete({ user: user._id });
         // await Cart.findOneAndDelete({ user: user._id }, {session});
@@ -83,14 +83,7 @@ const create = async({user, data}) => {
         let total = 0;
 
         if(order){
-            order = new Order({
-                user: user._id,
-                items: purchasedItems,
-                subtotal,
-                platformFee,
-                total,
-                status: 'failed'
-            });
+            order.status = 'failed';
             
             await order.save();
             return order;
@@ -101,6 +94,18 @@ const create = async({user, data}) => {
     }
 }
 
+const getAll = async ( user ) => {
+    try {
+        if(!user) throw {err: 'User not found!'};
+        const orders = await Order.find({ user: user._id});
+        return orders;
+    } catch (error) {
+        console.log(error);
+        throw error;      
+    }
+} 
+
 module.exports = {
-    create
+    create,
+    getAll
 }
