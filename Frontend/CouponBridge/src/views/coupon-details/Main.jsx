@@ -14,6 +14,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import StarIcon from '@mui/icons-material/Star';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CircleIcon from '@mui/icons-material/Circle';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState} from 'react';
@@ -125,10 +127,23 @@ const Main = () => {
                 <div className="right-column text">
                     <p style={{color:'var(--color-primary)'}}>{coupon ?coupon.brand.trim().toUpperCase():''}</p>
                     <p style={{margin:'0.3rem 0rem'}} className='lg-heading'>{coupon ? coupon.title.trim().toUpperCase():''}</p>
-                    <div className="coupon-details-days-left">
+                    
+                    {coupon && coupon.isActive ?
+                    <div style={{color: 'var(--color-success)'}} className='coupon-status heading'>
+                        <CircleIcon sx={{marginRight: '0.5rem'}}/>
+                        <span><i>Available</i></span>
+                    </div>:
+                    <div className='coupon-status heading'>
+                        <MilitaryTechIcon sx={{marginRight: '0.5rem'}}/>
+                        <span><i>Sold</i></span>
+                    </div>
+                    }
+                    
+                    {coupon && coupon.isActive && <div className="coupon-details-days-left">
                         <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
                         <span>68 days left</span>
-                    </div>
+                    </div>}
+                    
                     <div className="coupon-details-cost">
                         <div className="coupon-details-reduced-cost section-heading">
                             <CurrencyRupeeIcon sx={{fontSize:'2rem'}}/>
@@ -149,11 +164,11 @@ const Main = () => {
                             <span className=''><b>4.5</b></span>
                         </div>
                     </div>
-                    <div className="coupon-details-navigate">
+                    {coupon && coupon.isActive && <div className="coupon-details-navigate">
                         <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}} onClick={() => navigate(`/checkout?type=buyNow&couponId=${id}`)}>Buy Now</Button>
                         <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
-                    </div>
-                    <div className="coupon-details-quick-items">
+                    </div>}
+                    {coupon && coupon.isActive && <div className="coupon-details-quick-items">
                         {coupon && !(coupon.isSaved) ? <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleLike}>
                             <FavoriteBorderIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Save</span>
@@ -171,7 +186,7 @@ const Main = () => {
                             <ShareIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Share</span>
                         </Button>
-                    </div>
+                    </div>}
                     <div className="coupon-details-meta">
                         <div className="coupon-details-meta-item">
                             <div className="coupon-details-meta-title">
@@ -180,13 +195,13 @@ const Main = () => {
                             </div>
                             <p style={{color:'var(--color-text-primary)'}}>{coupon ? coupon.category:''}</p>
                         </div>
-                        <div className="coupon-details-meta-item">
+                        {coupon && coupon.isActive && <div className="coupon-details-meta-item">
                             <div className="coupon-details-meta-title">
                                 <CalendarMonthIcon sx={{fontSize:'1rem', marginRight: '0.5rem'}}/>
                                 <span>Expires</span>
                             </div>
                             <p style={{color:'var(--color-text-primary)'}}>{coupon ? coupon.expiry:''}</p>
-                        </div>
+                        </div>}
                     </div>
 
                 </div>

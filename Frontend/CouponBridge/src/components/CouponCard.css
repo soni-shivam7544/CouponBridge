@@ -47,6 +47,11 @@
     display: flex;
     margin-left: 0.5rem;
 }
+.coupon-status {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0rem 0.1rem
+}
 .coupon-card-expiry{
     display: flex;
     align-items: center;

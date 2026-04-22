@@ -6,6 +6,8 @@ import StarIcon from '@mui/icons-material/Star';
 import Button from '@mui/material/Button';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import CircleIcon from '@mui/icons-material/Circle';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 import '../index.css';
 import './CouponCard.css';
@@ -113,7 +115,7 @@ function CouponCard( { data } ) {
                 <div className='text coupon-card-isverified'><VerifiedIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Verified</span></div>
                 : null: null
                 }
-                <span className='coupon-card-like' onClick={handleLike}>{ coupon && !(coupon.isSaved )? <FavoriteBorderIcon sx={{ color:'var(--color-text-muted)'}}/> : <FavoriteIcon sx={{ color:'var(--color-danger)'}}/>}</span>
+                { (coupon && !coupon.isPurchased) && (<span className='coupon-card-like' onClick={handleLike}>{ coupon && !(coupon.isSaved )? <FavoriteBorderIcon sx={{ color:'var(--color-text-muted)'}}/> : <FavoriteIcon sx={{ color:'var(--color-danger)'}}/>}</span>)}
             </div>
             <div className="coupon-card-info text">
                 <p style={{color:'var(--color-primary)'}}>{coupon ?coupon.brand.trim().toUpperCase():''}</p>
@@ -125,10 +127,20 @@ function CouponCard( { data } ) {
                         <span>4.8</span>
                     </div>
                 </div>
-                <div className="coupon-card-expiry caption">
+                {coupon && coupon.isActive ?
+                <div style={{color: 'var(--color-success)'}} className='coupon-status'>
+                    <CircleIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/>
+                    <span><i>Available</i></span>
+                </div>:
+                <div className='coupon-status'>
+                    <MilitaryTechIcon sx={{marginRight: '0.5rem'}}/>
+                    <span><i>Sold</i></span>
+                </div>
+                }
+                {(coupon && !coupon.isPurchased) && <div className="coupon-card-expiry caption">
                     <TimerIcon sx={{fontSize:'1rem'}}/>
                     <span> 83 days left</span>
-                </div>
+                </div>}
                 <div className="coupon-card-navigation">
                     <div className="coupon-card-price lg-heading">
                         <div className="coupon-card-reduced-price">
@@ -137,7 +149,7 @@ function CouponCard( { data } ) {
                         </div>
                         
                     </div>
-                    <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
+                    {(coupon && !coupon.isPurchased) && <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>}
                 </div>
             </div>
         </div>
