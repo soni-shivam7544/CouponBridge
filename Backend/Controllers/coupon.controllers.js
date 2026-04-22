@@ -96,11 +96,31 @@ const searchCoupons = async (req, res) => {
         res.status(500).json(errorResponseBody);
     }
 }
+
+const getPurchasedCoupons = async(req, res) => {
+    try {
+        const response = await couponService.getPurchased(req.user);
+        successResponseBody.data = response;
+        return res.status(200).json(successResponseBody);
+    } catch (error) {
+        console.log(error);
+        if(error.err) {
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to get purchased coupons";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to get purchased coupons";
+        return res.status(error.code).json(errorResponseBody);
+        
+    }
+}
 module.exports = {
     createCoupon,
     getAllCoupons,
     getCouponById,
     updateCouponById,
     destroyCoupon,
-    searchCoupons
+    searchCoupons,
+    getPurchasedCoupons
 }

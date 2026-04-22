@@ -138,11 +138,26 @@ const searchCoupons = async ({query,user}) => {
     }
 }
 
+const getPurchased = async(user) => {
+    try {
+        if(!user) throw {err: 'User no found', code: 401};
+
+        const coupons = await Coupon.find( { customer: user._id });
+        return coupons;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+        
+    }
+}
+
 module.exports = {
     create,
     getAll,
     getById,
     updateById,
     deleteById,
-    searchCoupons
+    searchCoupons,
+    getPurchased
 }

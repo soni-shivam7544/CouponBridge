@@ -11,6 +11,9 @@ const couponRouter = ( app ) => {
     // Get all coupons
     app.get('/cb/v1/api/coupons', couponController.getAllCoupons);
 
+    // Get purchased coupons
+    app.get('/cb/v1/api/coupons/purchased',authMiddlewares.isCustomerLoggedin,couponController.getPurchasedCoupons);
+
     // Get a coupon by Id
     app.get('/cb/v1/api/coupons/:id',authMiddlewares.verifyCustomerToken, couponController.getCouponById);
 
