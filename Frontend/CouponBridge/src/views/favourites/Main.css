@@ -8,8 +8,7 @@
 .favourites-coupon-list{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
+    gap: 0.5rem;
     margin-top: 2rem;
 }
 .favourites-coupon-not-found{

@@ -137,10 +137,15 @@ function CouponCard( { data } ) {
                     <span><i>Sold</i></span>
                 </div>
                 }
-                {(coupon && !coupon.isPurchased) && <div className="coupon-card-expiry caption">
+                {(coupon && !coupon.isPurchased) ? <div className="coupon-card-expiry caption">
                     <TimerIcon sx={{fontSize:'1rem'}}/>
                     <span> 83 days left</span>
-                </div>}
+                </div>:
+                <div className="coupon-card-expiry caption">
+                    <TimerIcon sx={{fontSize:'1rem'}}/>
+                    <span> 0 days left</span>
+                </div>
+                }
                 <div className="coupon-card-navigation">
                     <div className="coupon-card-price lg-heading">
                         <div className="coupon-card-reduced-price">
