@@ -7,17 +7,20 @@ import { ThemeProvider } from '@mui/material/styles'
 import { muiTheme } from './theme/muiTheme.js'
 import { ThemeModeProvider } from './context/ThemeModeContext.jsx'
 import { CategoryProvider } from './context/CategoryContext.jsx'
+import { PopupProvider } from './context/PopupContext.jsx'
 
 createRoot(document.getElementById('root')).render(
     <ThemeProvider theme= {muiTheme}>
         <ThemeModeProvider>
-            <CategoryProvider>
-                <AuthProvider>
-                    <AlertProvider>
-                        <App/>   
-                    </AlertProvider>
-                </AuthProvider>
-            </CategoryProvider>
+            <PopupProvider>
+                <CategoryProvider>
+                    <AuthProvider>
+                        <AlertProvider>
+                            <App/>   
+                        </AlertProvider>
+                    </AuthProvider>
+                </CategoryProvider>
+            </PopupProvider>
         </ThemeModeProvider>
     </ThemeProvider>
 )
