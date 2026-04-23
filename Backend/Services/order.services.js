@@ -131,7 +131,7 @@ const create = async({user, data}) => {
 const getAll = async ( user ) => {
     try {
         if(!user) throw {err: 'User not found!'};
-        const orders = await Order.find({ user: user._id});
+        const orders = await Order.find({ user: user._id}).populate('items.coupon');
         return orders;
     } catch (error) {
         console.log(error);

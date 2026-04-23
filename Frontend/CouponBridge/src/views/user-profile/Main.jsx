@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import OrderCard from '../../components/OrderCard';
 
 const Main= () => {
 
@@ -26,6 +27,7 @@ const Main= () => {
   const [option, setOption] = useState('profile');
   const [editMode,setEditMode] = useState(false);
   const [purchased, setPurchased] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [personalData, setPersonalData] = useState({
     name: '',
     email: '',
@@ -134,15 +136,25 @@ const Main= () => {
     }
 
     if(role === 'customer'){
+
       axios.get(`http://localhost:5050/cb/v1/api/coupons/purchased`,{
         headers:{
           authorization: localStorage.getItem('token')
         }
       }).then(res=>{
-        console.log(res);
         setPurchased(res.data.data);
 
       }).catch(err=>{
+        console.log(err.response);
+      });
+
+      axios.get(`http://localhost:5050/cb/v1/api/orders`,{
+        headers:{
+          authorization: localStorage.getItem('token')
+        }
+      }).then(res=>{
+        setOrders(res.data.data);
+      }).catch(err => {
         console.log(err.response);
       })
     }
@@ -314,11 +326,13 @@ const Main= () => {
           </form>
         </div>: ''}
         {option == 'orders' ?<div className="order-container">
-          <p className='text'>Show Payments</p>
+          {orders.map(order => {
+            return <OrderCard key={order._id} data = {order}/>
+          })}
         </div>: ''}
         {option == 'purchase' ?<div className="purchase-container">
           {purchased.map(item => {
-            return <CouponCard data = { item }/>
+            return <CouponCard key={item._id} data = { item }/>
           })}
         </div>: ''}
       </div>

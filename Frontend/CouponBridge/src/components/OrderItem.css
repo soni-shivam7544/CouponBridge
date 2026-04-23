@@ -1,0 +1,14 @@
+.order-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+}
+.order-item-cost {
+    display: flex;
+    align-items: center;
+}
