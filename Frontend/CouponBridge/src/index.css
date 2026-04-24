@@ -7,6 +7,16 @@
 /* Lignt Mode Color Palate*/
 
 :root {
+
+  --color-bg-overlay: rgba(0,0,0,0.4);
+
+  --color-popup-bg: #ffffff;
+  --color-popup-border: rgba(0,0,0,0.06);
+  
+  --color-btn-secondary-bg: #f3f4f6;
+  --color-btn-secondary-text: #374151;
+
+
   --color-bg: #F8FAFC;           /* main background */
   --color-surface: #FFFFFF;      /* cards */
   --color-border: #E2E8F0;       /* light borders */
@@ -21,6 +31,7 @@
   --color-success: #22C55E;
   --color-success-bg: #DCFCE7;
   --color-danger: #EF4444;
+  --color-danger-hover: #dc2626;
   --color-accent: #3B82F6; /* blue badge */
 
   --color-highlight: #FFDE42;        /* main yellow */
@@ -46,6 +57,15 @@ body {
 /*  Dark Mode Color Palate */
 
 .dark {
+
+  --color-bg-overlay: rgba(0,0,0,0.7);
+
+  --color-popup-bg: #111827; /* slightly lighter than background */
+  --color-popup-border: rgba(255,255,255,0.08);
+
+  --color-btn-secondary-bg: #1f2937;
+  --color-btn-secondary-text: #e5e7eb;
+
   --color-bg: #020617;          /* deep dark */
   --color-surface: #0F172A;     /* cards */
   --color-border: #1E293B;
@@ -62,6 +82,7 @@ body {
   --color-success-bg: #052E16;
 
   --color-danger: #EF4444;
+  --color-danger-hover: #ef4444;
   --color-accent: #60A5FA;
 
   --color-surface-dark: black;
