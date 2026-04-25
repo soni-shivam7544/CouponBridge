@@ -1,8 +1,8 @@
-import './deleteConfirmPopup.css';
+import './Popup.css';
 
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';import Button from '@mui/material/Button';
 
-const DeleteConfirmPopup = () => {
+const DeleteConfirmPopup = ({ onConfirm, onCancel }) => {
   return (
     <div className='popup-overlay'>
       <div className="popup-content">
@@ -11,8 +11,8 @@ const DeleteConfirmPopup = () => {
         <p className='sub-heading'>This action can not be undone.</p>
         <p className='sub-heading'> All your data will be deleted permanantly!</p>
         <div className="popup-action" style={{margin: '1.5rem 0rem 0rem'}}>
-            <Button variant="contained" sx={{backgroundColor:'var(--color-danger)', ":hover":{backgroundColor:'var(--color-danger-hover)'}}}>Delete</Button>
-            <Button variant="contained"sx={{backgroundColor:'var(--color-btn-secondary-bg)', color: 'var(--color-btn-secondary-text)'}}>Cancel</Button>
+            <Button variant="contained" sx={{backgroundColor:'var(--color-danger)', ":hover":{backgroundColor:'var(--color-danger-hover)'}}} onClick={onConfirm}>Delete</Button>
+            <Button variant="contained"sx={{backgroundColor:'var(--color-btn-secondary-bg)', color: 'var(--color-btn-secondary-text)'}} onClick={onCancel}>Cancel</Button>
         </div>
       </div>
     </div>

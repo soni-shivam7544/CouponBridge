@@ -15,6 +15,7 @@ import CouponCard from '../../components/CouponCard';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { usePopup } from '../../hooks/usePopup';
 import axios from 'axios';
 import OrderCard from '../../components/OrderCard';
 
@@ -22,6 +23,7 @@ const Main= () => {
 
   const navigate = useNavigate();
 
+  const {showPopup} = usePopup();
   const {user, updateUser, logout} = useAuth();
   const role = localStorage.getItem('role');
   const [option, setOption] = useState('profile');
@@ -114,9 +116,13 @@ const Main= () => {
     navigate('/login');
   }
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
+    const response = await showPopup('Delete-Confirm', {message: 'All your data will be deleted permanantly!'});
+
+    if (!response) return null;
+
     axios.delete(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`)
-    .then(res=>{
+    .then(() =>{
       logout();
       navigate('/signup');
     }).catch(err=>console.log(err.response));
