@@ -9,8 +9,12 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import PaymentCard from '../../components/PaymentCard';
+import { usePopup } from '../../hooks/usePopup';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const Main = () => {
+    const navigate = useNavigate();
     const [items,setItems] = useState([]);
     const [formData, setFormData] = useState({
         email: '',
@@ -19,9 +23,11 @@ const Main = () => {
         expiryDate: '',
         cvv: ''
     });
+    const {user} = useAuth();
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
     const couponId = searchParams.get('couponId');
+    const {showPopup} = usePopup();
 
     let subtotal = 0;
     if(type === 'buyNow'){
@@ -51,8 +57,14 @@ const Main = () => {
                 headers: {
                     authorization: localStorage.getItem('token')
                 }
-            }).then(res=>{
+            }).then(async(res)=>{
+
                 console.log(res);
+                await showPopup('Loader');
+                const response = await showPopup('Booking-Confirmed');
+                if (!response) navigate('/coupons');
+                else navigate(`/users/${user._id}`);
+
             }).catch(err => {
                 console.log(err.response);
             });
@@ -71,8 +83,14 @@ const Main = () => {
                 headers: {
                     authorization: localStorage.getItem('token')
                 }
-            }).then(res=>{
+            }).then(async(res)=>{
+
                 console.log(res);
+                await showPopup('Loader');
+                const response = await showPopup('Booking-Confirmed');
+                if (!response) navigate('/coupons');
+                else navigate(`/users/${user._id}`);
+
             }).catch(err => {
                 console.log(err.response);
             });

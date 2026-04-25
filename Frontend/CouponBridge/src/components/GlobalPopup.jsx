@@ -2,6 +2,7 @@
 import { usePopup } from '../hooks/usePopup.js';
 import LoaderPopup from './loaderPopup.jsx';
 import DeleteConfirmPopup from './DeleteConfirmPopup.jsx';
+import BookingConfirmed from './BookingConfirmed.jsx';
 
 function GlobalPopup() {
     const { popup, hidePopup } = usePopup();
@@ -23,6 +24,13 @@ function GlobalPopup() {
                 onConfirm = {() => handleResolve(true)}
                 onCancel = {() => handleResolve(false)}
             />);
+        case "Booking-Confirmed":
+            return(
+                <BookingConfirmed
+                    onViewOrders={ () => handleResolve(true)}
+                    onContinue={ () => handleResolve(false)}
+                />
+            );
         
         default:
             return null;
