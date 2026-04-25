@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import GlobalPopup from "../components/GlobalPopup";
 
 export const PopupContext = createContext();
 
@@ -17,8 +18,9 @@ export const PopupProvider = ( {children}) => {
         setPopup(null);
     }
     return (
-        <PopupContext.Provider value = {popup, showPopup, hidePopup}>
+        <PopupContext.Provider value = {{popup, showPopup, hidePopup}}>
             {children}
+            <GlobalPopup />
         </PopupContext.Provider>
     )
 }

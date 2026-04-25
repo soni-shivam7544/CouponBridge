@@ -1,7 +1,6 @@
-import './LoaderPopup.css';
-
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import './Popup.css';
 
 function LoaderPopup() {
     return(
