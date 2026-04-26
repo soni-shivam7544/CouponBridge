@@ -2,8 +2,10 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import Button from '@mui/material/Button';
 
 import './Popup.css';
+import { usePopup } from '../hooks/usePopup';
 
 const BookingConfirmed = ( { onViewOrders, onContinue } ) => {
+    const {popup} = usePopup();
     return(
         <div className='popup-overlay'>
             <div className="popup-content" style={{width:'50%', padding: '2rem 2.5rem'}}>
@@ -12,7 +14,7 @@ const BookingConfirmed = ( { onViewOrders, onContinue } ) => {
                 <p className='sub-heading'>Thankyou for your purchase. Your coupon codes have been sent to your email.</p>
                 <div className="popup-div text">
                     <p>Order Id</p>
-                    <p className='heading'>#92sdf35edf343t34d</p>
+                    <p className='heading'>#{popup.data.bookingId}</p>
                 </div>
                 <div className="popup-action" style={{margin: '1.5rem 0rem 0rem'}}>
                     <Button variant="contained"sx={{backgroundColor:'var(--color-btn-secondary-bg)', color: 'var(--color-btn-secondary-text)'}} onClick={onViewOrders}>View Orders</Button>

@@ -60,8 +60,7 @@ const Main = () => {
             }).then(async(res)=>{
 
                 console.log(res);
-                await showPopup('Loader');
-                const response = await showPopup('Booking-Confirmed');
+                const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
                 if (!response) navigate('/coupons');
                 else navigate(`/users/${user._id}`);
 
@@ -86,8 +85,7 @@ const Main = () => {
             }).then(async(res)=>{
 
                 console.log(res);
-                await showPopup('Loader');
-                const response = await showPopup('Booking-Confirmed');
+                const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
                 if (!response) navigate('/coupons');
                 else navigate(`/users/${user._id}`);
 

@@ -96,10 +96,13 @@ const create = async({user, data}) => {
             console.log(new mongoose.Types.ObjectId(data.items[0].coupon._id));
             
             const cart = await Cart.findOne({ user: user._id});
-            cart.items = cart.items.filter((item)=>{
-                return item.coupon != data.items[0].coupon._id;
-            });
-            await cart.save();
+            if(cart){
+                cart.items = cart.items.filter((item)=>{
+                    return item.coupon != data.items[0].coupon._id;
+                });
+                await cart.save();
+            }
+            
         }
         // await Cart.findOneAndDelete({ user: user._id }, {session});
 
