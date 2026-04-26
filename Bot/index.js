@@ -53,6 +53,6 @@ app.post('/run-bot', async(req, res) => {
 });
 
 
-app.listen('1854', (req, res)=>{
-    console.log("The bot server started successfully on port 1854.");
+app.listen(5055, (req, res)=>{
+    console.log("The bot server started successfully on port 5055.");
 })
