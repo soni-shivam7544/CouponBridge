@@ -48,7 +48,8 @@ const verifyCustomerToken = async (req, res, next) => {
         
         const user = await  Customer.findById( decoded.id );
         if(!user){
-            throw { err: "Customer not found! Create an Account.", code: 400 };
+            req.user = null;
+            return next();
         }
         req.user = user;
         
