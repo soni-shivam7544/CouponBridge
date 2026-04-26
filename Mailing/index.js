@@ -8,9 +8,16 @@ const routes = require('./routes.js');
 
 app.use(cors());
 
-
 routes(app);
 
+app.use('/', (req,res) => {
+    return res.status(404).json({
+        success: false,
+        data: {},
+        err: 'Page Not Found!',
+        message: "Page Not Found!"
+    })
+})
 
 
 

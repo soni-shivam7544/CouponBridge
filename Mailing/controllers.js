@@ -7,7 +7,7 @@ const composeNewMail = async (req, res) => {
             success: true,
             data: response,
             err: {},
-            message: "Sent mail successfully."
+            message: "Mail sent successfully."
         })
     }catch(error) {
         console.log(error);
