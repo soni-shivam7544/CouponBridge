@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from '@mui/material/Button';
 import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 
 import { useNavigate } from "react-router-dom";
+import { usePopup } from "../../hooks/usePopup";
 
 import './Main.css';
 
 const Main = () => {
 
   const navigate = useNavigate();
-
+  const {showPopup, hidePopup} = usePopup();
   const [file, setFile] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -39,6 +40,7 @@ const Main = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    showPopup('Loader');
 
     if(file){
 
@@ -57,6 +59,7 @@ const Main = () => {
           }
         })
         .then(res => {
+          hidePopup();
           console.log(res);
           localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
           
@@ -65,6 +68,7 @@ const Main = () => {
         })
         .catch(err => {
           console.log(err.response);
+          hidePopup();
           localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
           
           navigate('/login');
@@ -73,8 +77,9 @@ const Main = () => {
         
 
       }).catch(err=>{
+        hidePopup();
         console.log(err.response);
-      })
+      });
     }
 
     else {
@@ -85,6 +90,7 @@ const Main = () => {
         }
       })
       .then(res => {
+        hidePopup();
         console.log(res);
         localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
         
@@ -92,6 +98,7 @@ const Main = () => {
 
       })
       .catch(err => {
+        hidePopup();
         console.log(err.response);
         localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
         
