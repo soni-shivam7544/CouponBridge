@@ -13,6 +13,8 @@ import { usePopup } from '../../hooks/usePopup';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
+import { bookingEmail } from '../../mailingHtmls';
+
 const Main = () => {
     const navigate = useNavigate();
     const [items,setItems] = useState([]);
@@ -27,7 +29,7 @@ const Main = () => {
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
     const couponId = searchParams.get('couponId');
-    const {showPopup} = usePopup();
+    const {showPopup, hidePopup} = usePopup();
 
     let subtotal = 0;
     if(type === 'buyNow'){
@@ -48,6 +50,8 @@ const Main = () => {
         e.preventDefault();
         console.log(formData);
 
+        showPopup('Loader');
+
         if(type !== 'buyNow'){
             axios.post(`http://localhost:5050/cb/v1/api/orders`,{
                 items,
@@ -57,14 +61,27 @@ const Main = () => {
                 headers: {
                     authorization: localStorage.getItem('token')
                 }
-            }).then(async(res)=>{
+            }).then(res=>{
 
                 console.log(res);
-                const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
-                if (!response) navigate('/coupons');
-                else navigate(`/users/${user._id}`);
+                const mailingCoupons = items.map(item => item.coupon);
+                axios.post('http://localhost:5059/cb/v1/api/services/mail',{
+                    to: formData.email,
+                    subject: "Booking Confirmed!",
+                    html: bookingEmail(user.name,res.data.data._id,mailingCoupons)
+
+                }).then(async()=>{
+                    const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
+                    if (!response) navigate('/coupons');
+                    else navigate(`/users/${user._id}`);
+
+                }).catch(err => {
+                    hidePopup();
+                    console.log(err.response);
+                });
 
             }).catch(err => {
+                hidePopup();
                 console.log(err.response);
             });
 
@@ -82,14 +99,26 @@ const Main = () => {
                 headers: {
                     authorization: localStorage.getItem('token')
                 }
-            }).then(async(res)=>{
+            }).then(res=>{
 
                 console.log(res);
-                const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
-                if (!response) navigate('/coupons');
-                else navigate(`/users/${user._id}`);
+                axios.post('http://localhost:5059/cb/v1/api/services/mail',{
+                    to: formData.email,
+                    subject: "Booking Confirmed!",
+                    html: bookingEmail(user.name,res.data.data._id,items)
+
+                }).then(async()=>{
+                    const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
+                    if (!response) navigate('/coupons');
+                    else navigate(`/users/${user._id}`);
+
+                }).catch(err=>{
+                    hidePopup();
+                    console.log(err.response);
+                })
 
             }).catch(err => {
+                hidePopup();
                 console.log(err.response);
             });
         }
