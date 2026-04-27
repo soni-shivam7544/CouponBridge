@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 
-
 const sendMail = async( mailingData ) => {
 
     const transporter = nodemailer.createTransport({
@@ -15,7 +14,6 @@ const sendMail = async( mailingData ) => {
         from: `"CouponBridge" <${process.env.USER_EMAIL}>`,
         to: mailingData.to,
         subject: mailingData.subject,
-        text: mailingData.text,
         html: mailingData.html
     }
 
