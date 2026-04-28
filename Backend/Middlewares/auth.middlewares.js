@@ -34,7 +34,7 @@ const verifyProviderToken = async (req, res, next) => {
     }
 }
 
-const verifyCustomerToken = async (req, res, next) => {
+const verifyUserToken = async (req, res, next) => {
     
     try {
         const token = req.headers.authorization;
@@ -46,10 +46,13 @@ const verifyCustomerToken = async (req, res, next) => {
 
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
         
-        const user = await  Customer.findById( decoded.id );
+        let user = await  Customer.findById( decoded.id );
         if(!user){
+           user = await Provider.findById( decoded.id);
+           if(!user){
             req.user = null;
-            return next();
+            next();
+           }
         }
         req.user = user;
         
@@ -99,6 +102,6 @@ const isCustomerLoggedin = async (req, res, next) => {
 
 module.exports = {
     verifyProviderToken,
-    verifyCustomerToken,
+    verifyUserToken,
     isCustomerLoggedin
 };
