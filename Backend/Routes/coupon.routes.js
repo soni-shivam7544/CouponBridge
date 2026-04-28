@@ -6,7 +6,7 @@ const couponRouter = ( app ) => {
     app.post('/cb/v1/api/coupons', authMiddlewares.verifyProviderToken, couponController.createCoupon);
 
     // Search coupons by merchant name or provider name
-    app.get('/cb/v1/api/coupons/search', authMiddlewares.verifyCustomerToken ,couponController.searchCoupons);
+    app.get('/cb/v1/api/coupons/search', authMiddlewares.verifyUserToken ,couponController.searchCoupons);
 
     // Get all coupons
     app.get('/cb/v1/api/coupons', couponController.getAllCoupons);
@@ -15,7 +15,7 @@ const couponRouter = ( app ) => {
     app.get('/cb/v1/api/coupons/purchased',authMiddlewares.isCustomerLoggedin,couponController.getPurchasedCoupons);
 
     // Get a coupon by Id
-    app.get('/cb/v1/api/coupons/:id',authMiddlewares.verifyCustomerToken, couponController.getCouponById);
+    app.get('/cb/v1/api/coupons/:id',authMiddlewares.verifyUserToken, couponController.getCouponById);
 
 
     // Update a coupon by Id
