@@ -122,11 +122,23 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <div className="coupons-list">
-          { coupons.map( coupon => {
-            return <CouponCard key={ coupon._id} data={ coupon }/>
-          } ) }
-        </div>
+        {
+          coupons.length <=0
+        ?
+          <div className="coupon-not-found text">
+            <div className="coupons-alt">
+              <p className='lg-heading'>No Coupon Found</p>
+            </div>
+          </div>
+        :
+          <div className="coupons-list">
+            { coupons.map( coupon => {
+                return <CouponCard key={ coupon._id} data={ coupon }/>
+              } )
+            }
+          </div>
+        }
+
       </div>
     </>
   )

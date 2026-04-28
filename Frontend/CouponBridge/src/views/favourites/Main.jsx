@@ -43,7 +43,7 @@ const Main = () => {
       :
       <div className="favourites-coupon-not-found text">
         <div className="favourites-coupons-alt">
-          <p className='lg-heading'>No Coupon Found</p>
+          <p className='lg-heading'>No Coupon Saved</p>
           <Button variant="contained" onClick={() => navigate('/coupons')}>Browse Coupons</Button>
         </div>
       </div>

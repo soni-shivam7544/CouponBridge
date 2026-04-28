@@ -228,10 +228,10 @@ const Main= () => {
           <span style={{backgroundColor:'var(--color-bg)', borderRadius:'1rem', color:'var(--color-accent)', padding: '0rem 1rem', marginTop:'0.5rem'}}>{role ? role :null}</span>
         </div>
         <div className="profile-left-actions">
-          <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-text-secondary)'}} onClick={()=>navigate(`/users/${user._id}/favourites`)}>
+          {role === 'customer' && <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-text-secondary)'}} onClick={()=>navigate(`/users/${user._id}/favourites`)}>
             <FavoriteBorderOutlinedIcon sx={{marginRight:'1rem'}}/>
             <span>Favourites</span>
-          </Button>
+          </Button>}
           <Button variant="text" className="profile-left-actions-item" style={{color: 'var(--color-danger)'}} onClick={handleLogout}>
             <LogoutIcon sx={{ marginRight:'1rem'}}/>
             <span>Logout</span>
@@ -394,26 +394,82 @@ const Main= () => {
             />
           </form>
         </div>: ''}
-        {option == 'orders' ?<div className="order-container">
+
+
+        {option == 'orders' ?
+        ( 
+          orders.length <= 0 
+          ?
+          <div className="profile-coupon-not-found text">
+            <div className="profile-coupons-alt">
+              <p className='lg-heading'>No Orders Yet</p>
+            </div>
+          </div>
+          :
+          <div className="order-container">
           {orders.map(order => {
             return <OrderCard key={order._id} data = {order}/>
           })}
-        </div>: ''}
-        {option == 'purchase' ?<div className="purchase-container">
+          </div>
+        )
+          :
+          ''
+        }
+
+
+        {option == 'purchase' ?
+        (
+          purchased.length <= 0 
+          ?
+          <div className="profile-coupon-not-found text">
+            <div className="profile-coupons-alt">
+              <p className='lg-heading'>No Item Purchased</p>
+              <Button variant="contained" onClick={() => navigate('/cart')}>Go To Cart</Button>
+            </div>
+          </div>
+        :
+        <div className="purchase-container">
           {purchased.map(item => {
             return <CouponCard key={item._id} data = { item }/>
           })}
-        </div>: ''}
-        {option == 'sold' ?<div className="sold-container">
+        </div>
+        ): ''}
+
+
+        {option == 'sold' ?(
+          sold.length <= 0 
+          ?
+          <div className="profile-coupon-not-found text">
+            <div className="profile-coupons-alt">
+              <p className='lg-heading'>No Coupon Found</p>
+            </div>
+          </div>
+          :
+          <div className="sold-container">
           {sold.map(item => {
             return <CouponCard key={item._id} data = { item }/>
           })}
-        </div>: ''}
-        {option == 'active' ?<div className="active-container">
+        </div>): ''}
+
+
+        {option == 'active' ?
+        (
+          active.length <= 0 
+          ?
+          <div className="profile-coupon-not-found text">
+            <div className="profile-coupons-alt">
+              <p className='lg-heading'>No Active Coupons</p>
+              <Button variant="contained" onClick={() => navigate('/publish')}>Publish Coupons</Button>
+            </div>
+          </div>
+          :
+        <div className="active-container">
           {active.map(item => {
             return <CouponCard key={item._id} data = { item } onDelete={handleDeleteActive}/>
           })}
-        </div>: ''}
+        </div>): ''}
+
+
       </div>
     </div>
   );

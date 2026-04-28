@@ -14,7 +14,7 @@ import {useNavigate} from 'react-router-dom';
 
 const Main = () => {
 
-  const [cartItems,setCartItems] = useState(null);
+  const [cartItems,setCartItems] = useState([]);
   const navigate = useNavigate();
 
   const subtotal = cartItems && cartItems.reduce((acc, item) => {
@@ -81,6 +81,9 @@ const Main = () => {
         </div>
       </div>
       <div className="cart-body">
+        {cartItems.length > 0
+        ?
+        <>
         <div className="cart-coupon-list">
 
         {cartItems && cartItems.map( item => {
@@ -88,6 +91,7 @@ const Main = () => {
         })}
 
         </div>
+
         <div className="cart-summary caption">
           <div className="cart-order-summary">
             <p className='heading' style={{marginBottom:'1.5rem'}}>Order Summary</p>
@@ -130,6 +134,17 @@ const Main = () => {
             </Button>
           </div>
         </div>
+
+        </>
+        :
+        <div className="cart-coupon-not-found text">
+          <div className="cart-coupons-alt">
+            <p className='lg-heading'>Your Cart Is Empty</p>
+            <Button variant="contained" onClick={() => navigate('/coupons')}>Browse Coupons</Button>
+          </div>
+        </div>
+        }
+        
       </div>
     </div>
   );

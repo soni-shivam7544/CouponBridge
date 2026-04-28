@@ -159,3 +159,20 @@
     flex-wrap: wrap;
     gap: 0.5rem;
 }
+
+.profile-coupon-not-found{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    width: 100%;
+}
+.profile-coupon-not-found p {
+    margin-bottom: 2rem;
+}
+.profile-coupons-alt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
