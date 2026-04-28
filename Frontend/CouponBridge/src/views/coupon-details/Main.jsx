@@ -128,7 +128,7 @@ const Main = () => {
                     <p style={{color:'var(--color-primary)'}}>{coupon ?coupon.brand.trim().toUpperCase():''}</p>
                     <p style={{margin:'0.3rem 0rem'}} className='lg-heading'>{coupon ? coupon.title.trim().toUpperCase():''}</p>
                     
-                    {coupon && coupon.isActive ?
+                    {/* {coupon && coupon.isActive ?
                     <div style={{color: 'var(--color-success)'}} className='coupon-status heading'>
                         <CircleIcon sx={{marginRight: '0.5rem'}}/>
                         <span><i>Available</i></span>
@@ -137,12 +137,17 @@ const Main = () => {
                         <MilitaryTechIcon sx={{marginRight: '0.5rem'}}/>
                         <span><i>Sold</i></span>
                     </div>
-                    }
+                    } */}
                     
-                    {coupon && coupon.isActive && <div className="coupon-details-days-left">
+                    {coupon && coupon.isActive ? <div className="coupon-details-days-left">
                         <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
                         <span>68 days left</span>
-                    </div>}
+                    </div>:
+                    <div className="coupon-details-days-left">
+                        <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
+                        <span>0 days left</span>
+                    </div>
+                    }
                     
                     <div className="coupon-details-cost">
                         <div className="coupon-details-reduced-cost section-heading">
