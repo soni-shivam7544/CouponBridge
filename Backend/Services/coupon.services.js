@@ -102,9 +102,8 @@ const searchCoupons = async ({query,user}) => {
                 sortOption = { createdAt : -1 };
         }
         
-        let coupons = await Coupon.find({}).sort(sortOption).populate('provider', 'name email');
+        let coupons = await Coupon.find({isActive: true}).sort(sortOption).populate('provider', 'name email');
         
-
         if(user){
             const savedUser = await Customer.findById(user._id);
             if(savedUser){
@@ -115,6 +114,7 @@ const searchCoupons = async ({query,user}) => {
                 }));
                 coupons = updatedCoupons;
             }
+            coupons = coupons.filter(coupon => coupon.provider._id.toString()!== user._id.toString());
                 
         }
         
