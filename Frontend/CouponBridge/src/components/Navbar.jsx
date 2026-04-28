@@ -77,7 +77,7 @@ function Navbar() {
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)'}} onClick={handleThemeToggle}/>}
                         
                         <ShoppingCartOutlinedIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
-
+                        <span className='cart-badge caption'>15</span>
                         { user ? 
                             <>
                                 <div id="user" className='lg-heading' onClick={()=>navigate(`/users/${user._id}`)}> {user.name[0].toUpperCase()}</div>

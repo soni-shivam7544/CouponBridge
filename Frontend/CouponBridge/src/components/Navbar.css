@@ -76,3 +76,13 @@
     backdrop-filter: blur(10px)!important;
     -webkit-backdrop-filter: blur(10px)!important;
 }
+.cart-badge {
+    position: relative;
+    top: -10px;
+    right: 20px;
+    background-color: var(--color-primary-light);
+    padding: 0.2rem 0.3rem;
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    text-align: center;
+}
