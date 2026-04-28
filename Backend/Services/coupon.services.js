@@ -165,6 +165,19 @@ const getActives = async(user) => {
     }
 }
 
+const getSolds = async(user) => {
+    try{
+        if(!user) throw {err: 'User not found', code: 401};
+
+        const coupons = await Coupon.find( {provider: user._id, isActive: false});
+        return coupons;
+
+    } catch(error){
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
     create,
     getAll,
@@ -173,5 +186,6 @@ module.exports = {
     deleteById,
     searchCoupons,
     getPurchased,
-    getActives
+    getActives,
+    getSolds
 }

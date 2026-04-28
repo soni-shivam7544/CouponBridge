@@ -17,6 +17,10 @@ const couponRouter = ( app ) => {
     // Get Active coupons of Provider
     app.get('/cb/v1/api/coupons/active',authMiddlewares.isProviderLoggedin, couponController.getActiveCoupons);
     
+    // Get Sold coupons of Provider
+    app.get('/cb/v1/api/coupons/sold',authMiddlewares.isProviderLoggedin, couponController.getSoldCoupons);
+
+
     // Get a coupon by Id
     app.get('/cb/v1/api/coupons/:id',authMiddlewares.verifyUserToken, couponController.getCouponById);
 

@@ -168,11 +168,16 @@ function CouponCard( { data } ) {
                         </div>
                         
                     </div>
-                    {(coupon && !coupon.isPurchased) && 
-                    (user && user._id === coupon.provider._id) ? 
-                    null:
-                    <Button variant="contained" onClick={handleAddtoCart}><AddShoppingCartIcon sx={{fontSize:'1.2rem', marginRight: '0.2rem'}}/><span>Add to Cart</span></Button>
-                    }
+                    
+                    {coupon && !coupon.isPurchased && (!user || user._id !== coupon.provider._id) && (
+                    <Button
+                        variant="contained"
+                        onClick={handleAddtoCart}
+                    >
+                        <AddShoppingCartIcon sx={{ fontSize: '1.2rem', marginRight: '0.2rem' }} />
+                        <span>Add to Cart</span>
+                    </Button>
+                    )}
                 </div>
             </div>
         </div>

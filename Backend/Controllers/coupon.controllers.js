@@ -133,6 +133,25 @@ const getActiveCoupons = async(req, res)=>{
         return res.status(error.code).json(errorResponseBody);
     }
 }
+
+const getSoldCoupons = async(req, res) => {
+    try {
+        const response = await couponService.getSolds(req.user);
+        successResponseBody.data = response;
+        return res.status(200).json(successResponseBody);
+    } catch (error) {
+        console.log(error);
+         if(error.err) {
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to get provider's sold coupons";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Failed to get provider's sold coupons";
+        return res.status(error.code).json(errorResponseBody);
+    }
+}
+
 module.exports = {
     createCoupon,
     getAllCoupons,
@@ -141,5 +160,6 @@ module.exports = {
     destroyCoupon,
     searchCoupons,
     getPurchasedCoupons,
-    getActiveCoupons
+    getActiveCoupons,
+    getSoldCoupons
 }

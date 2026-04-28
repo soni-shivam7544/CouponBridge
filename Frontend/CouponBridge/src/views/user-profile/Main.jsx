@@ -178,6 +178,15 @@ const Main= () => {
         console.log(err.response);
       });
 
+      axios.get('http://localhost:5050/cb/v1/api/coupons/sold',{
+        headers:{
+          authorization: localStorage.getItem('token')
+        }
+      }).then(res=>{
+        setSold(res.data.data);
+      }).catch(err=> {
+        console.log(err.response);
+      })
 
     }
 
@@ -389,7 +398,7 @@ const Main= () => {
           })}
         </div>: ''}
         {option == 'sold' ?<div className="sold-container">
-          {purchased.map(item => {
+          {sold.map(item => {
             return <CouponCard key={item._id} data = { item }/>
           })}
         </div>: ''}
