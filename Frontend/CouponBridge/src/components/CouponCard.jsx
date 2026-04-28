@@ -18,14 +18,17 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
+import { usePopup } from '../hooks/usePopup';
 
-function CouponCard( { data } ) {
+
+function CouponCard( { data, onDelete} ) {
 
     const role = localStorage.getItem('role');
     const {user, updateUser} = useAuth();
     const [coupon, setCoupon] = useState(data);
-    const [isLiked, setIsLiked] = useState(coupon.isSaved); // to toggle like
-    
+    const [isLiked, setIsLiked] = useState(null); // to toggle like
+    const { showPopup } = usePopup();
+
     const navigate = useNavigate();
     const handleLike = (e) => {
         e.stopPropagation();
@@ -87,8 +90,25 @@ function CouponCard( { data } ) {
         })
     }
 
-    const handleDelete = () => {
+    const handleDelete = async (e) => {
+        e.stopPropagation();
 
+        const answer = await showPopup("Delete-Confirm", {
+            message: "The coupon will be deleted permanently!"
+        });
+
+        if (answer){
+            axios.delete(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
+                headers:{
+                    authorization: localStorage.getItem('token')
+                }
+            }).then(res=>{
+                console.log(res);
+                onDelete();
+            }).catch(err=>{
+                console.log(err.response);
+            })
+        }
     }
 
     useEffect(()=>{

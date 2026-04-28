@@ -32,6 +32,7 @@ const Main= () => {
   const [sold, setSold] = useState([]);
   const [active, setActive] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [isDeleteRequest, setDeleteRequest] = useState(false);
   const [personalData, setPersonalData] = useState({
     name: '',
     email: '',
@@ -130,6 +131,12 @@ const Main= () => {
     }).catch(err=>console.log(err.response));
   }
 
+  const handleDeleteActive = () => {
+    setDeleteRequest({
+      request: true
+    });
+  }
+
   useEffect(()=>{
     if(user){
       const date = new Date(user.createdAt);
@@ -190,7 +197,7 @@ const Main= () => {
 
     }
 
-  },[user, role]);
+  },[user, role, isDeleteRequest]);
 
   return (
     <div className='profile-container'>
@@ -404,7 +411,7 @@ const Main= () => {
         </div>: ''}
         {option == 'active' ?<div className="active-container">
           {active.map(item => {
-            return <CouponCard key={item._id} data = { item }/>
+            return <CouponCard key={item._id} data = { item } onDelete={handleDeleteActive}/>
           })}
         </div>: ''}
       </div>
