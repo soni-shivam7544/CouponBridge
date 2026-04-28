@@ -149,3 +149,13 @@
     gap: 1rem;
 
 }
+.active-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.sold-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

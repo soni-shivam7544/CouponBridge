@@ -29,6 +29,8 @@ const Main= () => {
   const [option, setOption] = useState('profile');
   const [editMode,setEditMode] = useState(false);
   const [purchased, setPurchased] = useState([]);
+  const [sold, setSold] = useState([]);
+  const [active, setActive] = useState([]);
   const [orders, setOrders] = useState([]);
   const [personalData, setPersonalData] = useState({
     name: '',
@@ -164,6 +166,21 @@ const Main= () => {
         console.log(err.response);
       })
     }
+    if(role === 'provider'){
+
+      axios.get('http://localhost:5050/cb/v1/api/coupons/active',{
+        headers: {
+          authorization: localStorage.getItem('token')
+        }
+      }).then(res=>{
+        setActive(res.data.data);
+      }).catch(err=>{
+        console.log(err.response);
+      });
+
+
+    }
+
   },[user, role]);
 
   return (
@@ -224,6 +241,7 @@ const Main= () => {
               <span>Profile</span>
             </label>
 
+            { role === 'customer' && <>
             <input id='orders' 
               type='radio' 
               name='profileOption'
@@ -233,7 +251,7 @@ const Main= () => {
             />
             <label htmlFor='orders' className={`profile-right-options-item ${option === 'orders'? "profile-right-options-active":""}`} style={{color:'var(--color-text-primary)'}}>
               <GradingIcon sx={{ marginRight:'1rem'}}/>
-              <span>Orders (1)</span>
+              <span>Orders ({orders && orders.length})</span>
             </label>
 
             <input id='purchase' 
@@ -245,8 +263,37 @@ const Main= () => {
             />
             <label htmlFor='purchase' className={`profile-right-options-item ${option === 'purchase'? "profile-right-options-active":""}`} style={{color:'var(--color-text-primary)', marginRight:'0'}}>
               <FavoriteBorderOutlinedIcon sx={{ marginRight:'1rem'}}/>
-              <span>Purchase (5)</span>
+              <span>Purchase ({purchased && purchased.length})</span>
             </label>
+            </>}
+
+            { role === 'provider' && 
+            <>
+              <input id='active' 
+                type='radio' 
+                name='profileOption'
+                value='active'
+                checked={option == 'active'}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor='active' className={`profile-right-options-item ${option === 'active'? "profile-right-options-active":""}`} style={{color:'var(--color-text-primary)'}}>
+                <GradingIcon sx={{ marginRight:'1rem'}}/>
+                <span>Active ({active && active.length})</span>
+              </label>
+
+              <input id='sold' 
+                type='radio' 
+                name='profileOption'
+                value='sold'
+                checked={option == 'sold'}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor='sold' className={`profile-right-options-item ${option === 'sold'? "profile-right-options-active":""}`} style={{color:'var(--color-text-primary)', marginRight:'0'}}>
+                <FavoriteBorderOutlinedIcon sx={{ marginRight:'1rem'}}/>
+                <span>Sold ({sold && sold.length})</span>
+              </label>
+            </>
+            }
             
           </div>
         </div>
@@ -338,6 +385,16 @@ const Main= () => {
         </div>: ''}
         {option == 'purchase' ?<div className="purchase-container">
           {purchased.map(item => {
+            return <CouponCard key={item._id} data = { item }/>
+          })}
+        </div>: ''}
+        {option == 'sold' ?<div className="sold-container">
+          {purchased.map(item => {
+            return <CouponCard key={item._id} data = { item }/>
+          })}
+        </div>: ''}
+        {option == 'active' ?<div className="active-container">
+          {active.map(item => {
             return <CouponCard key={item._id} data = { item }/>
           })}
         </div>: ''}
