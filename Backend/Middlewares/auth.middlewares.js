@@ -3,7 +3,7 @@ const Provider = require('../Models/provider.model');
 const { errorResponseBody } = require('../Utils/responsebody');
 const Customer = require('../Models/customer.model');
 
-const verifyProviderToken = async (req, res, next) => {
+const isProviderLoggedin = async (req, res, next) => {
     
     try {
         const token = req.headers.authorization;
@@ -101,7 +101,7 @@ const isCustomerLoggedin = async (req, res, next) => {
 }
 
 module.exports = {
-    verifyProviderToken,
+    isProviderLoggedin,
     verifyUserToken,
     isCustomerLoggedin
 };
