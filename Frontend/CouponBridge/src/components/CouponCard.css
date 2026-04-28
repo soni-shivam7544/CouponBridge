@@ -94,6 +94,18 @@
     cursor: pointer;
     z-index: 2;
 }
+.coupon-card-delete{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    padding: 0.3rem;
+    background-color: var(--color-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+}
 .coupon-card-discount {
     position: absolute;
     top: 15px;
