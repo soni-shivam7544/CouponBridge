@@ -169,11 +169,11 @@ const Main = () => {
                             <span className=''><b>4.5</b></span>
                         </div>
                     </div>
-                    {coupon && coupon.isActive && <div className="coupon-details-navigate">
+                    {coupon && coupon.isActive && (!user || user._id !== coupon.provider._id) && <div className="coupon-details-navigate">
                         <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}} onClick={() => navigate(`/checkout?type=buyNow&couponId=${id}`)}>Buy Now</Button>
                         <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
                     </div>}
-                    {coupon && coupon.isActive && <div className="coupon-details-quick-items">
+                    {coupon && coupon.isActive && (!user || user._id !== coupon.provider._id) && <div className="coupon-details-quick-items">
                         {coupon && !(coupon.isSaved) ? <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleLike}>
                             <FavoriteBorderIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Save</span>
