@@ -13,17 +13,17 @@ import { CartProvider } from './context/CartContext.jsx'
 createRoot(document.getElementById('root')).render(
     <ThemeProvider theme= {muiTheme}>
         <ThemeModeProvider>
-            <CartProvider>
-                <PopupProvider>
-                    <CategoryProvider>
-                        <AuthProvider>
-                            <AlertProvider>
-                                <App/>   
-                            </AlertProvider>
-                        </AuthProvider>
-                    </CategoryProvider>
-                </PopupProvider>
-            </CartProvider>
+            <AuthProvider>
+                <CartProvider>
+                    <PopupProvider>
+                        <CategoryProvider>
+                                <AlertProvider>
+                                    <App/>   
+                                </AlertProvider>
+                        </CategoryProvider>
+                    </PopupProvider>
+                </CartProvider>
+            </AuthProvider>
         </ThemeModeProvider>
     </ThemeProvider>
 )
