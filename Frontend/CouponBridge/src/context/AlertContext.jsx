@@ -30,7 +30,7 @@ export const AlertProvider = ({ children }) => {
         <AlertContext.Provider value = {{showAlert}}>
             { children }
             <div>
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal:'right' }}>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert
                     onClose={handleClose}
                     severity={type}

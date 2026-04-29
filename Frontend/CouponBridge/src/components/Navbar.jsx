@@ -11,13 +11,28 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useCart } from '../hooks/useCart';
+import { useAlert } from '../hooks/useAlert';
+
 
 function Navbar() {
     
     const navigate = useNavigate();
     const { user, logout } = useAuth();
     const { cartCount} = useCart();
+    const { showAlert } = useAlert();
     const {themeMode, setThemeMode} = useTheme(); 
+    const role = localStorage.getItem('role');
+
+    const handleSelling = () => {
+        if(!user || role === 'customer'){
+            showAlert({
+                type: 'info',
+                message: 'Login as a seller to start selling.'
+            });
+            navigate('/login');
+        }
+        else navigate('/publish');
+    }
 
     const handleLogout = () => {
         logout();
@@ -65,7 +80,7 @@ function Navbar() {
                     </div>
                     <div className="menu-items sub-heading">
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/coupons')}>Browse Coupons</Button>
-                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="merchants">Sell Coupons</Button>
+                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="merchants" onClick={ handleSelling }>Sell Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Providers</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Categories</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="how-it-works">How it works</Button>

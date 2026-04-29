@@ -4,9 +4,26 @@ import Button from '@mui/material/Button';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../hooks/useAlert';
+import { useAuth } from '../../hooks/useAuth';
 
 function HeroSection(){
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
+    const role = localStorage.getItem('role');
+    const { user } = useAuth();
+
+    const handleSelling = () => {
+        if(!user || role === 'customer'){
+            showAlert({
+                type: 'info',
+                message: 'Login as a seller to start selling.'
+            });
+            navigate('/login');
+        }
+        else navigate('/publish');
+    }
+   
     return(
         <>
             <div className="hero">
@@ -25,7 +42,7 @@ function HeroSection(){
                     </p>
                     <div className="hero-navigate">
                         <div className="heading browse" onClick={() => navigate('/coupons')}>Browse Coupons<KeyboardDoubleArrowRightIcon sx={{marginLeft:'0.5rem'}}/></div>
-                        <Button variant="contained" className="selling-btn" onClick={ () => navigate('/publish')}>Start Selling</Button>
+                        <Button variant="contained" className="selling-btn" onClick={ handleSelling }>Start Selling</Button>
                     </div>
                 </div>
 
