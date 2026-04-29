@@ -11,10 +11,13 @@ import CartCard from '../../components/CartCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
 
 const Main = () => {
 
   const [cartItems,setCartItems] = useState([]);
+  const {fetchCartCount} = useCart();
+
   const navigate = useNavigate();
 
   const subtotal = cartItems && cartItems.reduce((acc, item) => {
@@ -45,6 +48,8 @@ const Main = () => {
         }
     }).then(res=> {
         fetchCartItems();
+        fetchCartCount();
+
     }).catch(err => {
         console.log(err.response);
     });

@@ -12,12 +12,14 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
+import { useCart } from '../hooks/useCart';
 
 function Navbar() {
     
     const navigate = useNavigate();
     const { alert, showAlert } = useAlert();
     const { user, logout } = useAuth();
+    const { cartCount, fetchCartCount} = useCart();
     const {themeMode, setThemeMode} = useTheme();
 
     const handleLogout = () => {
@@ -77,7 +79,7 @@ function Navbar() {
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)', fontSize:'1.6rem'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)', fontSize: '1.6rem'}} onClick={handleThemeToggle}/>}
                         
                         {user && <><ShoppingCartOutlinedIcon sx={{color:"var(--color-text-secondary)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
-                        <span className='cart-badge'>1</span></>}
+                        {cartCount > 0 ?<span className='cart-badge'>{cartCount}</span>: null}</>}
                         { user ? 
                             (user && user.picture) ?
                             <div className="user user-image" onClick={()=>navigate(`/users/${user._id}`)}>

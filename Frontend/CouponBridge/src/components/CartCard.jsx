@@ -50,11 +50,11 @@ function CartCard({data, quantity, onRemove, onChange}) {
                 </div>
             </div>
             <div className="cart-card-navigation heading">
-                <div className="cart-card-update-items">
+                {/* <div className="cart-card-update-items">
                     <AddIcon sx={{cursor: 'pointer'}} onClick={handleIncreaseItem}/>
                     <span style={{margin: '0rem 0.5rem'}}>{quantity}</span>
                     <RemoveIcon sx={{cursor: 'pointer'}} onClick = {handleDecreaseItem}/>
-                </div>
+                </div> */}
                 <RemoveShoppingCartOutlinedIcon sx={{color: 'var(--color-danger)', cursor:'pointer', padding: '0.5rem', borderRadius:'50%', ":hover": { backgroundColor:'var(--color-bg)'}}} onClick={handleRemoveItem}/>
 
             </div>

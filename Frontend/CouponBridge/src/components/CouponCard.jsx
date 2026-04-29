@@ -19,6 +19,7 @@ import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
 import { usePopup } from '../hooks/usePopup';
+import { useCart } from '../hooks/useCart';
 
 
 function CouponCard( { data, onDelete} ) {
@@ -27,6 +28,7 @@ function CouponCard( { data, onDelete} ) {
     const {user, updateUser} = useAuth();
     const [coupon, setCoupon] = useState(data);
     const [isLiked, setIsLiked] = useState(null); // to toggle like
+    const { fetchCartCount } = useCart();
     const { showPopup } = usePopup();
 
     const navigate = useNavigate();
@@ -84,6 +86,7 @@ function CouponCard( { data, onDelete} ) {
         })
         .then(res => {
             console.log(res);
+            fetchCartCount();
         })
         .catch(err => {
             console.log(err.response)
