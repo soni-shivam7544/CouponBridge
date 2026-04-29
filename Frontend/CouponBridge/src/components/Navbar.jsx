@@ -3,7 +3,6 @@ import '../index.css';
 import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LogoImage from '../assets/images/coupon_bridge_logo.png';
-import Alert from '@mui/material/Alert';
 import { useAuth } from '../hooks/useAuth';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -18,7 +17,7 @@ function Navbar() {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
     const { cartCount} = useCart();
-    const {themeMode, setThemeMode} = useTheme();
+    const {themeMode, setThemeMode} = useTheme(); 
 
     const handleLogout = () => {
         logout();
@@ -41,7 +40,6 @@ function Navbar() {
     }
     const handleShoppingCart = () => {
         if(user) navigate('/cart');
-        else showAlert({type:'error', message:'Login to customer account required!'})
     }
 
     useEffect(() => {
