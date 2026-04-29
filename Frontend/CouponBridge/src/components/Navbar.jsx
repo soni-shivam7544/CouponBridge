@@ -74,15 +74,17 @@ function Navbar() {
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="how-it-works">How it works</Button>
                     </div>
                     <div className="user-items text">
-                        { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)'}} onClick={handleThemeToggle}/>}
+                        { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)', fontSize:'1.6rem'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)', fontSize: '1.6rem'}} onClick={handleThemeToggle}/>}
                         
-                        <ShoppingCartOutlinedIcon sx={{color:"var(--color-highlight-hover)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
-                        <span className='cart-badge caption'>15</span>
+                        {user && <><ShoppingCartOutlinedIcon sx={{color:"var(--color-text-secondary)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
+                        <span className='cart-badge'>1</span></>}
                         { user ? 
-                            <>
-                                <div id="user" className='lg-heading' onClick={()=>navigate(`/users/${user._id}`)}> {user.name[0].toUpperCase()}</div>
-                                <Button variant="contained" sx={{borderRadius: '2rem'}} onClick={ handleLogout }>Logout</Button>
-                            </>
+                            (user && user.picture) ?
+                            <div className="user user-image" onClick={()=>navigate(`/users/${user._id}`)}>
+                                <img src={user.picture} alt='img'/>
+                            </div>
+                            :
+                            <div id="user" className='user heading' onClick={()=>navigate(`/users/${user._id}`)}> <b>{user.name[0].toUpperCase()}</b></div>
                         : 
                             <>
                                 <Button className='login' variant="text" onClick={ ()=> navigate('/login')} sx={{marginRight: '0.5rem', borderRadius:'2rem', color:'var(--color-text-primary)'}}>Login</Button>
