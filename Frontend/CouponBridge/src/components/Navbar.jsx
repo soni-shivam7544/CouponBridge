@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LogoImage from '../assets/images/coupon_bridge_logo.png';
 import Alert from '@mui/material/Alert';
-import {useAlert} from '../hooks/useAlert';
 import { useAuth } from '../hooks/useAuth';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -17,14 +16,12 @@ import { useCart } from '../hooks/useCart';
 function Navbar() {
     
     const navigate = useNavigate();
-    const { alert, showAlert } = useAlert();
     const { user, logout } = useAuth();
-    const { cartCount, fetchCartCount} = useCart();
+    const { cartCount} = useCart();
     const {themeMode, setThemeMode} = useTheme();
 
     const handleLogout = () => {
         logout();
-        showAlert({type:'success', message:'Logout successful. Hope to see you soon.'});
         navigate('/login');
     }
 
@@ -96,7 +93,6 @@ function Navbar() {
                         
                     </div>
                 </div>
-                { alert ? <Alert severity= {alert.type} className='alert-message'> {alert.message}</Alert>:null}
             </div>
             <div className="nav-background"></div>
             
