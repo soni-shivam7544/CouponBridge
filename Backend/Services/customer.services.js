@@ -41,7 +41,7 @@ const login = async (data) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
 
-        if(!isMatch) throw { err: "Invalid Credentials. Password Incorrect.", code: 400 };
+        if(!isMatch) throw { err: "Invalid Password!", code: 400 };
 
         const token = jwt.sign(
             { id: user._id },

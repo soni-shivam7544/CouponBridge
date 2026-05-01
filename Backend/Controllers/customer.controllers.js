@@ -6,16 +6,16 @@ const signUp = async (req, res) => {
     try {
         const response = await customerService.create(req.body);
         successResponseBody.data = response;
-        successResponseBody.message = "You have registered as a customer successfully. Please login to your account ";
+        successResponseBody.message = "Customer registered.";
         res.status(201).json(successResponseBody);
     }catch (error) {
         if(error.err) {
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to register the customer.";
+            errorResponseBody.message = "Registration failed";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Failed to register the customer.";
+        errorResponseBody.message = "Registration failed";
         res.status(500).json(errorResponseBody);
     }
 }
@@ -25,16 +25,16 @@ const signin = async (req, res) => {
         const response = await customerService.login( req.body );
         successResponseBody.data = response;
         console.log(response);
-        successResponseBody.message = `Welcome back ${response.user.name}. Login to customer account successful.`;
+        successResponseBody.message = `Welcome back ${response.user.name} to your customer account.`;
         res.status(200).json(successResponseBody);
     } catch(error) {
         if( error.err ){
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to login customer.";
+            errorResponseBody.message = "Login failed";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Failed to login customer.";
+        errorResponseBody.message = "Login failed";
         res.status(500).json(errorResponseBody);
     }
 }

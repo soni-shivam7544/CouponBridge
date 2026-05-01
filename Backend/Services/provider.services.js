@@ -43,7 +43,7 @@ const signin = async (data) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            throw { err: "Invalid Credentials. Password Incorrect.", code: 401};
+            throw { err: "Invalid Password!", code: 401};
         }
 
         const token = jwt.sign(
