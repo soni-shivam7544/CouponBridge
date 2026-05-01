@@ -35,13 +35,16 @@ const addToUserCart = async (req, res) => {
     try {
         const response = await cartServices.addToCart({user: req.user, couponId: req.body.couponId});
         successResponseBody.data = response;
+        successResponseBody.message = "Item added to cart";
         return res.status(201).json(successResponseBody);
     } catch (error) {
         if(error.err){
             errorResponseBody.err = error.err;
+            successResponseBody.message = "Failed to add to cart";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.err = error;
+        successResponseBody.message = "Failed to add to cart";
         return res.status(500).json(errorResponseBody);
     }
 }
@@ -50,13 +53,16 @@ const removeFromUserCart = async (req, res) => {
     try {
         const response = await cartServices.removeFromCart({user: req.user, couponId: req.params.id});
         successResponseBody.data = response;
+        successResponseBody.message = "Item removed";
         return res.status(200).json(successResponseBody);
     } catch (error) {
         if(error.err){
             errorResponseBody.err = error.err;
+            successResponseBody.message = "Failed to remove from cart";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.err = error;
+        successResponseBody.message = "Failed to remove from cart";
         return res.status(500).json(errorResponseBody);
     }
 }

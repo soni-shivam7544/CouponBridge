@@ -10,7 +10,7 @@ const uploadImage = async(req, res) => {
         return res.status(200).json(successResponseBody);
     } catch(err) {
         console.log("Real err: ", err);
-        errorResponseBody.err = 'Upload Failed.';
+        errorResponseBody.err = 'Image Upload Failed.';
         return res.status(500).json(errorResponseBody);
     }
 }

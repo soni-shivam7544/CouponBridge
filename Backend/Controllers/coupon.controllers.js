@@ -8,15 +8,16 @@ const createCoupon = async (req, res) => {
         console.log(data);
         const response = await couponService.create({ ...data, provider: req.user._id });
         successResponseBody.data = response;
-        successResponseBody.message = "The coupon created successfully.";
+        successResponseBody.message = "The coupon published successfully.";
         res.status(201).json(successResponseBody);
     } catch (error) {
         if(error.err) {
             errorResponseBody.error = error.err;
+            errorResponseBody.message = "Failed to publish the coupon.";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
-        errorResponseBody.message = "Failed to create the coupon.";
+        errorResponseBody.message = "Failed to publish the coupon.";
         res.status(500).json(errorResponseBody);
     }
 }
