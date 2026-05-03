@@ -5,6 +5,7 @@ import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "../../hooks/usePopup";
+import { useAlert } from '../../hooks/useAlert';
 
 import './Main.css';
 
@@ -13,6 +14,7 @@ const Main = () => {
   const navigate = useNavigate();
   const {showPopup, hidePopup} = usePopup();
   const [file, setFile] = useState(null);
+  const { showAlert } = useAlert();
 
   const [formData, setFormData] = useState({
     code: "",
@@ -62,7 +64,10 @@ const Main = () => {
           hidePopup();
           console.log(res);
           localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
-          
+          showAlert ({
+            type: 'success',
+            message: res.data.message
+          });
           navigate('/coupons');
 
         })
@@ -70,8 +75,16 @@ const Main = () => {
           console.log(err.response);
           hidePopup();
           localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-          
-          navigate('/login');
+          if(err.response.data.error.err){
+            showAlert({
+              type: 'error',
+              message: err.response.data.error.err
+            });
+          }
+          else showAlert({
+            type: 'error',
+            message: err.response.data.message
+          });
 
         });
         
@@ -79,6 +92,10 @@ const Main = () => {
       }).catch(err=>{
         hidePopup();
         console.log(err.response);
+        showAlert({
+          type: 'error',
+          message: err.response.data.error.err
+        });
       });
     }
 
@@ -93,7 +110,10 @@ const Main = () => {
         hidePopup();
         console.log(res);
         localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
-        
+        showAlert ({
+          type: 'success',
+          message: res.data.message
+        });
         navigate('/coupons');
 
       })
@@ -101,8 +121,10 @@ const Main = () => {
         hidePopup();
         console.log(err.response);
         localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-        
-        navigate('/login');
+        showAlert ({
+          type: 'success',
+          message: err.response.data.error.err
+        })
 
       });
 
