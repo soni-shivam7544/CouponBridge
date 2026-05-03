@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 import { bookingEmail } from '../../mailingHtmls';
+import { useAlert } from '../../hooks/useAlert';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Main = () => {
         expiryDate: '',
         cvv: ''
     });
+    const { showAlert } = useAlert();
     const {user} = useAuth();
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
@@ -78,6 +80,11 @@ const Main = () => {
                 }).catch(err => {
                     hidePopup();
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: "Network Error. Coupons not sent!"
+                    });
+                    
                 });
 
             }).catch(err => {
@@ -115,6 +122,10 @@ const Main = () => {
                 }).catch(err=>{
                     hidePopup();
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: "Network Error. Coupons not sent!"
+                    })
                 })
 
             }).catch(err => {
