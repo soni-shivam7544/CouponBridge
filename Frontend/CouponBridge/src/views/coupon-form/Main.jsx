@@ -94,7 +94,7 @@ const Main = () => {
         console.log(err.response);
         showAlert({
           type: 'error',
-          message: err.response.data.error.err
+          message: err.response.data.err
         });
       });
     }
@@ -121,10 +121,16 @@ const Main = () => {
         hidePopup();
         console.log(err.response);
         localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-        showAlert ({
-          type: 'success',
-          message: err.response.data.error.err
-        })
+        if(err.response.data.error.err){
+          showAlert({
+            type: 'error',
+            message: err.response.data.error.err
+          });
+        }
+        else showAlert({
+          type: 'error',
+          message: err.response.data.message
+        });
 
       });
 
