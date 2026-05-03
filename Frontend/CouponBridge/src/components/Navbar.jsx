@@ -79,6 +79,7 @@ function Navbar() {
                         <img src={LogoImage} alt='image'/>
                     </div>
                     <div className="menu-items sub-heading">
+                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/')}>Home</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/coupons')}>Browse Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="merchants" onClick={ handleSelling }>Sell Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Providers</Button>
