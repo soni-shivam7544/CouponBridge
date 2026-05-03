@@ -18,8 +18,10 @@ import CircleIcon from '@mui/icons-material/Circle';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
 import { useEffect, useState} from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useAlert } from '../../hooks/useAlert';
 import axios from 'axios';
 
 const Main = () => {
@@ -29,6 +31,9 @@ const Main = () => {
     const {user, updateUser} = useAuth();
     const [coupon, setCoupon] = useState(null);
     const [isLiked, setIsLiked] = useState(false); // to toggle like
+    const {showAlert} = useAlert();
+    const {fetchCartCount} = useCart();
+
     const handleLike = (e) => {
 
         if(role === 'customer'){
@@ -41,10 +46,18 @@ const Main = () => {
                     console.log("saved");
                     updateUser(res.data.data);
                     setIsLiked(true);
+                    showAlert({
+                        type: 'success',
+                        message: "Item saved to favourites"
+                    });
 
 
                 }).catch(err => {
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: err.response.data.error
+                    });
                 })
             }
             else{
@@ -56,30 +69,70 @@ const Main = () => {
                     console.log("saved removed");
                     updateUser(res.data.data);
                     setIsLiked(false);
+                    showAlert({
+                        type: 'success',
+                        message: "Item removed from favourites"
+                    });
 
 
                 }).catch(err => {
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: err.response.data.error
+                    });
                 })
             }
         }
         else{
             console.log("Customer Login is required.");
+            showAlert({
+                type: 'info',
+                message: "Customer login required."
+            });
         }
         
         
     }
-    useEffect(()=>{
-        axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`,{
+
+    const handleAddtoCart = (e) => {
+        e.stopPropagation();
+
+        axios.post('http://localhost:5050/cb/v1/api/cart',{
+            couponId: coupon._id
+        },{
             headers:{
                 authorization: localStorage.getItem('token')
             }
         })
-        .then(res=>{
-            setCoupon(res.data.data);
-            setIsLiked(res.data.data.isSaved)
-        }).catch(err=>console.log(err.response));
-    }, [user]);
+        .then(res => {
+            console.log(res);
+            fetchCartCount();
+            showAlert({
+                type: 'success',
+                message: res.data.message
+            });
+        })
+        .catch(err => {
+            console.log(err.response)
+            showAlert({
+                type: 'info',
+                message: "Customer login required."
+            });
+        })
+    }
+
+    const handleBuyNow = () => {
+        if (role === 'customer') navigate(`/checkout?type=buyNow&couponId=${id}`);
+        else {
+            showAlert({
+                type: 'info',
+                message: "Customer login required."
+            });
+            return;
+        }
+    }
+
 
     const handleVerify = () => {
         console.log( coupon.productId, coupon.code);
@@ -97,6 +150,19 @@ const Main = () => {
         })
         .catch(err=> console.log(err));
     }
+
+    useEffect(()=>{
+        axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`,{
+            headers:{
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(res=>{
+            setCoupon(res.data.data);
+            setIsLiked(res.data.data.isSaved)
+        }).catch(err=>console.log(err.response));
+    }, [user]);
+
     return (
         <div className="details">
             <div className="navigate-back text" onClick={()=> navigate('/coupons')}>
@@ -170,8 +236,8 @@ const Main = () => {
                         </div>
                     </div>
                     {coupon && coupon.isActive && (!user || user._id !== coupon.provider._id) && <div className="coupon-details-navigate">
-                        <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}} onClick={() => navigate(`/checkout?type=buyNow&couponId=${id}`)}>Buy Now</Button>
-                        <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}}><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
+                        <Button variant="contained" sx={{width: '48%', borderRadius: '0.5rem'}} onClick={ handleBuyNow }>Buy Now</Button>
+                        <Button variant="outlined" color='var(--color-text-secondary)' sx={{width: '48%', borderRadius: '0.5rem'}} onClick={ handleAddtoCart }><AddShoppingCartIcon sx={{fontSize: '1rem', marginRight: '0.5rem'}}/><span>Add to Cart</span></Button>
                     </div>}
                     {coupon && coupon.isActive && (!user || user._id !== coupon.provider._id) && <div className="coupon-details-quick-items">
                         {coupon && !(coupon.isSaved) ? <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleLike}>
