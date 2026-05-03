@@ -18,11 +18,12 @@ import { useNavigate } from 'react-router-dom';
 import { usePopup } from '../../hooks/usePopup';
 import axios from 'axios';
 import OrderCard from '../../components/OrderCard';
+import { useAlert } from '../../hooks/useAlert';
 
 const Main= () => {
 
   const navigate = useNavigate();
-
+  const {showAlert} = useAlert();
   const {showPopup} = usePopup();
   const {user, updateUser, logout} = useAuth();
   const role = localStorage.getItem('role');
@@ -48,8 +49,22 @@ const Main= () => {
     .then(res => {
       console.log(res);
       updateUser(res.data.data);
+      showAlert({
+        type: 'success',
+        message: 'Profile Updated!'
+      });
     }).catch(err => {
       console.log(err.response);
+      if(err.response.data.error.err){
+          showAlert({
+            type: 'error',
+            message: err.response.data.error.err
+          });
+        }
+        else showAlert({
+          type: 'error',
+          message: err.response.data.message
+        });
     })
 
     setEditMode(false);
@@ -106,12 +121,23 @@ const Main= () => {
         axios.get(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`)
         .then(res=>{
           updateUser(res.data.data);
+          showAlert({
+            type: 'success',
+            message: 'Image Uploaded!'
+          })
+
         }).catch(err=> console.log(err.response));
 
       })
       .catch(err => console.log(err.response))
 
-    }).catch(err => console.log(err.response));
+    }).catch(err => {
+      console.log(err.response)
+      showAlert({
+          type: 'error',
+          message: err.response.data.err
+        });
+    });
   }
 
   const handleLogout = () => {
