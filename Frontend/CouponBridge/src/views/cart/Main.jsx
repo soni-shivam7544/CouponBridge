@@ -12,11 +12,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import { useCart } from '../../hooks/useCart';
+import { useAlert } from '../../hooks/useAlert';
 
 const Main = () => {
 
   const [cartItems,setCartItems] = useState([]);
   const {fetchCartCount} = useCart();
+  const {showAlert} = useAlert();
 
   const navigate = useNavigate();
 
@@ -49,9 +51,17 @@ const Main = () => {
     }).then(res=> {
         fetchCartItems();
         fetchCartCount();
+        showAlert({
+          type: 'success',
+          message: res.data.message
+        })
 
     }).catch(err => {
         console.log(err.response);
+        showAlert({
+          type: 'error',
+          message: err.response.data.message
+        })
     });
 
   }

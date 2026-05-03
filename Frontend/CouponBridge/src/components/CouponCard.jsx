@@ -20,6 +20,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
 import { usePopup } from '../hooks/usePopup';
 import { useCart } from '../hooks/useCart';
+import { useAlert } from '../hooks/useAlert';
 
 
 function CouponCard( { data, onDelete} ) {
@@ -30,6 +31,7 @@ function CouponCard( { data, onDelete} ) {
     const [isLiked, setIsLiked] = useState(null); // to toggle like
     const { fetchCartCount } = useCart();
     const { showPopup } = usePopup();
+    const { showAlert } = useAlert();
 
     const navigate = useNavigate();
     const handleLike = (e) => {
@@ -42,13 +44,20 @@ function CouponCard( { data, onDelete} ) {
                     $addToSet: { savedCoupons: coupon._id } // prevents duplicates
                 }).then(res => {
                     console.log(res);
-                    console.log("saved");
                     updateUser(res.data.data);
                     setIsLiked(true);
+                    showAlert({
+                        type: 'success',
+                        message: "Item saved to favourites"
+                    });
 
 
                 }).catch(err => {
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: err.response.data.error
+                    });
                 })
             }
             else{
@@ -57,18 +66,29 @@ function CouponCard( { data, onDelete} ) {
                     $pull: { savedCoupons: coupon._id }
                 }).then(res => {
                     console.log(res);
-                    console.log("saved removed");
                     updateUser(res.data.data);
                     setIsLiked(false);
+                    showAlert({
+                        type: 'success',
+                        message: "Item removed from favourites"
+                    });
 
 
                 }).catch(err => {
                     console.log(err.response);
+                    showAlert({
+                        type: 'error',
+                        message: err.response.data.error
+                    });
                 })
             }
         }
         else{
             console.log("Customer Login is required.");
+            showAlert({
+                type: 'info',
+                message: "Customer login required."
+            });
         }
         
         
@@ -87,9 +107,17 @@ function CouponCard( { data, onDelete} ) {
         .then(res => {
             console.log(res);
             fetchCartCount();
+            showAlert({
+                type: 'success',
+                message: res.data.message
+            });
         })
         .catch(err => {
             console.log(err.response)
+            showAlert({
+                type: 'info',
+                message: "Customer login required"
+            });
         })
     }
 

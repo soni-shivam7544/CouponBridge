@@ -40,11 +40,11 @@ const addToUserCart = async (req, res) => {
     } catch (error) {
         if(error.err){
             errorResponseBody.err = error.err;
-            successResponseBody.message = "Failed to add to cart";
+            errorResponseBody.message = "Failed to add to cart";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.err = error;
-        successResponseBody.message = "Failed to add to cart";
+        errorResponseBody.message = "Failed to add to cart";
         return res.status(500).json(errorResponseBody);
     }
 }
@@ -58,11 +58,11 @@ const removeFromUserCart = async (req, res) => {
     } catch (error) {
         if(error.err){
             errorResponseBody.err = error.err;
-            successResponseBody.message = "Failed to remove from cart";
+            errorResponseBody.message = "Failed to remove from cart";
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.err = error;
-        successResponseBody.message = "Failed to remove from cart";
+        errorResponseBody.message = "Failed to remove from cart";
         return res.status(500).json(errorResponseBody);
     }
 }
