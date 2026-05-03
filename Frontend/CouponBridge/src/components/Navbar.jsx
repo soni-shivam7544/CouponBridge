@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useCart } from '../hooks/useCart';
 import { useAlert } from '../hooks/useAlert';
-
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     
@@ -57,6 +57,16 @@ function Navbar() {
         if(user) navigate('/cart');
     }
 
+    const handleCategory = () => {
+        if (location.pathname === "/") {
+        const el = document.getElementById("category-section");
+        el?.scrollIntoView({ behavior: "smooth" });
+        } else {
+        sessionStorage.setItem("scrollTo", "categories");
+        navigate("/");
+        }
+    }
+
     useEffect(() => {
         const storedThemeMode = localStorage.getItem('themeMode');
         const body = document.body;
@@ -83,7 +93,7 @@ function Navbar() {
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/coupons')}>Browse Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="merchants" onClick={ handleSelling }>Sell Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Providers</Button>
-                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Categories</Button>
+                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers" onClick={handleCategory}>Categories</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="how-it-works">How it works</Button>
                     </div>
                     <div className="user-items text">

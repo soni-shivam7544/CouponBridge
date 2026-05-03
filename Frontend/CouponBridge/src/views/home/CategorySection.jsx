@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 
 library.add(fas, far, fab)
 
-const CategorySection = () => {
+const CategorySection = ( { categoryRef }) => {
 
     const {changeGlobalCategory} = useGlobalCategory();
     const navigate = useNavigate();
@@ -32,8 +32,8 @@ const CategorySection = () => {
         navigate('/coupons');
     }
   return (
-    <div className="category-section">
-      <p className="section-heading">Browse by Category</p>
+    <div className="category-section" id='category-section' ref={categoryRef} style={{scrollMarginTop:'5rem'}}>
+      <p className="section-heading">Browse By Category</p>
       <p className="sub-heading">Find deals in your favorite categories</p>
       <div className="category-container text">
         <div className="category-item" name='Food' onClick={handleCategoryClick}>

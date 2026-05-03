@@ -3,12 +3,12 @@ import CouponSection from './CouponSection.jsx';
 import ConcludingSection from './ConcludingSection.jsx';
 import CategorySection from './CategorySection.jsx';
 
-const Main = () => {
+const Main = ({ categoryRef}) => {
   return (
     <>
         <HeroSection/>
         <CouponSection/>
-        <CategorySection/>
+        <CategorySection categoryRef={categoryRef}/>
         <ConcludingSection/>
     </>
   )
