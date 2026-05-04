@@ -73,7 +73,7 @@ const updateProviderById = async (req, res) => {
     } catch(error) {
         if (error.err) {
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to update the provider.";
+            errorResponseBody.message = error.message;
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;

@@ -103,7 +103,9 @@ const updateProvider = async (id, data) => {
             Object.keys(error.errors).forEach ( key => {
                 err[key] = error.errors[key].message;
             });
-            throw { err, code: 400 };
+            throw { err,
+                message: "Validation Failed! Something Missing.",
+                code: 400 };
         }
         throw error;
     }

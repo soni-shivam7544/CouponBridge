@@ -74,7 +74,7 @@ const updateCustomerById = async (req, res) => {
     } catch(error) {
         if( error.err ){
             errorResponseBody.error = error.err;
-            errorResponseBody.message = "Failed to update the customer.";
+            errorResponseBody.message = error.message;
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.error = error;
