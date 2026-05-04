@@ -3,13 +3,14 @@ const OTP = require('../Models/otp.model');
 const create = async(data) => {
     try{
         const { email } = data;
-        const otpCode = `${Math.floor(Math.random() * 10000)}`;
+        const otpCode = `${Math.floor(1000 + Math.random() * 9000)}`;
         const otp = await OTP.create({
             email,
             otp: otpCode
         });
         return otp;
     } catch(error){
+
         if(error.name === 'TypeError'){
             throw {
                 err: 'Email is missing.',
@@ -28,7 +29,26 @@ const create = async(data) => {
     }
 }
 
+const verify = async(data) => {
+    try {
+        const { email, otp } = data;
+        const storedOTP = await OTP.findOne( { email, otp });
+        if(!storedOTP){
+            throw {
+                err: "Invalid OTP!",
+                message: "Invalid OTP!",
+                code: 400
+            }
+        }
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 
 module.exports = {
-    create
+    create,
+    verify
 }

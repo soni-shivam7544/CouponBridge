@@ -43,8 +43,9 @@ app.use((err, req, res, next) => {
 mongoose.connect('mongodb://localhost:27017/couponbridge',{
     autoIndex: true
     })
-    .then(() => {
+    .then(async() => {
         console.log("Connected to MongoDB");
+        await mongoose.model("OTP").syncIndexes();
     })
     .catch((err) => {
         console.log("Error connecting to MongoDB:", err);

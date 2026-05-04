@@ -20,6 +20,28 @@ const createOTP = async(req, res)=>{
     }
 }
 
+const verifyOTP = async(req, res) => {
+    try {
+        const response = await otpServices.verify(req.body);
+        successResponseBody.data = response;
+        successResponseBody.message = "OTP Verified!";
+        return res.status(200).json(successResponseBody);
+        
+    } catch (error) {
+        console.log(error);
+        if(error.err){
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = error.message;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "OTP Verification Failed!";
+        return res.status(500).json(errorResponseBody);
+        
+    }
+}
+
 module.exports = {
-    createOTP
+    createOTP,
+    verifyOTP
 }
