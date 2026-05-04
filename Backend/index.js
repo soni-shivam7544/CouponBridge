@@ -8,6 +8,7 @@ const customerRouter = require('./Routes/customer.routes.js');
 const uploadRouter = require('./Routes/upload.routes.js');
 const cartRouter = require('./Routes/cart.routes.js');
 const orderRouter = require('./Routes/order.routes.js');
+const OTPRouter = require('./Routes/otp.routes.js');
 const cors = require('cors');
 const { errorResponseBody } = require('./Utils/responsebody.js');
 const app = express();
@@ -25,6 +26,7 @@ customerRouter(app);
 uploadRouter(app);
 cartRouter(app);
 orderRouter(app);
+OTPRouter(app);
 
 
 app.get('/', (req, res) => {

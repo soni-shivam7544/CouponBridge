@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 
 const OTPSchema = mongoose.Schema({
     otp: {
-        type: Number,
+        type: String,
         required: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     createdAt: {
         type: Date,
