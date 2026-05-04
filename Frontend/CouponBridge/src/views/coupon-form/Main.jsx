@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { usePopup } from "../../hooks/usePopup";
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from "../../hooks/useAuth";
+import { publishEmail} from "../../mailingHtmls";
 
 import './Main.css';
 
@@ -29,6 +30,25 @@ const Main = () => {
     discountType:"Percentage",
     category:"Food"
   });
+
+  const sendPublishMail = async()=> {
+
+    try{
+      const response = await axios.post('http://localhost:5059/cb/v1/api/services/mail',{
+          to: user.email,
+          subject: "Coupon Published!",
+          html: publishEmail(user.name,formData.code,formData.price,formData.expiry)
+      });
+      return response;
+    }catch(err){
+      console.log(err.response);
+      showAlert({
+        type: 'error',
+        message: 'Network Error! Mail Not Sent!'
+      })
+    }
+
+  }
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -64,7 +84,7 @@ const Main = () => {
         .then(async(res) => {
           hidePopup();
           console.log(res);
-          localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
+          sendPublishMail();
           const response = await showPopup('Coupon-Published');
           if(response) navigate(`/users/${user._id}`);
           else navigate('/');
@@ -73,14 +93,7 @@ const Main = () => {
         .catch(err => {
           console.log(err.response);
           hidePopup();
-          localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-          if(err.response.data.error.err){
-            showAlert({
-              type: 'error',
-              message: err.response.data.error.err
-            });
-          }
-          else showAlert({
+          showAlert({
             type: 'error',
             message: err.response.data.message
           });
@@ -105,26 +118,16 @@ const Main = () => {
           Authorization: localStorage.getItem('token')
         }
       })
-      .then(async(res) => {
-        hidePopup();
-        console.log(res);
-        localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
+      .then(async() => {
+        sendPublishMail();
         const response = await showPopup('Coupon-Published');
-          if(response) navigate(`/users/${user._id}`);
-          else navigate('/');
+        if(response) navigate(`/users/${user._id}`);
+        else navigate('/');
 
       })
       .catch(err => {
         hidePopup();
-        console.log(err.response);
-        localStorage.setItem('alert', JSON.stringify({ name: 'error', message: 'Authentication Failed! Login as Provider first.'}));
-        if(err.response.data.error.err){
-          showAlert({
-            type: 'error',
-            message: err.response.data.error.err
-          });
-        }
-        else showAlert({
+        showAlert({
           type: 'error',
           message: err.response.data.message
         });
