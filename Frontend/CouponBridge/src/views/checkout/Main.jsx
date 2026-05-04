@@ -77,9 +77,12 @@ const Main = () => {
                     if (!response) navigate('/coupons');
                     else navigate(`/users/${user._id}`);
 
-                }).catch(err => {
+                }).catch(async(err) => {
                     hidePopup();
                     console.log(err.response);
+                    const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
+                    if (!response) navigate('/coupons');
+                    else navigate(`/users/${user._id}`);
                     showAlert({
                         type: 'error',
                         message: "Network Error. Coupons not sent!"
@@ -119,9 +122,12 @@ const Main = () => {
                     if (!response) navigate('/coupons');
                     else navigate(`/users/${user._id}`);
 
-                }).catch(err=>{
+                }).catch(async(err)=>{
                     hidePopup();
                     console.log(err.response);
+                    const response = await showPopup('Booking-Confirmed',{bookingId: res.data.data._id});
+                    if (!response) navigate('/coupons');
+                    else navigate(`/users/${user._id}`);
                     showAlert({
                         type: 'error',
                         message: "Network Error. Coupons not sent!"
