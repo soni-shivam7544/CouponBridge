@@ -3,6 +3,7 @@ import { usePopup } from '../hooks/usePopup.js';
 import LoaderPopup from './loaderPopup.jsx';
 import DeleteConfirmPopup from './DeleteConfirmPopup.jsx';
 import BookingConfirmed from './BookingConfirmed.jsx';
+import CouponPublished from './CouponPublished.jsx';
 
 function GlobalPopup() {
     const { popup, hidePopup } = usePopup();
@@ -31,7 +32,13 @@ function GlobalPopup() {
                     onContinue={ () => handleResolve(false)}
                 />
             );
-        
+        case "Coupon-Published":
+            return(
+                <CouponPublished
+                    onViewPublish={ () => handleResolve(true)}
+                    onContinue={ () => handleResolve(false)}
+                />
+            )
         default:
             return null;
     }

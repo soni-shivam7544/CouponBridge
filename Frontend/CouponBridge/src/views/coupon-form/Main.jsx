@@ -6,6 +6,7 @@ import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "../../hooks/usePopup";
 import { useAlert } from '../../hooks/useAlert';
+import { useAuth } from "../../hooks/useAuth";
 
 import './Main.css';
 
@@ -15,7 +16,7 @@ const Main = () => {
   const {showPopup, hidePopup} = usePopup();
   const [file, setFile] = useState(null);
   const { showAlert } = useAlert();
-
+  const { user } = useAuth(); 
   const [formData, setFormData] = useState({
     code: "",
     price: "",
@@ -60,15 +61,13 @@ const Main = () => {
             Authorization: localStorage.getItem('token')
           }
         })
-        .then(res => {
+        .then(async(res) => {
           hidePopup();
           console.log(res);
           localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
-          showAlert ({
-            type: 'success',
-            message: res.data.message
-          });
-          navigate('/coupons');
+          const response = await showPopup('Coupon-Published');
+          if(response) navigate(`/users/${user._id}`);
+          else navigate('/');
 
         })
         .catch(err => {
@@ -106,15 +105,13 @@ const Main = () => {
           Authorization: localStorage.getItem('token')
         }
       })
-      .then(res => {
+      .then(async(res) => {
         hidePopup();
         console.log(res);
         localStorage.setItem('alert', JSON.stringify({ name: 'success', message: 'A new Coupon Created Successfully.'}));
-        showAlert ({
-          type: 'success',
-          message: res.data.message
-        });
-        navigate('/coupons');
+        const response = await showPopup('Coupon-Published');
+          if(response) navigate(`/users/${user._id}`);
+          else navigate('/');
 
       })
       .catch(err => {
