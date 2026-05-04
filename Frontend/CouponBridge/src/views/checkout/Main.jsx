@@ -12,12 +12,14 @@ import PaymentCard from '../../components/PaymentCard';
 import { usePopup } from '../../hooks/usePopup';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useCart } from '../../hooks/useCart';
 
 import { bookingEmail } from '../../mailingHtmls';
 import { useAlert } from '../../hooks/useAlert';
 
 const Main = () => {
     const navigate = useNavigate();
+    const { fetchCartCount} = useCart();
     const [items,setItems] = useState([]);
     const [formData, setFormData] = useState({
         email: '',
@@ -32,6 +34,7 @@ const Main = () => {
     const type = searchParams.get('type');
     const couponId = searchParams.get('couponId');
     const {showPopup, hidePopup} = usePopup();
+
 
     let subtotal = 0;
     if(type === 'buyNow'){
@@ -64,7 +67,7 @@ const Main = () => {
                     authorization: localStorage.getItem('token')
                 }
             }).then(res=>{
-
+                fetchCartCount();
                 console.log(res);
                 const mailingCoupons = items.map(item => item.coupon);
                 axios.post('http://localhost:5059/cb/v1/api/services/mail',{
@@ -112,6 +115,7 @@ const Main = () => {
             }).then(res=>{
 
                 console.log(res);
+                fetchCartCount();
                 axios.post('http://localhost:5059/cb/v1/api/services/mail',{
                     to: formData.email,
                     subject: "Booking Confirmed!",
