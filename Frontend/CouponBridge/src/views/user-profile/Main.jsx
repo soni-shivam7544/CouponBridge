@@ -24,7 +24,7 @@ const Main= () => {
 
   const navigate = useNavigate();
   const {showAlert} = useAlert();
-  const {showPopup} = usePopup();
+  const {showPopup, hidePopup} = usePopup();
   const {user, updateUser, logout} = useAuth();
   const role = localStorage.getItem('role');
   const [option, setOption] = useState('profile');
@@ -109,6 +109,7 @@ const Main= () => {
 
     const imageData = new FormData();
     imageData.append('image', file);
+    showPopup('Loader');
 
     axios.post('http://localhost:5050/cb/v1/api/upload',imageData)
     .then(res=>{
@@ -120,19 +121,27 @@ const Main= () => {
       .then(res => {
         axios.get(`http://localhost:5050/cb/v1/api/${role}s/${user._id}`)
         .then(res=>{
+          hidePopup();
           updateUser(res.data.data);
           showAlert({
             type: 'success',
-            message: 'Image Uploaded!'
+            message: 'Image Updated!'
           })
 
-        }).catch(err=> console.log(err.response));
+        }).catch(err=> {
+          hidePopup();
+          console.log(err.response);
+        });
 
       })
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        hidePopup();
+        console.log(err.response);
+      })
 
     }).catch(err => {
-      console.log(err.response)
+      console.log(err.response);
+      hidePopup();
       showAlert({
           type: 'error',
           message: err.response.data.err
