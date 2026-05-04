@@ -13,7 +13,16 @@ const create = async ( couponData ) => {
             Object.keys(error.errors).forEach( (key) => {
                 err[key] = error.errors[key].message;
             });
-            throw { err: err, code: 400};
+            throw { err: err, 
+                message: "Validation Error! Something Missing",
+                code: 400};
+        }
+        if( error.code === 11000){
+            throw {
+                err: "Duplicate Coupon Code Found!",
+                message: "Duplicate Coupon Code Found!",
+                code: 400
+            }
         }
         throw error;
     }
