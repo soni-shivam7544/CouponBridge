@@ -13,8 +13,8 @@ const DeleteConfirmPopup = ({ onConfirm, onCancel }) => {
         <p className='sub-heading'>This action can not be undone.</p>
         <p className='sub-heading'>{popup.data.message || "All your data will be deleted permanently!"}</p>
         <div className="popup-action" style={{margin: '1.5rem 0rem 0rem'}}>
-            <Button variant="contained" sx={{backgroundColor:'var(--color-danger)', ":hover":{backgroundColor:'var(--color-danger-hover)'}}} onClick={onConfirm}>Delete</Button>
             <Button variant="contained"sx={{backgroundColor:'var(--color-btn-secondary-bg)', color: 'var(--color-btn-secondary-text)'}} onClick={onCancel}>Cancel</Button>
+            <Button variant="contained" sx={{backgroundColor:'var(--color-danger)', ":hover":{backgroundColor:'var(--color-danger-hover)'}}} onClick={onConfirm}>Delete</Button> 
         </div>
       </div>
     </div>

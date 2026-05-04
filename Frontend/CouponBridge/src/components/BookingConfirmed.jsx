@@ -18,7 +18,7 @@ const BookingConfirmed = ( { onViewOrders, onContinue } ) => {
                 </div>
                 <div className="popup-action" style={{margin: '1.5rem 0rem 0rem'}}>
                     <Button variant="contained"sx={{backgroundColor:'var(--color-btn-secondary-bg)', color: 'var(--color-btn-secondary-text)'}} onClick={onViewOrders}>View Orders</Button>
-                    <Button variant="contained" sx={{backgroundColor:'var(--color-primary)', ":hover":{backgroundColor:'var(--color-danger-hover)'}}} onClick={onContinue}>Continue Shopping</Button>
+                    <Button variant="contained" sx={{backgroundColor:'var(--color-primary)', ":hover":{backgroundColor:'var(--color-primary-hover)'}}} onClick={onContinue}>Continue Shopping</Button>
                     
                 </div>
             </div>
