@@ -15,13 +15,13 @@ createRoot(document.getElementById('root')).render(
         <ThemeModeProvider>
             <AuthProvider>
                 <CartProvider>
-                    <PopupProvider>
-                        <CategoryProvider>
-                                <AlertProvider>
-                                    <App/>   
-                                </AlertProvider>
-                        </CategoryProvider>
-                    </PopupProvider>
+                    <CategoryProvider>
+                            <AlertProvider>
+                                <PopupProvider>
+                                    <App/>
+                                </PopupProvider>
+                            </AlertProvider>
+                    </CategoryProvider>
                 </CartProvider>
             </AuthProvider>
         </ThemeModeProvider>

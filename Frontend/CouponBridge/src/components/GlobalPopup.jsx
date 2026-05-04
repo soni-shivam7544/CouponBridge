@@ -4,6 +4,7 @@ import LoaderPopup from './loaderPopup.jsx';
 import DeleteConfirmPopup from './DeleteConfirmPopup.jsx';
 import BookingConfirmed from './BookingConfirmed.jsx';
 import CouponPublished from './CouponPublished.jsx';
+import VerifyOTP from './VerifyOTP.jsx';
 
 function GlobalPopup() {
     const { popup, hidePopup } = usePopup();
@@ -38,7 +39,14 @@ function GlobalPopup() {
                     onViewPublish={ () => handleResolve(true)}
                     onContinue={ () => handleResolve(false)}
                 />
-            )
+            );
+        case "VerifyOTP":
+            return(
+                <VerifyOTP
+                    onContinue={() => handleResolve(true)}
+                    onCancel={ () => handleResolve(false)}
+                />
+            );
         default:
             return null;
     }

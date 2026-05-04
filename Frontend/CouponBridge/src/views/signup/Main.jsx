@@ -5,11 +5,14 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
+import { usePopup } from '../../hooks/usePopup';
+import { otpEmail } from '../../mailingHtmls';
 import axios from 'axios';
 
 const Main = () => {
     const navigate = useNavigate();
     const { showAlert } = useAlert();
+    const  { showPopup, hidePopup } = usePopup();
     const [formData, setFormData ] = useState({
             role: 'customer',
             name: '',
@@ -34,8 +37,45 @@ const Main = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const sendOTP = async() => {
+        try {
+            // Create OTP
+            const response = await axios.post('http://localhost:5050/cb/v1/api/otp',{
+                email: formData.email
+            })
+
+            await axios.post('http://localhost:5059/cb/v1/api/services/mail',{
+                to: formData.email,
+                subject: `${response.data.data.otp} is your Verification Code`,
+                html: otpEmail(formData.name, response.data.data.otp, 60)
+
+            });
+
+            return true;
+        } catch(err){
+            console.log(err.response);
+            showAlert({
+                type: 'error',
+                message: err.response.data.message
+            });
+            return false;
+        }
+        
+    }
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
+
+        showPopup("Loader");
+        const isOTPSent = await sendOTP();
+        if(! isOTPSent) {
+            hidePopup();
+            return;
+        }
+
+        const response = await showPopup('VerifyOTP', { email: formData.email  });
+        console.log(response);
+        if(!response) return;
 
         if(formData.role === 'customer'){
             axios.post('http://localhost:5050/cb/v1/api/customers/signup', formData)
@@ -123,7 +163,7 @@ const Main = () => {
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" className='input' name="email"  value={formData.email} onChange={ handleChange } required/>
 
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Create Password</label>
                     <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } required/>
 
                    <Button variant="contained" type='submit' sx= {{ width: '100%', borderRadius: '0.5rem', margin: '1rem 0rem 1rem'}}>Create Account</Button>
