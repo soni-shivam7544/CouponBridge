@@ -83,3 +83,45 @@ export const publishEmail = (name, couponCode, price, expiryDate) => `<div style
   </table>
 </div>
 `;
+
+export const otpEmail = (name,otp,expiryMinutes) => `<div style="background:#f5f7fb; padding:20px; font-family:Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden;">
+    
+    <tr>
+      <td style="background:#f59e0b; color:white; text-align:center; padding:15px;">
+        <h2>OTP Verification 🔐</h2>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:20px; text-align:center;">
+        <h3>Hello ${name},</h3>
+        <p>Your One-Time Password (OTP) has been generated.</p>
+        <p>Please use the OTP below to proceed:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:20px; text-align:center;">
+        <div style="display:inline-block; padding:15px 25px; font-size:24px; letter-spacing:5px; font-weight:bold; background:#f3f4f6; border-radius:8px;">
+          ${otp}
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:20px; text-align:center;">
+        <p>This OTP is valid for <b>${expiryMinutes} seconds</b>.</p>
+        <p>If you didn’t request this, you can safely ignore this email.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:20px; text-align:center;">
+        <p>Stay secure 🔒</p>
+      </td>
+    </tr>
+
+  </table>
+</div>
+`;
