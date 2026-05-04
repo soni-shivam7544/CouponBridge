@@ -99,7 +99,7 @@ function Navbar() {
                     <div className="user-items text">
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)', fontSize:'1.6rem'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)', fontSize: '1.6rem'}} onClick={handleThemeToggle}/>}
                         
-                        {user && <><ShoppingCartOutlinedIcon sx={{color:"var(--color-text-secondary)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
+                        {user && role === 'customer' && <><ShoppingCartOutlinedIcon sx={{color:"var(--color-text-secondary)", fontSize:'1.5rem'}}  onClick={handleShoppingCart} className="cart"/>
                         {cartCount > 0 ?<span className='cart-badge'>{cartCount}</span>: null}</>}
                         { user ? 
                             (user && user.picture) ?
