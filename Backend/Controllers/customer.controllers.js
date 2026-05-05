@@ -39,6 +39,25 @@ const signin = async (req, res) => {
     }
 }
 
+const signinWithOTP = async (req, res) => {
+    try {
+        const response = await customerService.loginWithOTP( req.body );
+        successResponseBody.data = response;
+        console.log(response);
+        successResponseBody.message = `Welcome back ${response.user.name} to your customer account.`;
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        if( error.err ){
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Login failed";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Login failed";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 const getAllCustomers = async (req, res) => {
     try {
         const response = await customerService.getAll();
@@ -112,6 +131,7 @@ const getCouponsByCustomerId = async (req, res) => {
 module.exports = {
     signUp,
     signin,
+    signinWithOTP,
     getAllCustomers,
     getCustomerById,
     updateCustomerById,
