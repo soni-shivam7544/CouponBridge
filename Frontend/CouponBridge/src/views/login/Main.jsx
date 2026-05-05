@@ -5,9 +5,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
+import { usePopup } from '../../hooks/usePopup';
+import { otpEmail } from '../../mailingHtmls';
 
 const Main = () => {
 
+    const [mode, setMode] = useState("password");
+    const { showPopup, hidePopup } = usePopup();
     const { showAlert } = useAlert();
     const { login } = useAuth();
     const [formData, setFormData] = useState({
@@ -38,9 +42,50 @@ const Main = () => {
         });
         
     }
+    const sendOTP = async() => {
+        try {
+            // Create OTP
+            const response = await axios.post('http://localhost:5050/cb/v1/api/otp',{
+                email: formData.email
+            })
 
-    const handleSubmit = (e) => {
+            await axios.post('http://localhost:5059/cb/v1/api/services/mail',{
+                to: formData.email,
+                subject: `${response.data.data.otp} is your Verification Code`,
+                html: otpEmail(formData.name || '', response.data.data.otp, 60)
+
+            });
+
+            return true;
+        } catch(err){
+            console.log(err.response);
+            showAlert({
+                type: 'error',
+                message: err.response.data.message
+            });
+            return false;
+        }
+        
+    }
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
+
+        showPopup("Loader");
+        if (mode === 'otp'){
+
+            const isOTPSent = await sendOTP();
+            if(! isOTPSent) {
+                hidePopup();
+                return;
+            }
+
+            const response = await showPopup('VerifyOTP',{
+                email: formData.email
+            });
+            console.log(response);
+            return;
+        }
         
         if(formData.role === 'customer'){
             axios.post('http://localhost:5050/cb/v1/api/customers/signin', formData)
@@ -103,11 +148,21 @@ const Main = () => {
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" className='input' name="email"  value={formData.email} onChange={ handleChange } required/>
 
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } required/>
+                    {mode === 'password' && <>
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" className='input' name="password" value={formData.password} onChange={ handleChange } required/>
+                    </>}
 
-                   <Button variant="contained" type='submit' sx= {{ width: '100%', borderRadius: '0.5rem', margin: '1rem 0rem 1rem'}}>Login</Button>
+                   {mode === 'password' && <Button variant="contained" type='submit' sx= {{ width: '100%', borderRadius: '0.5rem', margin: '1rem 0rem 1rem'}}>Login</Button>}
+
+                   {mode === 'otp' && <Button variant="contained" type='submit' sx= {{ width: '100%', borderRadius: '0.5rem', margin: '1rem 0rem 1rem'}}>Get OTP</Button>}
                 </form>
+
+                <div className="login-switch text" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <span>Or</span>
+                    { mode === 'password' && <Button variant='text' onClick={()=>setMode('otp')}>Get OTP</Button>}
+                    { mode === 'otp' && <Button variant='text' onClick={()=>setMode('password')}>Have Password</Button>}
+                </div>
 
                 <div id="auth-right-footer" className='text'>
                     <span>Don't have an account? </span>
