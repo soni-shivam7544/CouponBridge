@@ -7,6 +7,9 @@ const providerRoutes = ( app ) => {
     // Provider signin
     app.post('/cb/v1/api/providers/signin', providerController.signin);
 
+    // Provider signin with OTP
+    app.post('/cb/v1/api/providers/signin-otp', providerController.signinWithOTP);
+
     // Get all providers and provider by id
     app.get('/cb/v1/api/providers', providerController.getAllProviders);
     app.get('/cb/v1/api/providers/:id', providerController.getProviderById);

@@ -38,6 +38,25 @@ const signin = async (req, res) => {
     }
 }
 
+const signinWithOTP = async (req, res) => {
+    try {
+        const response = await providerService.loginWithOTP( req.body );
+        successResponseBody.data = response;
+        console.log(response);
+        successResponseBody.message = `Welcome back ${response.user.name} to your seller account.`;
+        res.status(200).json(successResponseBody);
+    } catch(error) {
+        if( error.err ){
+            errorResponseBody.error = error.err;
+            errorResponseBody.message = "Login failed";
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.error = error;
+        errorResponseBody.message = "Login failed";
+        res.status(500).json(errorResponseBody);
+    }
+}
+
 const getAllProviders = async (req, res) => {
     try {
         const response = await providerService.getAll();
@@ -111,6 +130,7 @@ const getCouponsByProviderId = async (req, res) => {
 module.exports = {
     signUp,
     signin,
+    signinWithOTP,
     getAllProviders,
     getProviderById,
     updateProviderById,

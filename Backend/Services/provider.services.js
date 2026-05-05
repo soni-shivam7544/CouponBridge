@@ -72,6 +72,34 @@ const signin = async (data) => {
     }
 }
 
+const loginWithOTP = async({ email }) => {
+    try {
+        const user = await Provider.findOne( { email });
+        if(!user){
+            throw { err: "Email Not Found!", code: 400};
+        }
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        return { user, token};
+
+    } catch (error) {
+        console.log(error);
+        if(error.name === 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach( key => {
+                err[key] = error.errors[key].message;
+            });
+            throw { err, code: 400 };
+        }
+        throw error;
+    }
+}
+
 const getAll = async () => {
     try {
         const providers = await Provider.find();
@@ -136,6 +164,7 @@ const getAllCoupons = async (providerId) => {
 module.exports = {
     create,
     signin,
+    loginWithOTP,
     getAll,
     getOne,
     updateProvider,
