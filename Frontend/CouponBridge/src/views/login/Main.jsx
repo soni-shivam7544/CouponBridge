@@ -10,7 +10,7 @@ import { otpEmail } from '../../mailingHtmls';
 
 const Main = () => {
 
-    const [mode, setMode] = useState("password");
+    const [mode, setMode] = useState("otp");
     const { showPopup, hidePopup } = usePopup();
     const { showAlert } = useAlert();
     const { login } = useAuth();
@@ -71,20 +71,65 @@ const Main = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        showPopup("Loader");
+        
         if (mode === 'otp'){
+            
+            if(formData.role === 'customer'){
+                axios.post('http://localhost:5050/cb/v1/api/customers/signin-otp',{
+                    email: formData.email
+                }).then( async(res) => {
+                    console.log(res.data);
 
-            const isOTPSent = await sendOTP();
-            if(! isOTPSent) {
-                hidePopup();
-                return;
+                    showPopup("Loader");
+                    const isOTPSent = await sendOTP();
+                    hidePopup();
+                    if(! isOTPSent) {
+                        return;
+                    }
+
+                    const response = await showPopup('VerifyOTP',{
+                        email: formData.email
+                    });
+                    console.log(response);
+
+                    if(response){
+                        login({ userData:res.data.data, role:'customer'});
+                        showAlert({ type: 'success', message: `${res.data.message}`});
+                        navigate('/');
+                    }
+                }).catch( err => {
+                    showAlert({ type: 'error', message: `${err.response.data.error}`});
+
+                });
             }
+            else axios.post('http://localhost:5050/cb/v1/api/providers/signin-otp', { email: formData.email })
+            .then ( async(res)=> {
+                console.log(res);
 
-            const response = await showPopup('VerifyOTP',{
-                email: formData.email
+                showPopup("Loader");
+                const isOTPSent = await sendOTP();
+                hidePopup();
+                if(! isOTPSent) {
+                    return;
+                }
+
+                const response = await showPopup('VerifyOTP',{
+                    email: formData.email
+                });
+                console.log(response);
+
+                if(response){
+                    login({ userData:res.data.data, role:'provider'});
+                    showAlert({ type: 'success', message: `${res.data.message}`});
+                    navigate('/');
+                }
+            })
+            .catch( err => {
+                showAlert({ type: 'error', message: `${err.response.data.error}`});
             });
-            console.log(response);
+
             return;
+            
         }
         
         if(formData.role === 'customer'){
