@@ -12,7 +12,17 @@ function CouponSection() {
     const navigate = useNavigate();
 
     useEffect( () => {
-        axios.get('http://localhost:5050/cb/v1/api/coupons')
+        axios.get('http://localhost:5050/cb/v1/api/coupons/search',{
+            params:{
+                search: '',
+                sort: 'Newest',
+                category: 'All Categories',
+                isVerified: false
+            },
+            headers:{
+                authorization: localStorage.getItem('token')
+            }
+            })
             .then(res => {
                 let data = res.data.data;
                 let newData = [];

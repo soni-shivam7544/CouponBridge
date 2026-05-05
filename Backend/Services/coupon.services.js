@@ -123,7 +123,7 @@ const searchCoupons = async ({query,user}) => {
                 }));
                 coupons = updatedCoupons;
             }
-            coupons = coupons.filter(coupon => coupon.provider._id.toString()!== user._id.toString());
+            // coupons = coupons.filter(coupon => coupon.provider._id.toString()!== user._id.toString());
                 
         }
         
