@@ -189,7 +189,7 @@ function CouponCard( { data, onDelete} ) {
                     <p>{coupon ? coupon.provider.name:''}</p>
                     <div className="coupon-card-provider-rating">
                         <StarIcon sx={{color: 'var(--color-highlight-hover)', fontSize:'1rem'}}/>
-                        <span>4.8</span>
+                        <span></span>
                     </div>
                 </div>
                 {/* {coupon && coupon.isActive ?

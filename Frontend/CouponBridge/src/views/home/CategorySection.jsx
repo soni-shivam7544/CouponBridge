@@ -32,7 +32,7 @@ const CategorySection = ( { categoryRef }) => {
         navigate('/coupons');
     }
   return (
-    <div className="category-section" id='category-section' ref={categoryRef} style={{scrollMarginTop:'5rem'}}>
+    <div className="category-section" id='category-section' ref={categoryRef} style={{scrollMarginTop:'8rem'}}>
       <p className="section-heading">Browse By Category</p>
       <p className="sub-heading">Find deals in your favorite categories</p>
       <div className="category-container text">
