@@ -2,6 +2,7 @@ import './HeroSection.css'
 import '../../index.css'
 import Button from '@mui/material/Button';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
@@ -42,7 +43,7 @@ function HeroSection(){
                     </p>
                     <div className="hero-navigate">
                         <div className="heading browse" onClick={() => navigate('/coupons')}>Browse Coupons<KeyboardDoubleArrowRightIcon sx={{marginLeft:'0.5rem'}}/></div>
-                        <Button variant="contained" className="selling-btn" onClick={ handleSelling }>Start Selling</Button>
+                        <Button variant="contained" className="selling-btn" onClick={ handleSelling }><SellOutlinedIcon sx={{marginRight: '0.5rem'}}/> Start Selling</Button>
                     </div>
                 </div>
 
