@@ -5,9 +5,9 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 
-const HowItWorks = () => {
+const HowItWorks = ({ howItWorksRef }) => {
     return(
-        <div className='how-it-works text'>
+        <div className='how-it-works text' id='how-it-works' ref={ howItWorksRef } style={{scrollMarginTop:'8rem'}}>
             <p className='section-heading'>How It Works</p>
             <p className='sub-heading'>Three simple steps to start saving</p>
             <div className="working-flow">

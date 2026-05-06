@@ -57,6 +57,16 @@ function Navbar() {
         if(user) navigate('/cart');
     }
 
+    const handleHowItWorks = () =>{
+        if (location.pathname === "/") {
+        const el = document.getElementById("how-it-works");
+        el?.scrollIntoView({ behavior: "smooth" });
+        } else {
+        sessionStorage.setItem("scrollTo", "how-it-works");
+        navigate("/");
+        }
+    }
+
     const handleCategory = () => {
         if (location.pathname === "/") {
         const el = document.getElementById("category-section");
@@ -92,9 +102,9 @@ function Navbar() {
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/')}>Home</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="browse-coupons" onClick={ () => navigate('/coupons')}>Browse Coupons</Button>
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="merchants" onClick={ handleSelling }>Sell Coupons</Button>
-                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Providers</Button>
+                        {/* <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers">Providers</Button> */}
                         <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="providers" onClick={handleCategory}>Categories</Button>
-                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="how-it-works">How it works</Button>
+                        <Button sx={{color:'var(--color-text-secondary)'}} variant="text" className="how-it-works" onClick={handleHowItWorks}>How it works</Button>
                     </div>
                     <div className="user-items text">
                         { themeMode ? <DarkModeIcon sx={{marginRight:'1rem', cursor:'pointer', color: 'var(--color-primary-light)', fontSize:'1.6rem'}} onClick={handleThemeToggle}/> : <LightModeIcon sx={{marginRight:'1rem', cursor:'pointer', color:'var(--color-highlight)', fontSize: '1.6rem'}} onClick={handleThemeToggle}/>}
