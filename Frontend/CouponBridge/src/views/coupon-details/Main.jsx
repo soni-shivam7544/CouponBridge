@@ -34,6 +34,25 @@ const Main = () => {
     const {showAlert} = useAlert();
     const {fetchCartCount} = useCart();
 
+    const handleShareCoupon = () => {
+        const url = window.location.href;
+
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                showAlert({
+                    type: 'info',
+                    message: 'Link copied to clipboard!'
+                });
+            })
+            .catch((err) => {
+                console.error("Failed to copy: ", err.response);
+                showAlert({
+                    type: 'error',
+                    message: 'Failed to copy!'
+                })
+            });
+    };
+
     const handleLike = (e) => {
 
         if(role === 'customer'){
@@ -151,6 +170,15 @@ const Main = () => {
         .catch(err=> console.log(err));
     }
 
+    const getDaysLeft = () => {
+        const now = new Date();
+        const expiry = new Date(coupon && coupon.expiry);
+
+        const diffTime = expiry - now; // milliseconds difference
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    }
+
     useEffect(()=>{
         axios.get(`http://localhost:5050/cb/v1/api/coupons/${id}`,{
             headers:{
@@ -207,7 +235,10 @@ const Main = () => {
                     
                     {coupon && coupon.isActive ? <div className="coupon-details-days-left">
                         <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
-                        <span>68 days left</span>
+                        <span>{
+                           getDaysLeft() > 0 ? `${getDaysLeft()} days left`:
+                           (getDaysLeft() === 0 ? 'Expiring Today': 'Expired')   
+                        }</span>
                     </div>:
                     <div className="coupon-details-days-left">
                         <TimerIcon sx={{fontSize:'1rem', marginRight:'0.2rem'}}/>
@@ -232,7 +263,7 @@ const Main = () => {
                         </div>
                         <div className="coupon-details-provider-rating">
                             <StarIcon sx={{color: 'var(--color-highlight)', marginRight:'0.3rem'}}/>
-                            <span className=''><b>4.5</b></span>
+                            {/* <span className=''><b>4.5</b></span> */}
                         </div>
                     </div>
                     {coupon && coupon.isActive && (!user || user._id !== coupon.provider._id) && <div className="coupon-details-navigate">
@@ -253,7 +284,7 @@ const Main = () => {
                             <ElectricBoltIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Verify Coupon</span>
                         </Button>
-                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleShareCoupon}>
                             <ShareIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Share</span>
                         </Button>
