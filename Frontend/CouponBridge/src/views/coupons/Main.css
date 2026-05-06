@@ -49,9 +49,9 @@ select:focus {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    overflow-y: auto;
+    /* overflow-y: auto;
     height: 70vh;
-    scrollbar-width: none;
+    scrollbar-width: none; */
 }
 
 .coupon-not-found{
