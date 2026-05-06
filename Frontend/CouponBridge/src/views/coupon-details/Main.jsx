@@ -22,6 +22,7 @@ import { useCart } from '../../hooks/useCart';
 import { useEffect, useState} from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useAlert } from '../../hooks/useAlert';
+import { usePopup } from '../../hooks/usePopup';
 import axios from 'axios';
 
 const Main = () => {
@@ -33,6 +34,8 @@ const Main = () => {
     const [isLiked, setIsLiked] = useState(false); // to toggle like
     const {showAlert} = useAlert();
     const {fetchCartCount} = useCart();
+    const [verificationOrder, setVerificationOrder] = useState(false);
+    const { showPopup, hidePopup } = usePopup();
 
     const handleShareCoupon = () => {
         const url = window.location.href;
@@ -154,20 +157,62 @@ const Main = () => {
 
 
     const handleVerify = () => {
-        console.log( coupon.productId, coupon.code);
-        axios.post('http://localhost:1854/run-bot',{ productId: coupon.productId, couponCode: coupon.code })
+        if (!user || role === 'provider'){
+            showAlert({
+                type: 'info',
+                message: 'Customer login required'
+            });
+            return;
+        }
+        showPopup("Loader");
+        axios.post('http://localhost:5055/run-bot',{ productId: coupon.productId, couponCode: coupon.code })
         .then (res=> {
             console.log(res);
+            hidePopup();
             if(res.data.data === 'Applied'){
-                const div = document.querySelector('.result-success');
-                div.innerText = `Coupon ${res.data.data}! ${res.data.message} You can buy the coupon`;
+                showAlert({
+                    type: 'success',
+                    message: 'Verification successfull!'
+                })
+                axios.put(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
+                    isVerified: true
+                }).then(res => {
+                    console.log(res);
+                    setVerificationOrder((prev) => (!prev));
+                }).catch(err => {
+                    console.log(err);
+                })
             }
             else {
-                const div = document.querySelector('.result-failed');
-                div.innerText = `Coupon ${res.data.data}! ${res.data.message} Proceed buying at your risk`;
+                showAlert({
+                    type: 'info',
+                    message: 'Coupon code missmatch. Proceed with caution!'
+                });
+                axios.put(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
+                    isVerified: false
+                }).then(res => {
+                    console.log(res);
+                    setVerificationOrder((prev) => (!prev));
+                }).catch(err => {
+                    console.log(err);
+                })
             }
         })
-        .catch(err=> console.log(err));
+        .catch(err=> {
+            console.log(err.response);
+            hidePopup();
+            showAlert({
+                type: 'error',
+                message: 'Verification unsuccessful. Could not verify coupon!'
+            });
+            axios.put(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
+                isVerified: true
+            }).then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            })
+        });
     }
 
     const getDaysLeft = () => {
@@ -189,7 +234,7 @@ const Main = () => {
             setCoupon(res.data.data);
             setIsLiked(res.data.data.isSaved)
         }).catch(err=>console.log(err.response));
-    }, [user]);
+    }, [user, verificationOrder]);
 
     return (
         <div className="details">
@@ -280,7 +325,7 @@ const Main = () => {
                             <span>Saved</span>
                         </Button>
                         }
-                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}}>
+                        <Button variant="text" sx={{marginRight:'2rem', color:'var(--color-text-primary)'}} onClick={handleVerify}>
                             <ElectricBoltIcon sx={{marginRight: '0.7rem', fontSize: '1.1rem'}}/>
                             <span>Verify Coupon</span>
                         </Button>

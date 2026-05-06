@@ -26,7 +26,7 @@ const couponRouter = ( app ) => {
 
 
     // Update a coupon by Id
-    app.put('/cb/v1/api/coupons/:id', authMiddlewares.isProviderLoggedin, couponController.updateCouponById);
+    app.put('/cb/v1/api/coupons/:id', couponController.updateCouponById);
 
     // Delete a coupon by Id
     app.delete('/cb/v1/api/coupons/:id', authMiddlewares.isProviderLoggedin, couponController.destroyCoupon);
