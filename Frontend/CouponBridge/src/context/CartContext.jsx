@@ -34,7 +34,7 @@ export const CartProvider = ({ children })=>{
             }).catch(err => console.log(err.response));
         }
         
-    },[]);
+    });
 
     return(
         <CartContext.Provider value = {{ cartCount, fetchCartCount }}>
