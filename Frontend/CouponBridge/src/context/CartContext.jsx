@@ -7,6 +7,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children })=>{
     const [cartCount, setCartCount] = useState(0);
+    const role = localStorage.getItem('role');
     const { user } = useAuth();
 
     const fetchCartCount = () => {
@@ -23,7 +24,7 @@ export const CartProvider = ({ children })=>{
 
     useEffect(() => {
 
-        if (user){
+        if (user && role === 'customer'){
             axios.get('http://localhost:5050/cb/v1/api/cart', {
                 headers:{
                     authorization: localStorage.getItem('token')
