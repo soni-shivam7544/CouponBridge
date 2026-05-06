@@ -142,6 +142,15 @@ function CouponCard( { data, onDelete} ) {
         }
     }
 
+    const getDaysLeft = () => {
+        const now = new Date();
+        const expiry = new Date(coupon && coupon.expiry);
+
+        const diffTime = expiry - now; // milliseconds difference
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    }
+
     useEffect(()=>{
         axios.get(`http://localhost:5050/cb/v1/api/coupons/${coupon._id}`,{
             headers:{
@@ -204,7 +213,12 @@ function CouponCard( { data, onDelete} ) {
                 } */}
                 {(coupon && !coupon.isPurchased) ? <div className="coupon-card-expiry caption">
                     <TimerIcon sx={{fontSize:'1rem'}}/>
-                    <span> 83 days left</span>
+                    <span>
+                        {
+                           getDaysLeft() > 0 ? `${getDaysLeft()} days left`:
+                           (getDaysLeft() === 0 ? 'Expiring Today': 'Expired')   
+                        }
+                    </span>
                 </div>:
                 <div className="coupon-card-expiry caption">
                     <TimerIcon sx={{fontSize:'1rem'}}/>
