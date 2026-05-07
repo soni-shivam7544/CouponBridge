@@ -16,7 +16,7 @@ export const CartProvider = ({ children })=>{
                 authorization: localStorage.getItem('token')
             }
         }).then(res => {
-            setCartCount(res.data.data.items.length);
+            setCartCount(res.data.data ? res.data.data.items.length: 0);
         }).catch(err => console.log(err.response));
 
         
@@ -30,9 +30,9 @@ export const CartProvider = ({ children })=>{
                     authorization: localStorage.getItem('token')
                 }
             }).then( res => {
-                console.log(res.data.data);
-                setCartCount(res.data.data.items.length);
-            }).catch(err => console.log(err.response));
+                console.log(res.data);
+                setCartCount(res.data.data ? res.data.data.items.length : 0);
+            }).catch(err => console.log(err));
         }
         
     });
